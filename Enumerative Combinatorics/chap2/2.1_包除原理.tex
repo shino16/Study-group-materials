@@ -1,0 +1,108 @@
+\documentclass[xelatex,ja=standard,a4paper,14pt,everyparhook=compat]{bxjsarticle}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{enumitem, mleftright, mathtools, hyperref}
+\usepackage{caption, wrapfig}
+
+% \usepackage{zxjatype}
+% \renewcommand*\familydefault{\sfdefault}
+% % なぜか Segoe UI で () が出力できない
+% \setmainfont[BoldFont={Segoe UI SemiBold}]{Segoe UI}
+% \setsansfont[BoldFont={Segoe UI Bold}]{Segoe UI}
+% \setCJKmainfont{Noto Sans CJK JP}
+% \setCJKsansfont{Noto Sans CJK JP}
+% \usepackage{concmath}
+
+\setenumerate{label=(\alph*)}
+
+\usepackage{concmath}
+\usepackage[OT1]{fontenc}
+\setsansfont{CMU Concrete}
+\setmainfont{CMU Concrete}
+\setCJKmainfont{Noto Sans JP}
+\setCJKsansfont{Noto Sans JP}
+
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbZ}{\mathbb{Z}}
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\fS}{\mathfrak{S}}
+\newcommand{\inv}[1]{#1^{-1}}
+
+\newcommand{\paren}[1]{\mleft(#1\mright)}
+\newcommand{\bbinom}[2]{\mleft(\binom{#1}{#2}\mright)}
+\newcommand{\ifthen}[3]{\text{$#1$ ? $#2$ : $#3$}}
+\newcommand{\bool}[1]{[#1]}
+\newcommand{\dcup}{\mathbin{\dot\cup}}
+
+\theoremstyle{definition}
+\newtheorem{theorem}{定理}[subsection]
+\newtheorem*{theorem*}{定理}
+\newtheorem{example}[theorem]{例}
+\newtheorem{proposition}[theorem]{命題}
+\newtheorem{corollary}[theorem]{系}
+\renewcommand{\proofname}{\textup{証明}}
+
+\begin{document}
+
+\setcounter{section}{1}
+\section{Sieve Methods}
+\subsection{Inclusion-Exclusion}
+
+``Sieve method''とは：有限集合$S$の要素数を求める方法
+
+パターン(1) $\#S$を大きめに見積もり、誤差を大きめに見積もり、その誤差を…ということを繰り返し、誤差を$0$に近づけていく
+
+パターン(2) $T \supseteq S$について、余分な元が打ち消しあうように$T$の各元を重みづけする（後の節で登場）
+
+\begin{theorem}
+    $n$元集合$S$、線形空間$V = \{f : 2^S \to K\}$ ($K$は体)について、線形写像$\phi: V \to V$を \begin{equation*}
+        \phi f(T) = \sum_{Y \supseteq T} f(Y),
+    \end{equation*}
+    で定める。このとき$\inv \phi$が存在し、 \begin{equation*}
+        \inv \phi f(T) = \sum_{Y \supseteq T} (-1)^{\#(Y-T)} f(Y).
+    \end{equation*}
+\end{theorem}
+
+$T$、$Y$の代わりに補集合$S-T$、$S-Y$を考えると、包含関係を逆にした場合の主張が成り立つ（後述）。
+
+\begin{proof}
+    $\psi : V \to V$を$\psi f(T) = \sum_{Y \subseteq T} (-1)^{\#(Y-T)} f(Y)$で定めると、 \begin{align*}
+        \phi \psi f(T)
+         & = \sum_{Y \supseteq T} (-1)^{\#(Y-T)} \phi f(Y) \qquad \text{($\psi\phi f(T)$では？)} \\
+         & = \sum_{Y \supseteq T} (-1)^{\#(Y-T)} \sum_{Z \supseteq Y} f(Z)                       \\
+         & = \sum_{Z \supseteq T} \paren{\sum_{Z \supseteq Y \supseteq T} (-1)^{\#(Y-T)}} f(Z).
+    \end{align*}
+    $T$、$Z$を固定したとき、$m = \#(Z-T)$とおくと \begin{equation*}
+        \sum_{Z \supseteq Y \supseteq T} (-1)^{\#(Y-T)}
+        = \sum_{i=0}^m (-1)^i \binom{m}{i}
+        = \delta_{0m}
+    \end{equation*}
+    なので、$\phi \psi f(T) = f(T)$がわかる。よって$\inv \phi = \psi$。
+\end{proof}
+
+\subsubsection*{よくある定理2.1.1の適用例}
+
+集合$A$と、$A$の元が持ったり持たなかったりする性質の集合$S$がある。
+
+ちょうど$T \subseteq S$の性質のみを持つ$A$の元の個数$f_=(T)$\footnote{重み$w:A \to K$を決めて、元の個数の代わりに元の重みの和$\sum_x w(x)$を$f_=(T)$としてもよい}は求めにくいが、少なくとも$T \subseteq S$の性質は満たすような$A$の元の個数$f_\geq(T)$は求めやすいようなとき、 \begin{equation*}
+    f_\geq(T) = \sum_{Y \supseteq T} f_=(Y),
+\end{equation*}
+なので、定理2.1.1より \begin{equation*}
+    f_=(T) = \sum_{Y \supseteq T} (-1)^{\#(Y-T)} f_\geq(Y).
+\end{equation*}
+とくに、どの性質も持たないような元の個数は \begin{equation} \label{2.5}
+    f_=(\emptyset) = \sum_{Y} (-1)^{\#Y} f_\geq(Y).
+\end{equation}
+
+性質を集合で言い換えることもできる。$A_1,\ldots,A_n$を$A$の部分集合とし、 \begin{equation*}
+    A_T = \bigcap_{i \in T} A_i,
+\end{equation*}
+と定める（$A_\emptyset = A$とする）。$A_i$を「性質$P_i$を満たす$A$の元の集合」と考えれば、式(\ref{2.5})に対応するのは \begin{align*}
+    \#(\overline{A_1 \cup \cdots \cup A_n})
+     & = \#(\overline{A_1} \cap \cdots \cap \overline{A_n}) \\
+     & = S_0 - S_1 + S_2 - \cdots + (-1)^n S_n,
+\end{align*}
+ただし \begin{equation*}
+    S_k = \sum_{\#T = k} \#A_T.
+\end{equation*}
+
+\end{document}

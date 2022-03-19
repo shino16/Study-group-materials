@@ -1,0 +1,156 @@
+\documentclass[xelatex,ja=standard,a4paper,14pt,everyparhook=compat]{bxjsarticle}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{enumerate, mleftright, mathtools}
+\usepackage{caption, wrapfig}
+
+% \usepackage{fancyhdr}
+% \pagestyle{fancy}
+% \fancyhead{}
+% \renewcommand{\headrulewidth}{0pt}
+% \fancyfoot[C]{}
+% \fancyfoot[R]{\thepage}
+
+
+% \usepackage{zxjatype}
+% \renewcommand*\familydefault{\sfdefault}
+% % なぜか Segoe UI で () が出力できない
+% \setmainfont[BoldFont={Segoe UI SemiBold}]{Segoe UI}
+% \setsansfont[BoldFont={Segoe UI Bold}]{Segoe UI}
+% \setCJKmainfont{Noto Sans CJK JP}
+% \setCJKsansfont{Noto Sans CJK JP}
+% \usepackage{concmath}
+
+
+\usepackage{zxjatype}
+% なぜか Segoe UI で () が出力できない
+% \setmainfont[BoldFont=* Bold, ItalicFont=* Italic, BoldItalicFont=* BoldItalic]{/usr/local/texlive/texmf-local/fonts/truetype/CMUConcrete/CMU Concrete.ttf}
+\usepackage{concmath}
+\usepackage[OT1]{fontenc}
+\setsansfont{CMU Concrete}
+\setmainfont{CMU Concrete}
+\setCJKmainfont{Noto Sans CJK JP}
+\setCJKsansfont{Noto Sans CJK JP}
+% \newfontfamily\bfsegoe{CMU Concrete Roman}
+% \renewcommand*\bfdefault{\bfsegoe}
+
+
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\fS}{\mathfrak{S}}
+\DeclareMathOperator*{\inv}{inv}
+
+\newcommand{\paren}[1]{\mleft(#1\mright)}
+
+\theoremstyle{definition}
+\newtheorem{theorem}{定理}[subsection]
+\newtheorem*{theorem*}{定理}
+\newtheorem{example}[theorem]{例}
+\newtheorem{proposition}[theorem]{命題}
+\renewcommand{\proofname}{\textup{証明}}
+
+\begin{document}
+
+\section{What is Enumerative Combinatorics?}
+\setcounter{subsection}{5}
+\subsection{Alternating Permutations, Euler Numbers, and the $cd$-Index of $\fS_n$}
+
+\subsubsection{Basic Properties}
+
+Alternating permutations $w \in \fS_n$の個数$E_n$をオイラー数と呼ぶ．
+
+
+\begin{proposition}
+    \begin{equation*}
+        \sum_{n \geq 0} E_n \frac{x^n}{n!} = \sec x + \tan x.
+    \end{equation*}
+\end{proposition}
+
+なお$\sum_{n \geq 0} E_n \frac{(-x)^n}{n!} = \sec x - \tan x$より， \begin{align*}
+    \sum_{n \geq 0} E_{2n} \frac{x^{2n}}{(2n)!} &= \sec x, \\
+    \sum_{n \geq 0} E_{2n+1} \frac{x^{2n+1}}{(2n+1)!} &= \tan x.
+\end{align*}
+$E_{2n}$はsecant number，$E_{2n+1}$はtangent numberとも呼ばれる．
+
+\begin{proof}
+    $0 \leq k \leq n$とする．$S \in \binom{[n]}{k}$をとり，$\overline S = [n] - S$とする．$S$のreverse alternating permutation $u$と，$\overline S$のreverse alternating permutation $v$をとる．$\operatorname{rev}(u), n+1, v$の連結を$w$とする．以上の手順ですべてのalternationg permutationとreverse alternating permutation $w \in \fS_{n+1}$をちょうど$1$回ずつ生成できる．したがって，$n \geq 1$について \begin{equation*}
+        2E_{n+1} = \sum_{k=0}^n \binom{n}{k} E_k E_{n-k}.
+    \end{equation*}
+    $y = \sum_{n \geq 0} E_n x^n / n!$とする．上の等式を$x^n/n!$倍して足し上げると，微分方程式 \begin{equation*}
+        2y' = y^2 + 1,
+    \end{equation*}
+    が導かれる．初期条件$y(0) = E_0 = 1$により，$y = \sec x + \tan x$が唯一解．
+\end{proof}
+
+等式 \begin{equation*}
+    \sum_{n \geq 0} E_{2n} \frac{x^{2n}}{(2n)!} = (\cos x)^{-1}
+    = \paren{\sum_{n \geq 0} (-1)^n \frac{x^{2n}}{(2n)!}}^{-1},
+\end{equation*}
+は， \begin{equation*}
+    \sum_{n \geq 0} \frac{x^n}{n!} = e^x = (e^{-x})^{-1} = \paren{\sum_{n \geq 0} (-1)^n \frac{x^n}{n!}}^{-1},
+\end{equation*}
+とあわせて次のように一般化できる．
+
+\begin{theorem*}
+    \begin{equation*}
+        f_k(n) = \# \{w \in \fS_n : D(w) = \{k, 2k, 3k, \ldots\} \cap [n-1] \},
+    \end{equation*}
+    とするとき， \begin{equation*}
+        \sum_{n \geq 0} f_k(kn) \frac{x^{kn}}{(kn)!}
+        = \paren{\sum_{n \geq 0} (-1)^n \frac{x^{kn}}{(kn)!}}^{-1}.
+    \end{equation*}
+\end{theorem*}
+\begin{proof}
+    \begin{align*}
+        \paren{\sum_{n \geq 0} (-1)^n \frac{x^{kn}}{(kn)!}}^{-1}
+        & = \paren{1 - \sum_{n \geq 1} (-1)^{n-1} \frac{x^{kn}}{(kn)!}}^{-1} \\
+        & = \sum_{j \geq 0} \paren{\sum_{n \geq 1} (-1)^{n-1} \frac{x^{kn}}{(kn)!}}^j.
+    \end{align*}
+    右辺の$j$乗部分を展開すると \begin{align*}
+            & \sum_{j \geq 0} \paren{\sum_{n \geq 1} (-1)^{n-1} \frac{x^{kn}}{(kn)!}}^j \\
+        ={} & \sum_{j \geq 0} \sum_{N \geq 0}
+                \sum_{\substack{a_1 + \cdots + a_j = N \\ a_i \geq 1}}
+                \binom{kN}{ka_1, \ldots, ka_j} (-1)^{N-j} \frac{x^{kN}}{(kN)!}.
+    \end{align*}
+    ここで \begin{align*}
+        S & = \{k, 2k, \ldots, (N-1)k\}, \\
+        T & = \{ka_1, k(a_1+a_2), \ldots, k(a_1+\cdots+a_{j-1})\},
+    \end{align*}
+    とおくと$\binom{kN}{ka_1, \ldots, ka_j} = \alpha_{kN}(T)$ ($=\#\{w \in \fS_{kN} : D(w) \subseteq T\}$) である．$\#S = N-1$，$\#T = j-1$に注意すると， \begin{align*}
+            & \sum_{j \geq 0} \sum_{N \geq 0}
+                \sum_{\substack{a_1 + \cdots + a_j = N \\ a_i \geq 1}}
+                \binom{kN}{ka_1, \ldots, ka_j} (-1)^{N-j} \frac{x^{kN}}{(kN)!} \\
+        ={} & \sum_{N \geq 0} \sum_{T \subseteq S}
+                (-1)^{\#S-\#T} \alpha_{kN}(T) \frac{x^{kN}}{(kN)!} \\
+        ={} & \sum_{N \geq 0} \beta_{kN}(S) \frac{x^{kN}}{(kN)!},
+    \end{align*}
+    ただし$\beta_{kN}(S) = \#\{w \in \fS_{kN} : D(w) = S\}$．
+\end{proof}
+
+これはさらに一般化できる．演習問題146： \begin{equation*}
+    \sum_{n \geq 0} f_k(kn+i) \frac{x^{kn+i}}{(kn+i)!} = \frac{\sum_{n \geq 0} (-1)^n \frac{x^{nk+i}}{(kn+i)!}}{\sum_{n \geq 0} (-1)^n \frac{x^{kn}}{(kn)!}} \quad (1 \leq i \leq k).
+\end{equation*}
+$i=k$として両辺に$1$を足すと先ほどの等式が，$k=2$，$i=1$とすれば$\sum_{n \geq 0} E_{2n+1} \frac{x^{2n+1}}{(2n+1)!} = \sin x / \cos x = \tan x$が得られる．
+
+\subsubsection{Flip Equivalence of Increasing Binary Trees}
+
+$w$のincreasing binary tree $T(w)$について，頂点$v$の左右の子を入れ替える操作を\textbf{flip}という．$n$頂点のincreasing binary tree $T$に何度かflipを行って$T'$にできるとき，$T$と$T'$が\textbf{同値}であるとする．
+
+% $T$の葉の数を$\epsilon(T)$とするとき，$T$と同値なincreasing binary treeの個数は$2^{n-\epsilon(T)}$．
+
+これらの同値類の個数を$f(n)$とする．すなわち$f(n)$は子同士の順番の違いを無視したincreasing binary treeの個数．このような木は$(1,2)$-木と呼ばれる．
+
+\begin{proposition}
+    \begin{equation*}
+        f(n) = E_n.
+    \end{equation*}
+\end{proposition}
+\begin{proof}
+    漸化式を考える．根が子を$1$個持つものと$2$個持つもので分けて数えると， \begin{equation*}
+        f(n+1) = f(n) + \frac{1}{2} \sum_{i=1}^{n-1} \binom{n}{i} f(i) f(n-i).
+    \end{equation*}
+    $y = \sum_{n \geq 1} f(n) x^n/n!$とすると \begin{equation*}
+        y' = 1 + y + \frac{1}{2} y^2, \quad y(0) = 0.
+    \end{equation*}
+    $2 (y+1)' = 1 + (y+1)^2$より，唯一解は$y=\sec x + \tan x - 1$．
+\end{proof}
+
+\end{document}

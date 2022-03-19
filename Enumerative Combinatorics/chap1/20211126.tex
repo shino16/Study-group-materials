@@ -1,0 +1,234 @@
+\documentclass[xelatex,ja=standard,a4paper,14pt]{bxjsarticle}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{enumerate, mleftright}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[C]{}
+\fancyfoot[R]{\thepage}
+
+
+\usepackage{zxjatype}
+\renewcommand*\familydefault{\sfdefault}
+% なぜか Segoe UI で () が出力できない
+\setsansfont[BoldFont={Segoe UI Bold}]{Segoe UI}
+\setCJKsansfont{Noto Sans CJK JP}
+\usepackage{concmath}
+
+\newcommand{\bbC}{\mathbb{C}}
+
+\newcommand{\paren}[1]{\mleft(#1\mright)}
+
+\theoremstyle{definition}
+\newtheorem{theorem}{定理}[subsection]
+\newtheorem{example}[theorem]{例}
+\newtheorem{proposition}[theorem]{命題}
+\renewcommand{\proofname}{\textup{証明}}
+
+\begin{document}
+
+\section{What Is Enumerative Combinatorics?}
+\subsection{How to Count}
+
+$i$ が動くとき，有限集合 $S_i$ の要素数 $f(i)$ を数えるとする．$f(i)$ がどのような形で表されれば「数えた」といえるだろうか？
+
+\begin{enumerate}[1.]
+    \item 完全に陽な閉じた式で表され，よく知られた関数のみを含み，総和記号を含まない形．
+    \item 漸化式．
+    \item $f(i)$ を計算するある程度効率的なアルゴリズム．
+    \item 漸近的な評価．
+    \item 母関数．
+\end{enumerate}
+
+\subsubsection{母関数の扱いについて}
+
+通常型母関数： \begin{equation*}
+    \sum_{n \geq 0} f(n) x^n.
+\end{equation*}
+指数型母関数： \begin{equation*}
+    \sum_{n \geq 0} f(n) \frac{x^n}{n!}.
+\end{equation*}
+これらは形式的べき級数．
+
+$x$ が何かの値をとるわけではなく，$x^n$ や $x^n/n!$ は $f(n)$ が書かれる場所に過ぎない．
+
+$F(x) = \sum_{n \geq 0} a_n x^n$ であるとき，$a_n$ は $F(x)$ における $x^n$ の\textbf{係数}といい， \begin{equation*}
+    a_n = [x^n] F(x)
+\end{equation*}
+と表す．$F(x) = \sum_{n \geq 0} a_n x^n/n!$ に対しては， \begin{equation*}
+    a_n = n! [x^n] F(x)
+\end{equation*}
+と表す．また，形式的に $a_0 = F(0)$ と表す．
+
+複変数の母関数の例： \begin{equation*}
+    \sum_{l \geq 0} \sum_{m \geq 0} \sum_{n \geq 0} f(l,m,n) \frac{x^ly^mz^n}{n!}.
+\end{equation*}
+（$l$，$m$ について通常型，$n$ について指数型）
+
+変数は無限個あってもよいが，どの項も無限個の変数を含んではならない．例：$x_1+x_2+x_3+\cdots$．
+
+和・積は次に従う． \begin{align*}
+    \paren{\sum_{n \geq 0} a_n x^n} + \paren{\sum_{n \geq 0} b_n x^n}
+     & = \sum_{n \geq 0} (a_n + b_n) x^n,                                              \\
+    \paren{\sum_{n \geq 0} a_n \frac{x^n}{n!}} + \paren{\sum_{n \geq 0} b_n \frac{x^n}{n!}}
+     & = \sum_{n \geq 0} (a_n + b_n) \frac{x^n}{n!},                                   \\
+    \paren{\sum_{n \geq 0} a_n x^n} \paren{\sum_{n \geq 0} b_n x^n}
+     & = \sum_{n \geq 0} \paren{\sum_{i=0}^n a_i b_{n-i}} x^n,                         \\
+    \paren{\sum_{n \geq 0} a_n \frac{x^n}{n!}} \paren{\sum_{n \geq 0} b_n \frac{x^n}{n!}}
+     & = \sum_{n \geq 0} \paren{\sum_{i=0}^n \binom{n}{i} a_i b_{n-i}} \frac{x^n}{n!}.
+\end{align*}
+$\bbC$ 係数の形式的べき級数全体が成す環を $\bbC[[x]]$ と表す．$m$ 変数 $x_1,\ldots,x_m$ の場合は $\bbC[[x_1,\ldots,x_m]]$ と表す．これらは一意分解環 (unique factorization domain) をなす．
+
+$F(x) G(x) = 1$ であるとき，$G(x) = F(x)^{-1}$ と表す．$F(x)^{-1}$ が存在するための必要十分条件は $F(0) \neq 0$ である．$F(x)^{-1} G(x) = G(x) / F(x)$ と表す．$(F(x)G(x))^{-1} = F(x)^{-1} G(x)^{-1}$，$(F(x)^{-1})^{-1} = F(x)$ が成り立つ（それぞれ $(\cdot)^{-1}$ が存在する場合）．
+
+\setcounter{theorem}{4}
+\begin{example}
+    $\alpha \in \bbC \setminus \{0\}$ とする．$\paren{\sum_{n \geq 0} \alpha^n x^n}(1 - \alpha x) = 1$ より， \begin{equation*}
+        \sum_{n \geq 0} \alpha^n x^n = \frac{1}{1 - \alpha x}.
+    \end{equation*}
+\end{example}
+
+原則として，形式的べき級数を関数とみなしたときに成り立つ等式は，形式的べき級数の等式としても成立する（式が形式的べき級数としても well defined である場合に限る）．
+
+\begin{example}
+    等式 \begin{equation} \label{ex1.1.6}
+        \paren{\sum_{n \geq 0} \frac{x^n}{n!}} \paren{\sum_{n \geq 0} (-1)^n \frac{x^n}{n!}} = 1
+    \end{equation}
+    は関数論的には正しい（$e^x e^{-x} = 1$）．すなわち，任意の $x \in \bbC$ について \begin{equation*}
+        \sum_{n \geq 0} \paren{\sum_{k=0}^n (-1)^k \binom{n}{k}} \frac{x^n}{n!} = 1
+    \end{equation*}
+    が成り立つので，係数を比較して \begin{equation*}
+        \sum_{k=0}^n (-1)^k \binom{n}{k} = \delta_{0n}
+    \end{equation*}
+    である．したがって式 (\ref{ex1.1.6}) は形式的べき級数に関する等式としても正しい．
+\end{example}
+
+\begin{example}
+    等式 \begin{equation*}
+        \sum_{n \geq 0} \frac{(x+1)^n}{n!} = e \sum_{n \geq 0} \frac{x^n}{n!}
+    \end{equation*}
+    は関数論的には正しい（$e^{x+1} = e \cdot e^x$）が，左辺は $\bbC[[x]]$ の元でないため，形式的べき級数に関する主張にはならない．例えば左辺の定数項は $\sum_{n \geq 0} 1/n!$ であり，この級数は $\bbC[[x]]$ においては収束しない．
+\end{example}
+
+次の条件が成り立つとき，形式的べき級数の列 $F_1(x), F_2(x), \ldots$ が $F(x) = \sum_{n \geq 0} a_n x^n$ に\textbf{収束する}という： \begin{equation*}
+    \forall n \geq 0,\ \exists \delta(n)\ \mathrm{s.t.}\ \forall i \geq \delta(n),\ [x^n] F_i(x) = a_n.
+\end{equation*}
+このことを $F_i(x) \to F(x)$ や $\lim_{i \to \infty} F_i(x) = F(x)$ と表す．
+
+非零な形式的べき級数 $F(x) = \sum_{n \geq 0} a_n x^n$ の\textbf{次数} $\deg F(x)$ を \begin{equation*}
+    \deg F(x) = \min \{n : a_n \neq 0\}
+\end{equation*}
+で定める（$\deg 0 = \infty$ っぽい）．$\deg F(x) G(x) = \deg F(x) + \deg G(x)$ に注意．これを用いると，$F_i(x)$ が収束する条件は \begin{equation*}
+    \lim_{i \to \infty} \deg(F_{i+1}(x) - F_i(x)) = \infty
+\end{equation*}
+と表せる．また，$F_i(x)$ が $F(x)$ に収束する条件は \begin{equation*}
+    \lim_{i \to \infty} \deg(F(x) - F_i(x)) = \infty
+\end{equation*}
+とも表せる．
+
+\begin{proposition}
+    無限級数 $\sum_{j \geq 0} F_j(x)$ が収束するための必要十分条件は \begin{equation*}
+        \lim_{j \to \infty} \deg F_j(x) = \infty.
+    \end{equation*}
+\end{proposition}
+\begin{proof}
+    $\widetilde{F}_i(x) = \sum_{j=0}^i F_j(x)$ とすると，$\deg(\widetilde{F}_{i+1}(x) - \widetilde{F}_i(x)) = \deg F_{i+1}(x)$.
+\end{proof}
+
+\begin{proposition}
+    無限積 $\prod_{j \geq 1} (1 + G_j(x))$ ($G_j(0) = 0$) が収束するための必要十分条件は， \begin{equation*}
+        \lim_{j \to \infty} \deg G_j(x) = \infty.
+    \end{equation*}
+\end{proposition}
+\begin{proof}
+    $\widetilde{G}_i = \prod_{j=1}^i (1 + G_j(x))$ とすると， \begin{align*}
+        \deg(\widetilde{G}_{i+1} - \widetilde{G}_i)
+        % &= \deg(\widetilde{G}_{i+1} - \widetilde{G}_i) - \deg \widetilde{G}_{i} \\
+         & = \deg \frac{\widetilde{G}_{i+1} - \widetilde{G}_i}{\widetilde{G}_{i}}
+        \quad \text{($\widetilde{G}_i^{-1}$ の定数項は非零)}                      \\
+         & = \deg \paren{\frac{\widetilde{G}_{i+1}}{\widetilde{G}_i} - 1}         \\
+         & = \deg G_{i+1}(x).
+    \end{align*}
+\end{proof}
+
+$F(x) = \sum_{n \geq 0} a_n x^n$ は $F_j(x) = a_j x^j$ の無限級数ともみなせる．
+
+$F(x) = \sum_{n \geq 0} a_n x^n$ と $G(0) = 0$ を満たす $G(x)$ について，\textbf{合成} $F(G(x))$ を \begin{equation*}
+    F(G(x)) = \sum_{n \geq 0} a_n G(x)^n
+\end{equation*}
+で定める．
+
+\begin{example}
+    $F(x) \in \bbC[[x]]$ が $F(0) = 0$ を満たすとき，$\lambda \in \bbC$ について \begin{equation*}
+        (1 + F(x))^\lambda = \sum_{n \geq 0} \binom{\lambda}{n} F(x)^n
+    \end{equation*}
+    と定義する．ただし $\binom{\lambda}{n} = \lambda(\lambda-1)\cdots(\lambda-n+1)/n!$．
+\end{example}
+
+$F(x) = \sum_{n \geq 0} a_n x^n$ について，形式的導関数 $F'(x)$（または $\frac{dF}{dx}$ や $DF(x)$）を \begin{equation*}
+    F'(x) = \sum_{n \geq 0} n a_n x^{n-1} = \sum_{n \geq 0} (n+1) a_{n+1} x^n
+\end{equation*}
+で定める．次の成立が確認できる： \begin{align*}
+    (F+G)'   & = F' + G',        \\
+    (FG)'    & = F'G + FG',      \\
+    F(G(x))' & = G'(x) F'(G(x)).
+\end{align*}
+
+\begin{example}
+    $F(0) = 1$ とし，次を満たす形式的べき級数 $G(x)$ をとる： \begin{equation*}
+        G'(x) = \frac{F'(x)}{F(x)}, \qquad G(0) = 0.
+    \end{equation*}
+    関数論的にこの条件を $F(x)$ について解くと， \begin{equation} \label{ex1.1.11}
+        F(x) = \exp G(x)
+    \end{equation}
+    が得られる．ただし \begin{equation*}
+        \exp G(x) = \sum_{n \geq 0} \frac{G(x)^n}{n!}
+    \end{equation*}
+    と定める．式 (\ref{ex1.1.11}) は形式的べき級数の等式としても正しい．
+\end{example}
+
+\begin{proof}
+    $F(x)$ の係数を動かすことを考える． \begin{align*}
+        F(x)      & = 1 + \sum_{n \geq 1} a_n x^n, \\
+        G(x)      & = \sum_{n \geq 1} b_n x^n,     \\
+        \exp G(x) & = 1 + \sum_{n \geq 1} c_n x^n
+    \end{align*}
+    とおく．各 $b_n$ は有限個の $a_i$ の多項式なので，$c_n$ も有限個の $a_i$ の多項式である． \begin{equation*}
+        c_n = p_n(a_1, a_2, \ldots, a_m)
+    \end{equation*}
+    とおく．各 $a_i$ の値を適当に定めると，原点の近傍 $U \subseteq \bbC$ であって $U$ 上で$1 + \sum_{n \geq 1} a_n x^n$ が収束するようなものがとれる．$U$ 上で $F(x) = \exp G(x)$ が成り立つので，これらの $a_i$ の値に対して $a_n = c_n = p_n(a_1,\ldots,a_m)$．
+
+    したがって，$\bbC^m$ の近傍で $p_n(a_1,\ldots,a_m)$ が $a_n$ に一致するので，これらは多項式として等しい．よって任意の $a_i$ について $a_n = p_n(a_1,\ldots,a_m) = c_n$ であり，$F(G) = \exp G(x)$ が形式的べき級数の等式として成立する．
+\end{proof}
+
+\begin{example}
+    $a_0 = a_1 = 1$，$a_n = a_{n-1} + a_{n-2}$ ($n \geq 2$) について，母関数 $F(x) = \sum_{n \geq 0} a_n x^n$ の簡単な式を求める． \begin{align*}
+        F(x) & = 1 + x + \sum_{n \geq 2} a_n x^n                 \\
+             & = 1 + x + \sum_{n \geq 2} (a_{n-1} + a_{n-2}) x^n \\
+             & = 1 + x + x \sum_{n \geq 2} a_{n-1} x^{n-1}
+        + x^2 \sum_{n \geq 2} a_{n-2} x^{n-2}                    \\
+             & = 1 + x + x (F(x) - 1) + x^2 F(x)
+    \end{align*}
+    より，これを $F(x)$ について解いて \begin{equation*}
+        F(x) = \frac{1}{1-x-x^2}
+    \end{equation*}
+    を得る．
+\end{example}
+
+\begin{example}
+    $a_0 = 1$，$a_{n+1} = a_n + n a_{n-1}$ ($n \geq 0$) について，母関数 $F(x) = \sum_{n \geq 0} a_n x^n/n!$ の簡単な式を求める． \begin{align*}
+        \sum_{n \geq 0} a_{n+1} \frac{x^n}{n!}
+         & = \sum_{n \geq 0} a_n \frac{x^n}{n!}
+        + \sum_{n \geq 0} n a_{n-1} \frac{x^n}{n!} \\
+         & = \sum_{n \geq 0} a_n \frac{x^n}{n!}
+        + \sum_{n \geq 1} a_{n-1} \frac{x^n}{(n-1)!},
+    \end{align*}
+    すなわち \begin{equation*}
+        F'(x) = F(x) + xF(x)
+    \end{equation*}
+    である．これを例 1.1.11 と同様に解いて，$F(x) = \exp\paren{x + \frac{1}{2} x^2}$．
+\end{example}
+
+\end{document}

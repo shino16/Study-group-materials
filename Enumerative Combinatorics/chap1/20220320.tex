@@ -1,0 +1,267 @@
+\documentclass[xelatex,ja=standard,a4paper,14pt,everyparhook=compat]{bxjsarticle}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{enumitem, mleftright, mathtools, hyperref}
+\usepackage{caption, wrapfig}
+
+% \usepackage{zxjatype}
+% \renewcommand*\familydefault{\sfdefault}
+% % なぜか Segoe UI で () が出力できない
+% \setmainfont[BoldFont={Segoe UI SemiBold}]{Segoe UI}
+% \setsansfont[BoldFont={Segoe UI Bold}]{Segoe UI}
+% \setCJKmainfont{Noto Sans CJK JP}
+% \setCJKsansfont{Noto Sans CJK JP}
+% \usepackage{concmath}
+
+\setenumerate{label=(\alph*)}
+
+\usepackage{concmath}
+\usepackage[OT1]{fontenc}
+\setsansfont{CMU Concrete}
+\setmainfont{CMU Concrete}
+\setCJKmainfont{Noto Sans JP}
+\setCJKsansfont{Noto Sans JP}
+
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbZ}{\mathbb{Z}}
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\fS}{\mathfrak{S}}
+\DeclareMathOperator*{\inv}{inv}
+
+\newcommand{\paren}[1]{\mleft(#1\mright)}
+\newcommand{\bbinom}[2]{\mleft(\binom{#1}{#2}\mright)}
+\newcommand{\ifthen}[3]{\text{$#1$ ? $#2$ : $#3$}}
+\newcommand{\bool}[1]{[#1]}
+\newcommand{\dcup}{\mathbin{\dot\cup}}
+
+\theoremstyle{definition}
+\newtheorem{theorem}{定理}[subsection]
+\newtheorem*{theorem*}{定理}
+\newtheorem{example}[theorem]{例}
+\newtheorem{proposition}[theorem]{命題}
+\newtheorem{corollary}[theorem]{系}
+\renewcommand{\proofname}{\textup{証明}}
+
+\begin{document}
+
+\setcounter{section}{1}
+\setcounter{subsection}{8}
+\subsection{The Twelvefold Way}
+
+有限集合$N,X$について、$\#N = n$、$\#X = x$とする。何らかの制約のもとで写像$f:N \to X$を数えていく。
+
+$f$自体について、「任意」「単射」「全射」の$3$通りの制約がある。また、「$N$の元を区別する／しない」、「$X$の元を区別する／しない」の場合がある。
+
+厳密に言うならば、例えば下図7.は
+\begin{quote}
+    $f,g : N \to X$について、同値関係$\sim$を \begin{equation*}
+        f \sim g \Longleftrightarrow \text{$\exists v: X \to X,\text{全単射}$ s.t. $f \circ v = g$}
+    \end{equation*}
+    で定めるとき、互いに同値でない写像$f:N \to X$の個数
+\end{quote}
+と表せる。
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{ccccc}
+        $N$の元    & $X$の元    & $f$は任意                        & $f$は単射                    & $f$は全射                            \\
+        \hline
+        区別する   & 区別する   & ${}^{1.}$ $x^n$                  & ${}^{2.}$ $(x)_n$            & ${}^{3.}$ $x! S(n,x)$                \\
+        区別しない & 区別する   & ${}^{4.}$ $\bbinom{x}{n}$        & ${}^{5.}$ $\binom{x}{n}$     & ${}^{6.}$ $\big(\binom{x}{n-x}\big)$ \\
+        区別する   & 区別しない & ${}^{7.}$ $\sum_{i=0}^x S(n,i)$  & ${}^{8.}$ $\bool{n \leq x}$  & ${}^{9.}$ $S(n,x)$                   \\
+        区別しない & 区別しない & ${}^{10.}$ $\sum_{i=0}^x p_i(n)$ & ${}^{11.}$ $\bool{n \leq x}$ & ${}^{12.}$ $p_x(n)$
+    \end{tabular}
+\end{table}
+
+2. \begin{equation*}
+    (x)_n = {}_x \mathrm{P}_n = x(x-1)\cdots(x-n+1) \quad \text{(下降階乗冪)}.
+\end{equation*}
+
+3., 7., 9. $S(n,x)$は第二種スターリング数と呼ばれ、 \begin{gather*}
+    B_i \neq \emptyset \quad (i = 1,\ldots,x), \\
+    [n] = B_1 \dcup B_2 \dcup \cdots \dcup B_x,
+\end{gather*}
+を満たす$\pi = \{B_1,\ldots,B_x\}$の個数。なお$S(0,0) = 1$とする。
+
+4., 6. \begin{equation*}
+    \bbinom{x}{n} = {}_x \mathrm{H}_n = \binom{x}{x+n-1}.
+\end{equation*}
+
+8. \begin{equation*}
+    [P] = \text{if $P$ then $1$ else $0$}.
+\end{equation*}
+
+10., 12. $p_x(n)$は分割$\lambda_1,\ldots,\lambda_x \vdash n$の個数。
+実は \begin{equation*}
+    p_0(n) + p_1(n) + \cdots + p_x(n) = p_x(n+x)
+\end{equation*}
+が成り立つ（練習66）。これは分割$\lambda_1,\ldots,\lambda_x \vdash n+x$について各$\lambda_i$から$1$だけ引いたものを考えればよい。
+
+\subsubsection*{第二種スターリング数}
+
+$n \geq 1$について \begin{align*}
+    S(n,0)   & = 0,            & S(n,k)   & = 0 \text{ for $k > n$},        \\
+    S(n,1)   & = 1,            & S(n,2)   & = 2^{n-1}-1,                    \\
+    S(n,n)   & = 1,                                                         \\
+    S(n,n-1) & = \binom{n}{2}, & S(n,n-2) & = \binom{n}{3} + 3\binom{n}{4},
+\end{align*}
+が成り立つことを確認できる。また、$S(n,k)$は次の漸化式に従う。 \begin{equation*}
+    S(n,k) = kS(n-1,k) + S(n-1,k-1).
+\end{equation*}
+
+\begin{equation*}
+    B(n) = \sum_{k=1}^{n} S(n,k) % TODO: n=0?
+\end{equation*}
+を\textbf{ベル数}という。
+
+次の関係式が成り立つ。 \begin{align}
+    S(n,k)                                & = \frac{1}{k!} \sum_{i=0}^{k} (-1)^{k-i} \binom{k}{i} i^n, \\
+    \sum_{n \geq k} S(n,k) \frac{x^n}{n!} & = \frac{1}{k!} (e^x-1)^k \quad (k \geq 0),                 \\
+    \sum_{n \geq k} S(n,k) x^n            & = \frac{x^k}{(1-x)(1-2x)\dots(1-kx)},                      \\
+    x^n                                   & = \sum_{k=0}^n S(n,k) (x)_k,                               \\
+    B(n+1)                                & = \sum_{i=0}^n \binom{n}{i} B(i) \quad (n \geq 0),         \\
+    \sum_{n \geq 0} B(n) \frac{x^n}{n!}   & = \exp(e^x - 1).
+\end{align}
+
+\begin{proof}
+    (2): \begin{equation*}
+        F_k(x) = \sum_{n \geq k} S(n,k) \frac{x^n}{n!},
+    \end{equation*}
+    とおく。漸化式$S(n,k) = kS(n-1,k) + S(n-1,k-1)$より、 \begin{equation*}
+        F_k'(x) = kF_k(x) + F_{k-1}(x).
+    \end{equation*}
+    帰納法の仮定$F_{k-1}(x) = \frac{1}{(k-1)!} (e^x-1)^{k-1}$と条件$[x^k]F_k = 1/k!$を用いると、$F_k(x) = \frac{1}{k!} (e^x-1)^k$が得られる。
+
+    (1): (2)の右辺を展開して \begin{equation*}
+        \sum_{n \geq k} S(n,k) \frac{x^n}{n!}
+        = \frac{1}{k!} \sum_{i=0}^k (-1)^{k-i} \binom{k}{i} e^{ix}.
+    \end{equation*}
+
+    (6): $k$を動かして(2)を足し上げる。
+
+    (5): (6)を微分して \begin{align*}
+        \sum_{n \geq 0} B(n+1) \frac{x^n}{n!}
+         & = e^x \exp(e^x-1)                 \\
+         & = \sum_{i=0}^n \binom{n}{i} B(i).
+    \end{align*}
+
+    (3): \begin{equation*}
+        G_k(x) = \sum_{n \geq k} S(n,k) x^n,
+    \end{equation*}
+    とおく。漸化式$S(n,k) = kS(n-1,k) + S(n-1,k-1)$より、 \begin{equation*}
+        G_k(x) = kxG_k(x) + xG_{k-1}(x).
+    \end{equation*}
+    帰納法の仮定$G_{k-1}(x) = \frac{x^{k-1}}{(1-x)(1-2x)\cdots(1-(k-1)x)}$を用いると、$G_k(x) = \frac{x^k}{(1-x)(1-2x)\cdots(1-kx)}$が得られる。
+
+    (4): 写像$f:N \to X$の個数を$k \coloneqq \#\operatorname{Im} f$ごとに数えていくと、 \begin{equation*}
+        x^n = \sum_{k=0}^n k! S(n,k) \binom{x}{k} = \sum_{k=0}^n S(n,k) (x)_k.
+    \end{equation*}
+\end{proof}
+
+命題1.3.7の式
+\begin{equation*}
+    \sum_{k=0}^n c(n,k) t^k = t(t+1)\cdots(t+n-1),
+\end{equation*}
+について、$t \gets -x$として$(-1)^n$倍すると、 \begin{equation}
+    \sum_{k=0}^n s(n,k) x^k = (x)_n.
+\end{equation}
+
+式(4)、(7)は線形空間の基底の変換とみなせる。
+
+\begin{proposition}
+    \begin{enumerate}
+        \item \begin{equation*}
+                  \sum_{k \geq 0} S(m,k) s(k,n) = \delta_{mn} \quad (m,n \in \bbN).
+              \end{equation*}
+        \item 数列$(a_n)$、$(b_n)$について、次は同値。 \begin{enumerate}[label=(\roman*)]
+                  \item $\forall n \in \bbN$ $b_n = \sum_{k=0}^n S(n,k) a_k$.
+                  \item $\forall n \in \bbN$ $a_n = \sum_{k=0}^n s(n,k) b_k$.
+              \end{enumerate}
+    \end{enumerate}
+\end{proposition}
+
+\subsubsection*{The Calculus of Finite Differences (有限差分)}
+
+$K$を標数$0$の体とし、$f: \bbZ \to K$あるいは$f: \bbN \to K$を考える。$f$の\textbf{一階差分}$\Delta f$を \begin{equation*}
+    \Delta f(n) = f(n+1) - f(n),
+\end{equation*}
+と定める。$\Delta$は一階\textbf{差分演算子}と呼ばれる。$k$階差分演算子は \begin{equation*}
+    \Delta^k f = \Delta(\Delta^{k-1} f),
+\end{equation*}
+で定められる。
+
+\textbf{シフト演算子}$E$を \begin{equation*}
+    E f(n) = f(n+1),
+\end{equation*}
+で定めるとき、$\Delta = E - 1$（ただし$1$は恒等演算子）。これらの演算子は線形写像なので、分配法則が成り立つ。したがって \begin{align*}
+    \Delta^k f(n) &= (E-1)^k f(n) \\
+    &= \sum_{i=0}^k (-1)^{k-i} \binom{k}{i} E^i f(n) \\
+    &= \sum_{i=0}^k (-1)^{k-i} \binom{k}{i} f(n+i).
+\end{align*}
+また、 \begin{gather} \label{Taylor}
+    \begin{aligned}
+        f(n) &= E^n f(0) \\
+        &= (1+\Delta)^n f(0) \\
+        &= \sum_{k=0}^n \binom{n}{k} \Delta^k f(0).
+    \end{aligned}
+\end{gather}
+
+微分と有限差分には次のような対応がある。 \begin{align*}
+    \frac{d}{dx} &\longleftrightarrow \Delta \\
+    e^x &\longleftrightarrow 2^n \phantom{(n)_k} (\Delta 2^n = 2^n) \\
+    x^k &\longleftrightarrow (n)_k \phantom{2^n} (\Delta (n)_k = k(n)_{k-1})
+\end{align*}
+また、Taylor級数展開 \begin{equation*}
+    f(x) = \sum_{k \geq 0} \frac{f^{(k)}(0)}{k!} x^k
+\end{equation*}
+には式(\ref{Taylor}) \begin{equation*}
+    f(n) = \sum_{k=0}^n \frac{\Delta^k f(0)}{k!} (n)_k
+\end{equation*}
+が対応する。$f(n) = x^k$
+
+$f(n) = n^4$の\textbf{差分表(difference table)}は次のようになる。
+
+\begin{table}[ht]
+    \begin{tabular}{ccccccccccccc}
+        $0$&&$1$&&$16$&&$81$&&$256$&&$625$&$\cdots$ \\
+        &$1$&&$15$&&$65$&&$175$&&$369$ \\
+        &&$14$&&$50$&&$110$&&$194$ \\
+        &&&$36$&&$60$&&$84$ \\
+        &&&&$24$&&$24$ \\
+        &&&&&$0$&&$\ddots$\\
+    \end{tabular}
+\end{table}
+
+式(8)より \begin{equation*}
+    n^4 = \binom{n}{1} + 14 \binom{n}{2} + 36 \binom{n}{3} + 24 \binom{n}{4} + 0 \binom{n}{5} + \cdots.
+\end{equation*}
+式(4)と比べると、 \begin{equation*}
+    1!S(4,1) = 1, \ 2!S(4,2) = 14, \ 3!S(4,3) = 36, \ 4!S(4,4) = 24, \
+\end{equation*}
+が分かる。
+
+\begin{proposition}
+    $K$を標数$0$の体とする。
+    \begin{enumerate}
+        \item 関数$f: \bbZ \to K$は次数が$d$以下の多項式 $\Longleftrightarrow$ $\Delta^{d+1} f(n) = 0$。
+        \item 次数が$d$以下の多項式$f$について \begin{equation*}
+            f(n) = \sum_{k=0}^d \Delta^k f(0) \cdot \binom{n}{k}.
+        \end{equation*}
+        \item $f(n) = n^d$のとき、$\Delta^k f(0) = k! S(d,k)$。
+    \end{enumerate}
+\end{proposition}
+
+\begin{corollary}
+    $K$を標数$0$の体とし、$f:\bbZ \to K$を次数が$d$以下の多項式とすると、 \begin{equation*}
+        \forall n \in \bbZ \ f(n) \in \bbZ \Longleftrightarrow f(0), \Delta f(0), \ldots, \Delta^d f(0) \in \bbZ.
+    \end{equation*}
+\end{corollary}
+
+写像十二相には様々な拡張がある。
+\begin{itemize}
+    \item 「写像三十相」\url{https://arxiv.org/abs/math/0606404}
+    \item 色$1$の球$\alpha_1$個、…、色$m$の球$\alpha_m$個を、箱$1$に$\beta_1$個、…、箱$n$に$\beta_n$個入れる方法$N_{\alpha\beta}$、さらにどの箱も各色の球が高々$1$個であるような方法$M_{\alpha\beta}$
+
+    これらは単純な式で表せないが、4章、5章、7章で何度も出てくるらしい。
+\end{itemize}
+
+\end{document}
