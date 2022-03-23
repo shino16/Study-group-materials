@@ -62,8 +62,6 @@
     \end{equation*}
 \end{theorem}
 
-$T$、$Y$の代わりに補集合$S-T$、$S-Y$を考えると、包含関係を逆にした場合の主張が成り立つ（後述）。
-
 \begin{proof}
     $\psi : V \to V$を$\psi f(T) = \sum_{Y \subseteq T} (-1)^{\#(Y-T)} f(Y)$で定めると、 \begin{align*}
         \phi \psi f(T)
@@ -74,7 +72,7 @@ $T$、$Y$の代わりに補集合$S-T$、$S-Y$を考えると、包含関係を�
     $T$、$Z$を固定したとき、$m = \#(Z-T)$とおくと \begin{equation*}
         \sum_{Z \supseteq Y \supseteq T} (-1)^{\#(Y-T)}
         = \sum_{i=0}^m (-1)^i \binom{m}{i}
-        = \delta_{0m}
+        = \delta_{0m},
     \end{equation*}
     なので、$\phi \psi f(T) = f(T)$がわかる。よって$\inv \phi = \psi$。
 \end{proof}
@@ -104,5 +102,15 @@ $T$、$Y$の代わりに補集合$S-T$、$S-Y$を考えると、包含関係を�
 ただし \begin{equation*}
     S_k = \sum_{\#T = k} \#A_T.
 \end{equation*}
+
+包除原理やその変種は、$\cap$と$\cup$、$\subseteq$と$\supseteq$などを入れ替えることで双対形が得られる。定理2.1.1の双対形は、 \begin{quote}
+    $\widetilde\phi : V \to V$を \begin{equation*}
+        \widetilde\phi f(T) = \sum_{Y \subseteq T} f(Y),
+    \end{equation*}
+    で定めるとき、$\inv{\widetilde\phi}$が存在して \begin{equation*}
+        \inv{\widetilde\phi} f(T) \sum_{Y \subseteq T} (-1)^{\#(T-Y)} f(Y).
+    \end{equation*}
+\end{quote}
+である。証明も同様。元の定理2.1.1について$g(T) \mapsto f(S-T)$を考えることでも双対形の主張が得られる。
 
 \end{document}
