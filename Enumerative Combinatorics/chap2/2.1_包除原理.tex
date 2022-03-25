@@ -1,6 +1,6 @@
 \documentclass[xelatex,ja=standard,a4paper,14pt,everyparhook=compat]{bxjsarticle}
 \usepackage{amsmath, amssymb, amsthm}
-\usepackage{enumitem, mleftright, mathtools, hyperref}
+\usepackage{enumitem, mleftright, mathtools, hyperref, bm}
 \usepackage{caption, wrapfig}
 
 % \usepackage{zxjatype}
@@ -18,8 +18,8 @@
 \usepackage[OT1]{fontenc}
 \setsansfont{CMU Concrete}
 \setmainfont{CMU Concrete}
-\setCJKmainfont{Noto Sans JP}
-\setCJKsansfont{Noto Sans JP}
+\setCJKmainfont{Noto Sans CJK JP}
+\setCJKsansfont{Noto Sans CJK JP}
 
 \newcommand{\bbN}{\mathbb{N}}
 \newcommand{\bbZ}{\mathbb{Z}}
@@ -28,10 +28,12 @@
 \newcommand{\inv}[1]{#1^{-1}}
 
 \newcommand{\paren}[1]{\mleft(#1\mright)}
+\newcommand{\norm}[1]{\mleft|#1\mright|}
 \newcommand{\bbinom}[2]{\mleft(\binom{#1}{#2}\mright)}
 \newcommand{\ifthen}[3]{\text{$#1$ ? $#2$ : $#3$}}
 \newcommand{\bool}[1]{[#1]}
 \newcommand{\dcup}{\mathbin{\dot\cup}}
+\newcommand{\qbinom}[2]{\pmb{\binom{#1}{#2}}}
 
 \theoremstyle{definition}
 \newtheorem{theorem}{定理}[subsection]
@@ -47,54 +49,54 @@
 \section{Sieve Methods}
 \subsection{Inclusion-Exclusion}
 
-``Sieve method''とは：有限集合$S$の要素数を求める方法
+``Sieve method''：有限集合$S$の要素数を求める方法
 
-パターン(1) $\#S$を大きめに見積もり、誤差を大きめに見積もり、その誤差を…ということを繰り返し、誤差を$0$に近づけていく
+パターン(1) $\#S$を大きめに見積もり，誤差を大きめに見積もり，その誤差を…ということを繰り返し，誤差を$0$に近づけていく
 
-パターン(2) $T \supseteq S$について、余分な元が打ち消しあうように$T$の各元を重みづけする（後の節で登場）
+パターン(2) $T \supseteq S$について，余分な元が打ち消しあうように$T$の各元を重みづけする（後の節で登場）
 
 \begin{theorem}
-    $n$元集合$S$、線形空間$V = \{f : 2^S \to K\}$ ($K$は体)について、線形写像$\phi: V \to V$を \begin{equation*}
+    $n$元集合$S$，線形空間$V = \{f : 2^S \to K\}$ ($K$は体)について，線形写像$\phi: V \to V$を \begin{equation*}
         \phi f(T) = \sum_{Y \supseteq T} f(Y),
     \end{equation*}
-    で定める。このとき$\inv \phi$が存在し、 \begin{equation*}
+    で定める．このとき$\inv \phi$が存在し， \begin{equation*}
         \inv \phi f(T) = \sum_{Y \supseteq T} (-1)^{\#(Y-T)} f(Y).
     \end{equation*}
 \end{theorem}
 
 \begin{proof}
-    $\psi : V \to V$を$\psi f(T) = \sum_{Y \subseteq T} (-1)^{\#(Y-T)} f(Y)$で定めると、 \begin{align*}
+    $\psi : V \to V$を$\psi f(T) = \sum_{Y \supseteq T} (-1)^{\#(Y-T)} f(Y)$で定めると， \begin{align*}
         \phi \psi f(T)
          & = \sum_{Y \supseteq T} (-1)^{\#(Y-T)} \phi f(Y) \qquad \text{($\psi\phi f(T)$では？)} \\
          & = \sum_{Y \supseteq T} (-1)^{\#(Y-T)} \sum_{Z \supseteq Y} f(Z)                       \\
          & = \sum_{Z \supseteq T} \paren{\sum_{Z \supseteq Y \supseteq T} (-1)^{\#(Y-T)}} f(Z).
     \end{align*}
-    $T$、$Z$を固定したとき、$m = \#(Z-T)$とおくと \begin{equation*}
+    $T$，$Z$を固定したとき，$m = \#(Z-T)$とおくと \begin{equation*}
         \sum_{Z \supseteq Y \supseteq T} (-1)^{\#(Y-T)}
         = \sum_{i=0}^m (-1)^i \binom{m}{i}
         = \delta_{0m},
     \end{equation*}
-    なので、$\phi \psi f(T) = f(T)$がわかる。よって$\inv \phi = \psi$。
+    なので，$\phi \psi f(T) = f(T)$がわかる．よって$\inv \phi = \psi$．
 \end{proof}
 
 \subsubsection*{よくある定理2.1.1の適用例}
 
-集合$A$と、$A$の元が持ったり持たなかったりする性質の集合$S$がある。
+集合$A$と，$A$の元が持ったり持たなかったりする性質の集合$S$がある．
 
-ちょうど$T \subseteq S$の性質のみを持つ$A$の元の個数$f_=(T)$\footnote{重み$w:A \to K$を決めて、元の個数の代わりに元の重みの和$\sum_x w(x)$を$f_=(T)$としてもよい}は求めにくいが、少なくとも$T \subseteq S$の性質は満たすような$A$の元の個数$f_\geq(T)$は求めやすいようなとき、 \begin{equation*}
+ちょうど$T \subseteq S$の性質のみを持つ$A$の元の個数$f_=(T)$\footnote{重み$w:A \to K$を決めて，元の個数の代わりに元の重みの和$\sum_x w(x)$を$f_=(T)$としてもよい}は求めにくいが，少なくとも$T \subseteq S$の性質は満たすような$A$の元の個数$f_\geq(T)$は求めやすいようなとき， \begin{equation*}
     f_\geq(T) = \sum_{Y \supseteq T} f_=(Y),
 \end{equation*}
-なので、定理2.1.1より \begin{equation*}
+なので，定理2.1.1より \begin{equation*}
     f_=(T) = \sum_{Y \supseteq T} (-1)^{\#(Y-T)} f_\geq(Y).
 \end{equation*}
-とくに、どの性質も持たないような元の個数は \begin{equation} \label{2.5}
+とくに，どの性質も持たないような元の個数は \begin{equation} \label{2.5}
     f_=(\emptyset) = \sum_{Y} (-1)^{\#Y} f_\geq(Y).
 \end{equation}
 
-性質を集合で言い換えることもできる。$A_1,\ldots,A_n$を$A$の部分集合とし、 \begin{equation*}
+性質を集合で言い換えることもできる．$A_1,\ldots,A_n$を$A$の部分集合とし， \begin{equation*}
     A_T = \bigcap_{i \in T} A_i,
 \end{equation*}
-と定める（$A_\emptyset = A$とする）。$A_i$を「性質$P_i$を満たす$A$の元の集合」と考えれば、式(\ref{2.5})に対応するのは \begin{align*}
+と定める（$A_\emptyset = A$とする）．$A_i$を「性質$P_i$を満たす$A$の元の集合」と考えれば，式(\ref{2.5})に対応するのは \begin{align*}
     \#(\overline{A_1 \cup \cdots \cup A_n})
      & = \#(\overline{A_1} \cap \cdots \cap \overline{A_n}) \\
      & = S_0 - S_1 + S_2 - \cdots + (-1)^n S_n,
@@ -103,14 +105,150 @@
     S_k = \sum_{\#T = k} \#A_T.
 \end{equation*}
 
-包除原理やその変種は、$\cap$と$\cup$、$\subseteq$と$\supseteq$などを入れ替えることで双対形が得られる。定理2.1.1の双対形は、 \begin{quote}
+包除原理やその変種は，$\cap$と$\cup$，$\subseteq$と$\supseteq$などを入れ替えることで双対形が得られる．定理2.1.1の双対形は， \begin{quote}
     $\widetilde\phi : V \to V$を \begin{equation*}
         \widetilde\phi f(T) = \sum_{Y \subseteq T} f(Y),
     \end{equation*}
-    で定めるとき、$\inv{\widetilde\phi}$が存在して \begin{equation*}
-        \inv{\widetilde\phi} f(T) \sum_{Y \subseteq T} (-1)^{\#(T-Y)} f(Y).
+    で定めるとき，$\inv{\widetilde\phi}$が存在して \begin{equation*}
+        \inv{\widetilde\phi} f(T) = \sum_{Y \subseteq T} (-1)^{\#(T-Y)} f(Y).
     \end{equation*}
 \end{quote}
-である。証明も同様。元の定理2.1.1について$g(T) \mapsto f(S-T)$を考えることでも双対形の主張が得られる。
+である．証明も同様．元の定理2.1.1について$f'(T) = f(S-T)$を考えることでも双対形の主張が得られる．また，高々$T$の性質しか満たさない$A$の元の個数を$f_\leq(T)$とするとき， \begin{align*}
+    f_\leq(T) & = \sum_{Y \subseteq T} f_=(Y),                   \\
+    f_=(T)    & = \sum_{Y \subseteq T} (-1)^{\#(T-Y)} f_\leq(Y).
+\end{align*}
+
+$f_=(T)$が$T$の要素数によってのみ決まる場合を考える．$i=0, \ldots, n$について \begin{align*}
+    a(n-i) & = f_=(T) \quad (\#T = i),    \\
+    b(n-i) & = f_\geq(T) \quad (\#T = i),
+\end{align*}
+とする．このとき$0 \leq m \leq n$について \begin{align*}
+    b(m) & = \sum_{i=0}^m \binom{m}{i} a(i),            \\
+    a(m) & = \sum_{i=0}^m \binom{m}{i} (-1)^{m-i} b(i).
+\end{align*}
+$n = \infty$でも上の$2$つの式が同値であることが確認できる．また，有限差分を使うと$0 \leq m \leq n$について \begin{equation*}
+    a(m) = \Delta^m b(0),
+\end{equation*}
+とも表せる．$a(m)$，$b(m)$の値が$n$に依存しないなら，任意の$m \in \bbN$について$a(m) = \Delta^m b(0)$ (命題2.2.2)．
+
+\subsection{Examples and Special Cases}
+
+\begin{example}[攪乱順列]
+
+    順列$w \in \fS_n$であって，不動点を持たない($\forall i$ $w(i) \neq i$)ものはいくつあるか？そのような順列（攪乱順列）の個数を$D(n)$とおく．
+
+    少なくとも$T \subseteq [n]$の点が不動点であるような順列の個数は \begin{equation*}
+        f_\geq(T) = b(n-i) = (n-i)! \quad (\#T = i).
+    \end{equation*}
+    したがって，不動点を持たない順列の個数$f_=(\emptyset) = a(n) = D(n)$は \begin{align*}
+        D(n) & = \sum_{i=0}^n \binom{n}{i} (-1)^{n-i} i!                                                   \\
+             & = n! \paren{1 - \frac{1}{1!} + \frac{1}{2!} - \frac{1}{3!} + \cdots + (-1)^n \frac{1}{n!}}.
+    \end{align*}
+    これより$n!/e$が$D(n)$の良い近似であることが分かる．実際，$n > 0$について$D(n) = \operatorname{round}(n!/e)$が確認できる．\footnote{
+        \begin{equation*}
+            \norm{D(n) - \frac{n!}{e}} \leq \frac{1}{n+1} + \frac{1}{(n+1)(n+2)} + \frac{1}{(n+1)(n+2)(n+3)} + \cdots.
+        \end{equation*}
+        右辺を$g(n+1)$とおくと，$g(n+1) = n g(n) - 1$ ($n \geq 1$)より \begin{equation*}
+            g(1) = e-1 \approx 1.718, \quad g(2) \approx 0.718, \quad g(3) \approx 0.436, \quad g(4) = 0.308, \ldots
+        \end{equation*}
+        WolframAlphaによると$g(n) = e(\Gamma(n) - \Gamma(n,1)) = \int_0^1 t^{n-1} e^{-t} dt$で，これは$n \geq 1$について単調減少．
+        また$|D(1) - 1!/e| = |0 - 1!/e| < 1/2$．
+
+        $n=0$については$D(0)=1$なので不成立．}
+
+    また，$n \geq 1$について \begin{equation*}
+        D(n) = n D(n-1) + (-1)^n,
+    \end{equation*}
+    これを繰り返し使って \begin{align*}
+        D(n) & = n D(n-1) - (-1)^{n-1}             \\
+             & = n D(n-1) - (D(n-1) - (n-1)D(n-2)) \\
+             & = (n-1)(D(n-1)+D(n-2)).
+    \end{align*}
+    $D(n)$の指数型母関数は \begin{equation*}
+        \sum_{n \geq 0} D(n) \frac{x^n}{n!} = \frac{e^{-x}}{1-x}.
+    \end{equation*}
+\end{example}
+
+\setcounter{theorem}{2}
+\begin{example}
+    多重集合$M_n = \{1^2, 2^2, \ldots, n^2\}$の順列のうち，どの$2$つの隣接する項も等しくないものの個数を$h(n)$とおく．$h(0) = 1$，$h(1) = 0$，$h(2) = 2$．
+
+    順列$w$に対して，性質$P_i$を「$2$つの$i$が隣接すること」とする．求める値は$f_=(\emptyset) = h(n)$．
+
+    $g(i) = f_\geq(T)$ ($i=\#T$)とおくと \begin{equation*}
+        g(i) = \frac{(2n-i)!}{2^{n-i}}.
+    \end{equation*}
+    したがって， \begin{align*}
+        h(n) &= \sum_{i=0}^n \binom{n}{i} (-1)^{n-i} (n+i)! 2^{-i} \\
+        &= \mleft. \Delta^n (n+i)! 2^{-i} \mright|_{i=0}.
+    \end{align*}
+\end{example}
+
+\begin{example}
+    順列$w = a_1 a_2 \cdots a_n \in \fS_n$について\textbf{descent set} $D(w)$を \begin{equation*}
+        D(w) = \{i : a_i > a_{i+1}\},
+    \end{equation*}
+    で定める．また， \begin{align*}
+        \alpha_n(S) &= \#\{w \in \fS_n : D(w) \subseteq S\}, \\
+        \beta_n(S) &= \#\{w \in \fS_n : D(w) = S\},
+    \end{align*}
+    とする．このとき \begin{align*}
+        \alpha_n(S) &= \sum_{T \subseteq S} \beta_n(T), \\
+        \beta_n(S) &= \sum_{T \subseteq S} (-1)^{\#(S-T)} \alpha_n(T).
+    \end{align*}
+    また，$S = \{s_1, \ldots, s_k\}_< \subseteq [n-1]$のとき \begin{align*}
+        \alpha_n(S) &= \binom{n}{s_1,\: s_2-s_1,\: s_3-s_2,\: \ldots,\: n-s_k}, \\
+        \beta_n(S) &= \sum_{1 \leq i_1 < i_2 < \cdots < i_j \leq k} (-1)^{k-j}
+         \binom{n}{s_{i_1}, s_{i_2}-s_{i_1}, \ldots, n-s_{i_j}}.
+    \end{align*}
+    $s_0 = 0$，$s_{k+1} = n$とすると， \begin{equation*}
+        \beta_n(S) = n! \det \mleft[ \frac{1}{(s_{j+1}-s_i)!} \mright]_{(i,j) \in [0,k] \times [0,k]}
+    \end{equation*}
+    と書き換えられる（ただし$i \geq j$について$(i,j)$-成分は$0$とする）．さらに$n!$を各列にばらすと \begin{equation*}
+        \beta_n(S) = \det \mleft[ \binom{n-s_i}{s_{j+1}-s_i} \mright],
+    \end{equation*}
+    が得られる．
+\end{example}
+
+\begin{example}
+    $S = \{s_1, \ldots, s_k\} \subseteq [n-1]$について，
+    \begin{equation*}
+        \sum_{\substack{w \in \fS_n \\ D(w) \subseteq S}} q^{s(w)} = \qbinom{n}{s_1, s_2-s_1, \ldots, n-s_k}
+    \end{equation*}
+    が成り立つような$s(w)$を考える．実は$s(w)=\operatorname{inv}(w)$とすると上の等式が成り立つ． \begin{equation*}
+        t_1 = s_1,\ t_2 = s_2 - s_1,\ \ldots,\ t_{k+1} = n - s_k,
+    \end{equation*}
+    とし， \begin{equation*}
+        M = \{1^{t_1}, 2^{t_2}, \ldots, (k+1)^{t_{k+1}}\},
+    \end{equation*}
+    とおく．命題1.7.1より \begin{equation*}
+        \sum_{u \in \fS(M)} q^{\operatorname{inv}(u)} = \qbinom{n}{t_1, t_2, \ldots, t_{k+1}}.
+    \end{equation*}
+
+    $u \in \fS(M)$について，$u$の要素に対して小さい順に番号を振りなおして，$\operatorname{inv}(u) = \operatorname{inv}(v)$となるように$v \in \fS_n$をとる（例：$u = 12112$ $\Rightarrow$ $v=14235$）．$w = v^{-1}$とおく．
+
+    このようにしてとれる$w \in \fS_n$は$D(w) \subseteq \{s_1,\ldots,s_k\}$を満たす．逆に，$w \in \fS_n$について$D(w) \subseteq \{s_1,\ldots,s_k\}$が成り立つなら，対応する$u \in \fS(M)$がただ一つ存在する．よって示された．
+
+    \begin{equation*}
+        \beta_n(S, q) = \sum_{\substack{w \in \fS_n \\ D(w) = S}} q^{\operatorname{inv}(w)},
+    \end{equation*}
+    とおくと，例2.2.4と同じ議論により \begin{align*}
+        \beta_n(S, q) &= \pmb{(n)!} \det \mleft[ \frac{1}{\pmb{(s_{j+1}-s_i)!}} \mright] \\
+        &= \det \mleft[ \qbinom{n-s_i}{s_{j+1}-s_i} \mright].
+    \end{align*}
+\end{example}
+
+上の議論を一般化して，次の結果が得られる．
+
+\begin{proposition}
+    $S = \{P_1,\ldots,P_n\}$を性質の集合とする．また$h$を$\bbN$上の関数とし，$e$を$\bbN \times \bbN$上の関数であって$e(i,i) = 1$，$e(i,j) = 0$ ($j < i$)が成り立つものとする．
+
+    各$T \subseteq S$について，$T = \{P_{s_1}, \ldots, P_{s_k}\}$ ($1 \leq s_1 < \cdots < s_k \leq n$) とおくと \begin{equation*}
+        f_\leq(T) = h(n) e(s_0,s_1) e(s_1,s_2) \cdots e(s_k,s_{k+1}), \\
+    \end{equation*}
+    が成り立つとする（ただし$s_0 = 0$，$s_{k+1} = n$とする）．このとき \begin{equation*}
+        f_=(T) = h(n) \det \mleft[ e(s_i, s_{j+1}) \mright].
+    \end{equation*}
+\end{proposition}
 
 \end{document}
