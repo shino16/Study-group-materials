@@ -1,0 +1,255 @@
+\documentclass[xelatex,ja=standard,a4paper,14pt,everyparhook=compat]{bxjsarticle}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{enumitem, mleftright, mathtools, hyperref, bm}
+\usepackage{caption, wrapfig}
+\usepackage{multirow}
+
+\newcommand{\up}[1]{\smash{\raisebox{.5\normalbaselineskip}{$#1$}}}
+
+\setenumerate{label=(\alph*)}
+
+\usepackage{concmath}
+\usepackage[OT1]{fontenc}
+\setsansfont{CMU Concrete}
+\setmainfont{CMU Concrete}
+\setCJKmainfont{Noto Sans CJK JP}
+\setCJKsansfont{Noto Sans CJK JP}
+
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbZ}{\mathbb{Z}}
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\bbP}{\mathbb{P}}
+\newcommand{\fS}{\mathfrak{S}}
+\newcommand{\inv}[1]{#1^{-1}}
+
+\newcommand{\paren}[1]{\mleft(#1\mright)}
+\newcommand{\norm}[1]{\mleft|#1\mright|}
+\newcommand{\bbinom}[2]{\mleft(\binom{#1}{#2}\mright)}
+\newcommand{\ifthen}[3]{\text{$#1$ ? $#2$ : $#3$}}
+\newcommand{\bool}[1]{[#1]}
+\newcommand{\dcup}{\mathbin{\dot\cup}}
+\newcommand{\qbinom}[2]{\pmb{\binom{#1}{#2}}}
+
+\theoremstyle{definition}
+\newtheorem{theorem}{定理}[subsection]
+\newtheorem*{theorem*}{定理}
+\newtheorem{example}[theorem]{例}
+\newtheorem{proposition}[theorem]{命題}
+\newtheorem{corollary}[theorem]{系}
+\renewcommand{\proofname}{\textup{証明}}
+
+\begin{document}
+
+\setcounter{section}{1}
+\section{Sieve Methods}
+\setcounter{subsection}{4}
+\subsection{$V$-Partitions and Unimodal Sequences}
+
+\textbf{重み$n$の単峰列 ($n$-stack)}：次を満たす正整数の列$d_1 d_2 \cdots d_m$ \begin{enumerate}[label=\alph*.]
+    \item $\sum d_i = n$,
+    \item $d_1 \leq d_2 \leq \cdots \leq d_j \geq d_{j+1} \geq \cdots \geq d_m$ for some $j$.
+\end{enumerate}
+重み$n$の単峰数列の個数を$u(n)$とする．$u(0) = 0$とする．$u(n)$の母関数を \begin{align*}
+    U(q) & = \sum_{n \geq 0} u(n) q^n                         \\
+         & = q + 2q^2 + 4q^3 + 8q^4 + 15q^5 + 27q^6 + \cdots,
+\end{align*}
+とおく．
+
+$[j]! = (1-q)(1-q^2) \cdots (1-q^j)$とおく．単峰列の最大の項に着目して\footnote{$\frac{1}{[k-1]!}$を無くしたものは$p(n)$の母関数にあたる．} \begin{equation*}
+    U(q) = \sum_{k \geq 1} \frac{1}{[k-1]!} \cdot q^k \cdot \frac{1}{[k]!} = \sum_{k \geq 1} \frac{q^k}{[k-1]![k]!}.
+\end{equation*}
+分割数$p(n)$の母関数の式 \begin{equation*}
+    \sum_{n \geq 0} p(n) q^n = \prod_{i \geq 1} (1-q^i)^{-1},
+\end{equation*}
+に対応する$U(n)$の式がほしい．そこで，$n$の分割と重み$n$の単峰列の中間的なものを考える．
+
+\newpage
+
+\textbf{$n$の$V$-分割}：次のa.，b.を満たす非負整数の並び \begin{equation*}
+    \begin{bmatrix}
+               & a_1 & a_2 & \cdots \\
+        \up{c} & b_1 & b_2 & \cdots
+    \end{bmatrix}
+\end{equation*}
+\begin{enumerate}[label=\alph*.]
+    \item $c + \sum a_i + \sum b_i = n$,
+    \item $c \geq a_1 \geq a_2 \geq \cdots$, $c \geq b_1 \geq b_2 \geq \cdots$.
+\end{enumerate}
+$n$の$V$-分割の個数を$v(n)$とする．$v(0) = 1$とする．母関数を \begin{align*}
+    V(q) & = \sum_{n \geq 0} v(n) q^n                      \\
+         & = 1 + q + 3q^2 + 6q^3 + 12q^4 + 21q^5 + \cdots,
+\end{align*}
+とおく．このとき \begin{equation*}
+    V(q) = \sum_{k \geq 0} \frac{q^k}{[k]!^2}.
+\end{equation*}
+
+さらに$n$の\textbf{ダブル分割}を次のa.，b.を満たす非負整数の並びとして定義する．
+\begin{equation*}
+    \begin{bmatrix}
+        a_1 & a_2 & \cdots \\
+        b_1 & b_2 & \cdots
+    \end{bmatrix}
+\end{equation*}
+\begin{enumerate}[label=\alph*.]
+    \item $\sum a_i + \sum b_i = n$，
+    \item $a_1 \geq a_2 \geq \cdots$, $b_1 \geq b_2 \geq \cdots$.
+\end{enumerate}
+
+\newpage
+
+$n$のダブル分割の個数を$d(n)$とすると，母関数は \begin{equation*}
+    \sum_{n \geq 0} d(n) q^n = \prod_{i \geq 1} (1-q^i)^{-2}.
+\end{equation*}
+
+$n$の$V$-分割全体の集合を$V_n$，ダブル分割全体の集合を$D_n$とする．Sieve methodにより，$\#V_n$を$\#D_n$を用いて表したい．
+
+$\Gamma_1: D_n \to V_n$を \begin{equation*}
+    \Gamma_1 \begin{bmatrix}
+        a_1 & a_2 & \cdots \\
+        b_1 & b_2 & \cdots
+    \end{bmatrix} = \begin{cases}
+        \begin{bmatrix}
+                     & a_2 & a_3 & \cdots \\
+            \up{a_1} & b_1 & b_2 & \cdots
+        \end{bmatrix} & \text{if $a_1 \geq b_1$}, \\
+        \begin{bmatrix}
+                     & a_1 & a_2 & \cdots \\
+            \up{b_1} & b_2 & b_3 & \cdots
+        \end{bmatrix} & \text{if $b_1 > a_1$},
+    \end{cases}
+\end{equation*}
+で定める．$\Gamma_1$は全射だが，単射にはならない．ちょうど$2$回カウントされる$V$-分割の集合は \begin{equation*}
+    V_n^1 \coloneqq \mleft\{ \begin{bmatrix}
+               & a_1 & a_2 & \cdots \\
+        \up{c} & b_1 & b_2 & \cdots
+    \end{bmatrix} \in V_n : c > a_1 \mright\}.
+\end{equation*}
+したがって \begin{equation*}
+    \#V_n = \#D_n - \#V_n^1.
+\end{equation*}
+
+$\#V_n^1$を数えるため，$\Gamma_2 : D_{n-1} \to V_n^1$を次で定める． \begin{equation*}
+    \Gamma_2 \begin{bmatrix}
+        a_1 & a_2 & \cdots \\
+        b_1 & b_2 & \cdots
+    \end{bmatrix} = \begin{cases}
+        \begin{bmatrix}
+                         & a_2 & a_3 & \cdots \\
+            \up{a_1 + 1} & b_1 & b_2 & \cdots
+        \end{bmatrix} & \text{if $a_1 + 1 \geq b_1$,} \\
+        \begin{bmatrix}
+                     & a_1 + 1 & a_2 & \cdots \\
+            \up{b_1} & b_2     & b_3 & \cdots
+        \end{bmatrix} & \text{if $a_1 + 1 < b_1$.}    \\
+    \end{cases}
+\end{equation*}
+
+\newpage
+
+先ほどと同様に，$\Gamma_2$は全射だが単射ではなく， \begin{equation*}
+    V_n^2 = \mleft\{ \begin{bmatrix}
+               & a_1 & a_2 & \cdots \\
+        \up{c} & b_1 & b_2 & \cdots
+    \end{bmatrix} \in V_n : c > a_1 > a_2 \mright\},
+\end{equation*}
+の元を$2$回カウントする．したがって$\#V_n^1 = \#D_{n-1} - \#V_n^2$であり， \begin{equation*}
+    \#V_n = \#D_n - \#D_{n-1} + \#V_n^2.
+\end{equation*}
+
+同様に，$\Gamma_3 : D_{n-3} \to V_n^2$を \begin{equation*}
+    \Gamma_3 \begin{bmatrix}
+        a_1 & a_2 & \cdots \\
+        b_1 & b_2 & \cdots
+    \end{bmatrix} = \begin{cases}
+        \begin{bmatrix}
+                         & a_2 + 1 & a_3 & \cdots \\
+            \up{a_1 + 2} & b_1     & b_2 & \cdots
+        \end{bmatrix} & \text{if $a_1 + 2 \geq b_1$,} \\
+        \begin{bmatrix}
+                     & a_1 + 2 & a_2 + 1 & a_3 & \cdots \\
+            \up{b_1} & b_2     & b_3     & b_4 & \cdots
+        \end{bmatrix} & \text{if $a_1 + 2 < b_1$,} \\
+    \end{cases}
+\end{equation*}
+で定めると，これは \begin{equation*}
+    V_n^3 = \mleft\{ \begin{bmatrix}
+               & a_1 & a_2 & \cdots \\
+        \up{c} & b_1 & b_2 & \cdots
+    \end{bmatrix} \in V_n : c > a_1 > a_2 > a_3 \mright\},
+\end{equation*}
+の元を$2$回カウントする．したがって \begin{equation*}
+    \#V_n = \#D_n - \#D_{n-1} + \#D_{n-3} - \#V_n^3.
+\end{equation*}
+
+このようにして$\Gamma_i : D_{n-\binom{i}{2}} \to V_n^{i-1}$を構成することを繰り返せば， \begin{equation*}
+    v(n) = d(n) - d(n-1) + d(n-3) - d(n-6) + \cdots,
+\end{equation*}
+が得られる（ただし$m < 0$について$d(m) = 0$とする）．
+
+\newpage
+
+\begin{proposition}
+    \begin{equation*}
+        V(q) = \mleft( \sum_{n \geq 0} (-1)^n q^{\binom{n+1}{2}} \mright) \prod_{i \geq 1} (1-q^i)^{-2}.
+    \end{equation*}
+\end{proposition}
+
+\begin{proposition}
+    \begin{equation*}
+        U(q) + V(q) = \prod_{i \geq 1} (1-q^i)^{-2}.
+    \end{equation*}
+\end{proposition}
+
+重み$n$の単峰列全体の集合を$U_n$とする．$D_n \to U_n \cup V_n$の全単射を次で構成できる． \begin{equation*}
+    \begin{bmatrix}
+        a_1 & a_2 & \cdots \\
+        b_1 & b_2 & \cdots
+    \end{bmatrix} \mapsto \begin{cases}
+        \begin{bmatrix}
+                     & a_2 & a_3 & \cdots \\
+            \up{a_1} & b_1 & b_2 & \cdots
+        \end{bmatrix} & \text{if $a_1 \geq b_1$}, \\
+        \cdots a_2 a_1 b_1 b_2 \cdots & \text{if $b_1 > a_1$}.
+    \end{cases}
+\end{equation*}
+
+\begin{corollary}
+    \begin{equation*}
+        U(q) = \mleft( \sum_{n \geq 1} (-1)^{n-1} q^{\binom{n+1}{2}} \mright) \prod_{i \geq 1} (1-q^i)^{-2}.
+    \end{equation*}
+\end{corollary}
+
+\newpage
+
+\subsection{Involutions}
+
+包除原理の特別な形 \begin{equation*}
+    f_=(\emptyset) = \sum_Y (-1)^{\#Y} f_\geq(Y).
+\end{equation*}
+を考える．これを \begin{equation*}
+    f_=(\emptyset) + \sum_{\#Y\text{ odd}} f_\geq(Y) = \sum_{\#Y\text{ even}} f_\geq(Y).
+\end{equation*}
+と書き換える．これを組合せ的解釈を用いて示してみる．
+
+集合$A$の元が，性質（$S$の元）を持ったり持たなかったりする状況を考える． \begin{align*}
+    M  & = \{x \in A: \text{$x$は$S$のどの性質も持たない}\},                                   \\
+    N  & = \{(x, Y, Z): \text{$x \in A$が持つ性質が$Z \supseteq Y$に一致し，$\#Y$は奇数}\},    \\
+    N' & = \{(x', Y', Z'): \text{$x \in A$が持つ性質が$Z \supseteq Y$に一致し，$\#Y$は偶数}\},
+\end{align*}
+とする．$S$に全順序を入れ，$\sigma: M \cup N \to N'$を次のように定める． \begin{align*}
+     & \sigma(x) = (x, \emptyset, \emptyset) \quad \text{if $x \in M$}, \\
+     & \sigma(x, Y, Z) = \begin{cases}
+        (x, Y - i, Z)    & \text{if $\min Y = \min Z = i$}, \\
+        (X, Y \cup i, Z) & \text{if $\min Z = i < \min Y$}.
+    \end{cases}
+\end{align*}
+$\sigma$は全単射であり， \begin{equation*}
+    \sigma^{-1}(x, Y, Z) = \begin{cases}
+        x \in M          & \text{if $Y = Z = \emptyset$},                          \\
+        (X, Y-i, Z)      & \text{if $Z \neq \emptyset$ and $\min Y = \min Z = i$}, \\
+        (X, Y \cup i, Z) & \text{if $Z \neq \emptyset$ and $\min Z = i < \min Y$},
+    \end{cases}
+\end{equation*}
+ただし$\min \emptyset = \infty$とする．
+
+\end{document}
