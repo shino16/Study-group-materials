@@ -1,0 +1,142 @@
+\documentclass[xelatex,ja=standard,a4paper,14pt,everyparhook=compat]{bxjsarticle}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{enumitem, mleftright, mathtools, hyperref, bm}
+\usepackage{caption, wrapfig}
+\usepackage{multirow}
+
+\DeclareMathOperator{\Fix}{Fix}
+\newcommand{\wt}[1]{\widetilde{#1}}
+
+\setenumerate{label=(\alph*)}
+
+\usepackage{concmath}
+\usepackage[OT1]{fontenc}
+\setsansfont{CMU Concrete}
+\setmainfont{CMU Concrete}
+\setCJKmainfont{Noto Sans CJK JP}
+\setCJKsansfont{Noto Sans CJK JP}
+
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbZ}{\mathbb{Z}}
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\bbP}{\mathbb{P}}
+\newcommand{\fS}{\mathfrak{S}}
+\newcommand{\inv}[1]{#1^{-1}}
+
+\newcommand{\paren}[1]{\mleft(#1\mright)}
+\newcommand{\norm}[1]{\mleft|#1\mright|}
+\newcommand{\bbinom}[2]{\mleft(\binom{#1}{#2}\mright)}
+\newcommand{\ifthen}[3]{\text{$#1$ ? $#2$ : $#3$}}
+\newcommand{\bool}[1]{[#1]}
+\newcommand{\dcup}{\mathbin{\dot\cup}}
+\newcommand{\qbinom}[2]{\pmb{\binom{#1}{#2}}}
+
+\theoremstyle{definition}
+\newtheorem{theorem}{定理}[subsection]
+\newtheorem*{theorem*}{定理}
+\newtheorem{example}[theorem]{例}
+\newtheorem{proposition}[theorem]{命題}
+\newtheorem{corollary}[theorem]{系}
+\renewcommand{\proofname}{\textup{証明}}
+
+\begin{document}
+
+\setcounter{section}{2}
+\setcounter{subsection}{5}
+\subsection{Involutions}
+
+包除原理の特別な形 \begin{equation*}
+    f_=(\emptyset) = \sum_Y (-1)^{\#Y} f_\geq(Y).
+\end{equation*}
+を考える．これを \begin{equation*}
+    f_=(\emptyset) + \sum_{\#Y\text{ odd}} f_\geq(Y) = \sum_{\#Y\text{ even}} f_\geq(Y).
+\end{equation*}
+と書き換える．これを組合せ的解釈を用いて示してみる．
+
+集合$A$の元が，性質（$S$の元）を持ったり持たなかったりする状況を考える． \begin{align*}
+    M  & = \{x \in A: \text{$x$は$S$のどの性質も持たない}\},                                   \\
+    N  & = \{(x, Y, Z): \text{$x \in A$が持つ性質が$Z \supseteq Y$に一致し，$\#Y$は奇数}\},    \\
+    N' & = \{(x', Y', Z'): \text{$x \in A$が持つ性質が$Z \supseteq Y$に一致し，$\#Y'$は偶数}\},
+\end{align*}
+とする．$S$に全順序を入れ，$\sigma: M \cup N \to N'$を次のように定める． \begin{align*}
+     & \sigma(x) = (x, \emptyset, \emptyset) \quad \text{if $x \in M$}, \\
+     & \sigma(x, Y, Z) = \begin{cases}
+        (x, Y - i, Z)    & \text{if $\min Y = \min Z = i$}, \\
+        (X, Y \cup i, Z) & \text{if $\min Z = i < \min Y$}.
+    \end{cases}
+\end{align*}
+$\sigma$は全単射であり， \begin{equation*}
+    \sigma^{-1}(x, Y, Z) = \begin{cases}
+        x \in M          & \text{if $Y = Z = \emptyset$},                          \\
+        (X, Y-i, Z)      & \text{if $Z \neq \emptyset$ and $\min Y = \min Z = i$}, \\
+        (X, Y \cup i, Z) & \text{if $Z \neq \emptyset$ and $\min Z = i < \min Y$},
+    \end{cases}
+\end{equation*}
+ただし$\min \emptyset = \infty$とする．
+
+$x \in M$を$(x, \emptyset, \emptyset) \in N'$と同一視すれば，$\tau \coloneqq \sigma \cup \sigma^{-1} : N \cup N' \to N \cup N'$は以下を満たす． \begin{enumerate}
+    \item $\tau$はinvolution ($\tau^2 = \mathrm{id}$)．
+    \item $\tau$の不動点は$(x, \emptyset, \emptyset)$ ($x \in M$)．
+    \item $(x,Y,Z)$が$\tau$の不動点でないとき，$\tau(x,Y,Z) = (x,Y',Z')$とおくと \begin{equation*}
+              (-1)^{\#Y} + (-1)^{\#Y'} = 0.
+          \end{equation*}
+\end{enumerate}
+これらを踏まえて，包除原理の式 \begin{align*}
+    f_=(\emptyset) & = \sum_Y (-1)^{\#Y} f_\geq(Y)                                                   \\
+                   & = \sum_Y (-1)^{\#Y} \#\{x : Z \coloneqq \{\text{$x$が持つ性質}\} \supseteq Y\},
+\end{align*}
+の右辺を見ると，$\tau$で移りあう元$(x,Y,Z)$同士が係数$(-1)^{\#Y}$によって打ち消され，不動点$(x,\emptyset,\emptyset)$ ($\{\text{$x$が持つ性質}\} = \emptyset$)のみが残っている．
+
+一般化する．有限集合$X$が$2$つの集合のdisjoint union $X^+ \dcup X^-$で表されるとし，$X$のinvolution $\tau$が次の条件を満たすとする． \begin{enumerate}
+    \item $\tau(x) = y$，$x \neq y$ならば，$x,y$のちょうど片方のみが$X^+$に属する．
+    \item $\tau(x) = x$ならば$x \in X^+$．
+\end{enumerate}
+$X$の元を重み関数 \begin{equation*}
+    w(x) = \begin{cases*}
+        1  & if $x \in X^+$, \\
+        -1 & if $x \in X^-$,
+    \end{cases*}
+\end{equation*}
+で重みづけするとき， \begin{equation*}
+    \#\Fix(\tau) = \sum_{x \in X} w(x),
+\end{equation*}
+が成り立つ．ただし$\Fix(\tau)$は$\tau$の不動点の集合．
+
+ここで，さらに別の有限集合のdisjoint union $\wt X = \wt X^+ \cup \wt X^-$を考え，$\wt X$のinvolution $\wt \tau$が(a)，(b)を満たしているとする．さらに，全単射$f : X \to \wt X$が符号を保つ，すなわち$f(X^+) = \wt X^+$，$f(X^-) = \wt X^-$と仮定する．このとき \begin{equation*}
+    \#\Fix(\tau) = \#X^+ - \#X^- = \# \wt X^+ - \# \wt X^- = \#\Fix(\wt \tau).
+\end{equation*}
+このとき，$\Fix(\tau)$から$\Fix(\wt \tau)$への自然な全単射$g$を構成することができる．これを\textbf{involution principle}という．
+
+$x \in \Fix(\tau)$とする．このとき， \begin{equation*}
+    f(\tau f^{-1} \wt \tau f)^n (x) \in \Fix(\wt \tau),
+\end{equation*}
+を満たす非負整数$n$が存在する．そのような$n$について， \begin{equation*}
+    g(x) = f(\tau f^{-1} \wt \tau f)^n (x),
+\end{equation*}
+と定める．この$g : \Fix(\tau) \to \Fix(\wt \tau)$は全単射である．
+
+このinvolution principleについて，``sieve-equivalence''という変種がある．$2$つのdisjointな有限集合$X, \wt X$と$Y \subseteq X$，$\wt Y \subseteq \wt X$について，全単射$f: X \to \wt X$，$g: Y \to \wt Y$がとれたとする．このとき$\#(X-Y) = \#(\wt X - \wt Y)$．ここで全単射$h: (X-Y) \to (\wt X - \wt Y)$を構成する．
+
+$x \in X - Y$をとる．このとき， \begin{equation*}
+    f (g^{-1} f)^n (x) \in \wt X - \wt Y.
+\end{equation*}
+を満たす非負整数$n$が存在する．そのような$n$について， \begin{equation*}
+    h(x) = f(g^{-1} f)^n (x),
+\end{equation*}
+と定める．この$h : (X-Y) \to (\wt X-\wt Y)$は全単射．
+
+\begin{example}
+    $1$を不動点とする順列$w \in \fS_n$全体の集合を$Y$とする．また，ちょうど$1$個のサイクルからなる順列$w \in \fS_n$全体の集合を$\wt Y$とする．このとき$\#(\fS_n - Y) = \#(\fS_n - \wt Y) = n! - (n-1)!$．
+
+    $\fS_n - Y$と$\fS_n - \wt Y$の間の全単射$h$を構成する明らかな方法はなさそうだが，全単射$g: Y \to \wt Y$を構成するのは簡単である．$f : \fS_n \to \fS_n$を恒等写像とすれば，先ほどの方法で全単射$h : (\fS_n - Y) \to (\fS_n - \wt Y)$を構成できる．
+
+    ただし，この場合に関しては$Y$と$\wt Y$がdisjointであることから， \begin{equation*}
+        h(w) = \begin{cases*}
+            w         & if $w \notin \wt Y$, \\
+            g^{-1}(w) & if $w \in \wt Y$,
+        \end{cases*}
+    \end{equation*}
+    としてやれば済む．
+\end{example}
+
+\end{document}

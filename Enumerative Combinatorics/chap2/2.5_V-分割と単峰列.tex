@@ -219,37 +219,4 @@ $\#V_n^1$を数えるため，$\Gamma_2 : D_{n-1} \to V_n^1$を次で定める�
     \end{equation*}
 \end{corollary}
 
-\newpage
-
-\subsection{Involutions}
-
-包除原理の特別な形 \begin{equation*}
-    f_=(\emptyset) = \sum_Y (-1)^{\#Y} f_\geq(Y).
-\end{equation*}
-を考える．これを \begin{equation*}
-    f_=(\emptyset) + \sum_{\#Y\text{ odd}} f_\geq(Y) = \sum_{\#Y\text{ even}} f_\geq(Y).
-\end{equation*}
-と書き換える．これを組合せ的解釈を用いて示してみる．
-
-集合$A$の元が，性質（$S$の元）を持ったり持たなかったりする状況を考える． \begin{align*}
-    M  & = \{x \in A: \text{$x$は$S$のどの性質も持たない}\},                                   \\
-    N  & = \{(x, Y, Z): \text{$x \in A$が持つ性質が$Z \supseteq Y$に一致し，$\#Y$は奇数}\},    \\
-    N' & = \{(x', Y', Z'): \text{$x \in A$が持つ性質が$Z \supseteq Y$に一致し，$\#Y$は偶数}\},
-\end{align*}
-とする．$S$に全順序を入れ，$\sigma: M \cup N \to N'$を次のように定める． \begin{align*}
-     & \sigma(x) = (x, \emptyset, \emptyset) \quad \text{if $x \in M$}, \\
-     & \sigma(x, Y, Z) = \begin{cases}
-        (x, Y - i, Z)    & \text{if $\min Y = \min Z = i$}, \\
-        (X, Y \cup i, Z) & \text{if $\min Z = i < \min Y$}.
-    \end{cases}
-\end{align*}
-$\sigma$は全単射であり， \begin{equation*}
-    \sigma^{-1}(x, Y, Z) = \begin{cases}
-        x \in M          & \text{if $Y = Z = \emptyset$},                          \\
-        (X, Y-i, Z)      & \text{if $Z \neq \emptyset$ and $\min Y = \min Z = i$}, \\
-        (X, Y \cup i, Z) & \text{if $Z \neq \emptyset$ and $\min Z = i < \min Y$},
-    \end{cases}
-\end{equation*}
-ただし$\min \emptyset = \infty$とする．
-
 \end{document}
