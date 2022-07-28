@@ -221,7 +221,7 @@
 \subsubsection*{閉包演算子に関する公理系}
 
 \begin{theorem}
-    $E$を有限集合とし，$\sigma : 2^E \to 2^E$とする．$\sigma$がマトロイド$(E, \mathcal{F})$の閉包演算子であることは，任意の$X, Y \subseteq E$と$x, y \in E$について以下が同時に成立することと同値． \begin{enumerate}[label=(S\arabic*)]
+    $E$を有限集合とし，$\sigma : 2^E \to 2^E$とする．$\sigma$があるマトロイド$(E, \mathcal{F})$の閉包演算子であることは，任意の$X, Y \subseteq E$と$x, y \in E$について以下が同時に成立することと同値． \begin{enumerate}[label=(S\arabic*)]
         \item $X \subseteq \sigma(X)$,
         \item $X \subseteq Y \subseteq E$ $\Longrightarrow$ $\sigma(X) \subseteq \sigma(Y)$,
         \item $\sigma(X) = \sigma(\sigma(X))$,
@@ -333,5 +333,44 @@
 
     ($\Longleftarrow$) $\mathcal{C}$が(C1)を満たすなら，$(E, \mathcal{F})$は独立性システム．(C2)を満たすなら，$\mathcal{C}$の各元はサーキット．
 \end{proof}
+
+\subsubsection*{サーキット族に関する定義}
+
+\begin{theorem}
+    $E$を有限集合とし，$\mathcal{C} \subseteq 2^E$とする．\begin{equation*}
+        \mathcal{F} = \{F \subset E : \text{$C \subseteq F$なる$C \in \mathcal{C}$が存在しない}\},
+    \end{equation*}
+    とするとき，$\mathcal{C}$が独立性システム$(E, \mathcal{F})$のサーキットの族であることは，以下が同時に成立することと同値． \begin{enumerate}
+        \item[(C1)] $\emptyset \notin \mathcal{C}$,
+        \item[(C2)] $C_1, C_2 \in \mathcal{C}$, $C_1 \subseteq C_2$ $\Longrightarrow$ $C_1 = C_2$.
+    \end{enumerate}
+    さらに，$\mathcal{C}$が独立性システム$(E, \mathcal{F})$のサーキットの族であるとき，以下は同値． \begin{enumerate}
+        \item[(a)] $(E, \mathcal{F})$はマトロイド．
+        \item[(b)] $X \in \mathcal{F}$，$e \in E$について，$X \cup \{e\}$は高々$1$個のサーキットしか持たない．
+        \item[(C3)] 任意の相異なる$C_1, C_2 \in \mathcal{C}$と$e \in C_1 \cap C_2$について，$C_3 \subseteq (C_1 \cup C_2) \setminus \{e\}$なる$C_3 \in \mathcal{C}$が存在する．
+        \item[(C3')] 任意の$C_1, C_2 \in \mathcal{C}$，$e \in C_1 \cap C_2$，$f \in C_1 \setminus C_2$について，$f \in C_3 \subseteq (C_1 \cup C_2) \setminus \{e\}$なる$C_3 \in \mathcal{C}$が存在する．
+    \end{enumerate}
+    \begin{proof}[\textup{前半の証明}]
+        ($\Longrightarrow$) $\emptyset \in \mathcal{F}$より(C1)はよい．(C2)はサーキットの極小性よりよい．
+
+        ($\Longleftarrow$) (M1)は(C1)よりよい．(M2)は定義より明らか．任意のサーキットが$\mathcal{C}$に属することは定義から確認できる．(C2)より$\mathcal{C}$はサーキットの族．
+    \end{proof}
+    \begin{proof}[\textup{後半の証明}]
+        (a) $\Longrightarrow$ (C3'): $\mathcal{C}$をマトロイドのサーキットの族とする．$C_1, C_2 \in \mathcal{C}$，$e \in C_1 \cap C_2$，$f \in C_1 \setminus C_2$について，(R3)（ランク関数の劣モジュラ性）より \begin{align*}
+            & |C_1| - 1 + r((C_1 \cup C_2) \setminus \{e,f\}) + |C_2| - 1 \\
+            ={}& r(C_1) + r((C_1 \cup C_2) \setminus \{e,f\}) + r(C_2) \\
+            \geq{}& r(C_1) + r((C_1 \cup C_2) \setminus \{f\}) + r(C_2 \setminus \{e\}) \\
+            \geq{}& r(C_1 \setminus \{f\}) + r(C_1 \cup C_2) + r(C_2 \setminus \{e\}) \\
+            ={}& |C_1| - 1 + r(C_1 \cup C_2) + |C_2| - 1.
+        \end{align*}
+        これより$r((C_1 \cup C_2) \setminus \{e,f\}) = r(C_1 \cup C_2)$．$(C_1 \cup C_2) \setminus \{e,f\}$の基$B$をとる．$|B \cup \{f\}| > r(C_1 \cup C_2)$より，$B \cup \{f\}$はサーキット$C_3$を含む．よって$f \in C_3 \subseteq (C_1 \cup C_2) \setminus \{e\}$．
+
+        (C3') $\Longrightarrow$ (C3): 明らか．
+
+        (C3) $\Longrightarrow$ (b): $X \in \mathcal{F}$について$X \cup \{e\}$が相異なるサーキット$C_1, C_2$を含むとき，(C3)より$(C_1 \cup C_2) \setminus \{e\} \notin \mathcal{F}$．しかし$(C_1 \cup C_2) \setminus \{e\} \subseteq X$なので，$X \notin \mathcal{F}$．
+
+        (b) $\Longrightarrow$ (a): 定理13.8と命題13.7よりよい．
+    \end{proof}
+\end{theorem}
 
 \end{document}
