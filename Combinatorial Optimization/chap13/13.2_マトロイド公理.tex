@@ -9,8 +9,8 @@
 \usepackage[OT1]{fontenc}
 \setsansfont{CMU Concrete}
 \setmainfont{CMU Concrete}
-\setCJKmainfont{Noto Sans CJK JP}
-\setCJKsansfont{Noto Sans CJK JP Bold}
+\setCJKmainfont{Noto Sans JP}
+\setCJKsansfont{Noto Sans JP Bold}
 
 \newcommand{\bbN}{\mathbb{N}}
 \newcommand{\bbZ}{\mathbb{Z}}
@@ -54,38 +54,38 @@
 \subsubsection*{復習}
 
 \begin{definition}
-    \textbf{集合族}$(E, \mathcal{F})$：非空な有限集合$E$と$\mathcal{F} \subseteq 2^E$の対．
+    \textbf{集合システム}$(E, \mathcal{F})$：非空な有限集合$E$と$\mathcal{F} \subseteq 2^E$の対．
 
-    \textbf{独立集合族}$(E, \mathcal{F})$：次を満たす集合族 \begin{enumerate}
+    \textbf{独立性システム}$(E, \mathcal{F})$：次を満たす集合システム \begin{enumerate}
         \item[(M1)] $\emptyset \in \mathcal{F}$，
         \item[(M2)] $X \subseteq Y \in \mathcal{F}$ $\Rightarrow$ $X \in \mathcal{F}$．
     \end{enumerate}
-    $\mathcal{F}$の元は\textbf{独立}，$2^E \setminus \mathcal{F}$の元は\textbf{従属}．極小な従属集合は\textbf{サーキット}，極大な独立集合は\textbf{基底}．$X \subseteq E$の極大な独立部分集合は，$X$の基底と呼ばれる．
+    $\mathcal{F}$の元は\textbf{独立}，$2^E \setminus \mathcal{F}$の元は\textbf{従属}．極小な従属集合は\textbf{サーキット}，極大な独立集合は\textbf{基}．$X \subseteq E$の極大な独立部分集合は，$X$の基と呼ばれる．
 \end{definition}
 
 \begin{definition}
-    独立集合族$(E, \mathcal{F})$と$X \subseteq E$について，
+    独立性システム$(E, \mathcal{F})$と$X \subseteq E$について，
 
-    \textbf{ランク}：$r(X) \coloneqq \max\{|Y| : Y \subseteq X, Y \in \mathcal{F}\}$ ($X$の基底の位数の最大値)．
+    \textbf{ランク}：$r(X) \coloneqq \max\{|Y| : Y \subseteq X, Y \in \mathcal{F}\}$ ($X$の基の位数の最大値)．
 
     \textbf{閉包}：$\omega(X) \coloneqq \{y \in E : r(X \cup \{y\}) = r(X))\}$．
 \end{definition}
 
 \begin{definition}[定理13.5]
-    \textbf{マトロイド}$(E, \mathcal{F})$：次(のいずれか)を満たす独立集合族 \begin{enumerate}
+    \textbf{マトロイド}$(E, \mathcal{F})$：次(のいずれか)を満たす独立性システム \begin{enumerate}
         \item[(M3)] $X, Y \in \mathcal{F}$, $|X| > |Y|$ $\Longrightarrow$ $\exists x \in X \setminus Y$ s.t. $Y \cup \{x\} \in \mathcal{F}$,
         \item[(M3')] $X, Y \in \mathcal{F}$, $|X| = |Y| + 1$ $\Longrightarrow$ $\exists x \in X \setminus Y$ s.t. $Y \cup \{x\} \in \mathcal{F}$,
-        \item[(M3'')] 任意の$X \subseteq E$について，$X$の基底の位数はどれも等しい．
+        \item[(M3'')] 任意の$X \subseteq E$について，$X$の基の位数はどれも等しい．
     \end{enumerate}
 \end{definition}
 
 \newpage
 
-\subsubsection*{基底の族に関する公理系}
+\subsubsection*{基の族に関する公理系}
 
 \setcounter{theorem}{8}
 \begin{theorem}
-    $E$を有限集合とし，$\mathcal{B} \subseteq 2^E$とする．$\mathcal{B}$が何らかのマトロイド$(E, \mathcal{F})$の基底の族であることは，以下が同時に成立することと同値． \begin{enumerate}
+    $E$を有限集合とし，$\mathcal{B} \subseteq 2^E$とする．$\mathcal{B}$が何らかのマトロイド$(E, \mathcal{F})$の基の族であることは，以下が同時に成立することと同値． \begin{enumerate}
         \item[(B1)] $\mathcal{B} \neq \emptyset$,
         \item[(B2)] $\forall B_1, B_2 \in \mathcal{B}$, $\forall x \in B_1 \setminus B_2$, $\exists y \in B_2 \setminus B_1$ s.t. $(B_1 \setminus \{x\}) \cup \{y\} \in \mathcal{B}$.
     \end{enumerate}
@@ -98,7 +98,7 @@
 
     (M3)より$\exists y \in B_2 \setminus (B_1 \setminus \{x\})$ s.t. $(B_1 \setminus \{x\}) \cup \{y\} \in \mathcal{F}$．
 
-    (M3'')よりこれは基底．
+    (M3'')よりこれは基．
 
     また$y \in B_2$より$x \neq y$，したがって$y \in B_2 \setminus B_1$．
 
@@ -131,7 +131,7 @@
 
 \setcounter{exercise}{7}
 \begin{exercise}
-    $\mathcal{B}$が何らかのマトロイド$(E, \mathcal{F})$の基底の族であることは，以下が同時に成立することと同値であることを示せ． \begin{enumerate}
+    $\mathcal{B}$が何らかのマトロイド$(E, \mathcal{F})$の基の族であることは，以下が同時に成立することと同値であることを示せ． \begin{enumerate}
         \item[(B1)] $\mathcal{B} \neq \emptyset$,
         \item[(B2)] $\forall B_1, B_2 \in \mathcal{B}$, $\forall y \in B_2 \setminus B_1$, $\exists x \in B_1 \setminus B_2$ s.t. $(B_1 \setminus \{x\}) \cup \{y\} \in \mathcal{B}$.
     \end{enumerate}
@@ -146,7 +146,7 @@
             $\exists x \in \overline{B_2} \setminus \overline{B_1}$
             s.t. $(\overline{B_1} \setminus \{y\}) \cup \{x\} \in \overline{\mathcal{B}}$},
     \end{equation*}
-    と同値．また，(M3'')より$\mathcal{B}$がマトロイドの基底の族であることと$\overline{\mathcal{B}}$が基底の族であることは同値．
+    と同値．また，(M3'')より$\mathcal{B}$がマトロイドの基の族であることと$\overline{\mathcal{B}}$が基の族であることは同値．
 \end{proof}
 
 \newpage
@@ -171,7 +171,7 @@
 \begin{proof}
     (a) $\Longrightarrow$ (b): $r$はランク関数なので，(R1)と(R2)は明らか．(R3)を示す．
 
-    $X, Y \subseteq E$について，$X \cap Y$の基底$A$をとる．基底$A$を拡張して，$A \dotcup B$を$X$の基底，$A \dotcup B \dotcup C$を$X \cup Y$の基底とする．$C \subseteq Y$より$A \cup C \subseteq Y$．また$A \cup B \cup C \in \mathcal{F}$より$A \cup C \in \mathcal{F}$．したがって \begin{align*}
+    $X, Y \subseteq E$について，$X \cap Y$の基$A$をとる．基$A$を拡張して，$A \dotcup B$を$X$の基，$A \dotcup B \dotcup C$を$X \cup Y$の基とする．$C \subseteq Y$より$A \cup C \subseteq Y$．また$A \cup B \cup C \in \mathcal{F}$より$A \cup C \in \mathcal{F}$．したがって \begin{align*}
         r(X) + r(Y)
          & \geq |A \cup B| + |A \cup C| \\
          & = |A \cup B \cup C| + |A|    \\
@@ -215,7 +215,7 @@
 
     \newpage
 
-    最後に$r$がマトロイド$(E, \mathcal{F})$のランク関数であることを示す．$X \subseteq E$について，$X$の基底$Y$を$|Y|$が最大になるようにとる．$\forall x \in X \setminus Y$, $r(Y \cup \{x\}) = r(Y)$なので，先ほどと同じ議論により$r(X) = r(Y) = |Y|$．
+    最後に$r$がマトロイド$(E, \mathcal{F})$のランク関数であることを示す．$X \subseteq E$について，$X$の基$Y$を$|Y|$が最大になるようにとる．$\forall x \in X \setminus Y$, $r(Y \cup \{x\}) = r(Y)$なので，先ほどと同じ議論により$r(X) = r(Y) = |Y|$．
 \end{proof}
 
 \subsubsection*{閉包演算子に関する公理系}
@@ -294,13 +294,44 @@
 
     以上より，$(E, \mathcal{F})$はマトロイド．マトロイド$(E, \mathcal{F})$のランク関数を$r$，閉包演算子を$\sigma'$とする．$\sigma = \sigma'$を示す．
 
-    まず，$X \subseteq E$と$z \in \sigma'(X)$について，$z \in \sigma(X)$を示す．$z \in X \subseteq \sigma(X)$ならよい．そうでない場合を考える．$X$の基底$Y$をとる． \begin{equation*}
+    まず，$X \subseteq E$と$z \in \sigma'(X)$について，$z \in \sigma(X)$を示す．$z \in X \subseteq \sigma(X)$ならよい．そうでない場合を考える．$X$の基$Y$をとる． \begin{equation*}
         r(Y \cup \{z\}) \leq r(X \cup \{z\}) = r(X) = |Y| < |Y \cup \{z\}|,
     \end{equation*}
     より$Y \cup \{z\} \notin \mathcal{F}$．したがって \begin{equation*}
         \text{$\exists y$ s.t. $y \in \sigma((Y \cup \{z\}) \setminus \{y\})$.}
     \end{equation*}
     $y = z$ならば$z \in \sigma(Y \setminus \{z\}) \subseteq \sigma(X)$．$y \neq z$ならば，$y \notin \sigma(Y \setminus \{y\})$なので(S2)より$z \in \sigma(Y) \subseteq \sigma(X)$．
+
+    次に，$z \notin \sigma'(X)$について$z \notin \sigma(X)$を示す．
+
+    $X \cup \{z\}$の基$Y$をとる．$r(X \cup \{z\}) > r(X)$より$z \in Y$，また \begin{equation*}
+        |Y \setminus \{z\}| = |Y| - 1 = r(X \cup \{z\}) - 1 = r(X),
+    \end{equation*}
+    なので$Y \setminus \{z\}|$は$X$の基．よって$X \subseteq \sigma'(Y \setminus \{z\}) \subseteq \sigma(Y \setminus \{z\})$なので，$\sigma(X) \subseteq \sigma(Y \setminus \{z\})$．
+
+    $Y \setminus \{z\} \in \mathcal{F}$より$z \notin \sigma(Y \setminus \{z\})$なので，$z \notin \sigma(X)$．
+\end{proof}
+
+\newpage
+
+\subsection*{サーキットの属に関する公理系}
+
+\begin{theorem}
+    $E$を有限集合とし，$\mathcal{C} \subseteq 2^E$とする．$\mathcal{F} = \{F \subset E : \text{$\exists C \in \mathcal{C}$ s.t. $C \subseteq F$}\}$とするとき，$(E, \mathcal{F})$が独立性システムであって$\mathcal{C}$がそのサーキットの族であることは，次の条件が同時に成り立つことと同値． \begin{enumerate}[label=(C\arabic*)]
+        \item $\emptyset \notin \mathcal{C}$,
+        \item $C_1, C_2 \in \mathcal{C}$, $C_1 \subseteq C_2$ $\Longrightarrow$ $C_1 = C_2$.
+    \end{enumerate}
+    さらに，このとき以下の条件は同値． \begin{enumerate}
+        \item[(a)] $(E, \mathcal{F})$はマトロイド．
+        \item[(b)] $X \in \mathcal{F}$，$e \in E$について，$X \cup \{e\}$はサーキットを高々$1$個しか持たない．
+        \item[(C3)] 相異なる$C_1, C_2 \in \mathcal{C}$と$e \in C_1 \cap C_2$について，$C_3 \subseteq (C_1 \cup C_2) \setminus \{e\}$なる$C_3 \in \mathcal{C}$が存在する．
+        \item[(C3')] $C_1, C_2 \in \mathcal{C}$と$e \in C_1 \cap C_2$，$f \in C_1 \setminus C_2$について，$f \in C_3 \subseteq (C_1 \cup C_2) \setminus \{e\}$なる$C_3 \in \mathcal{C}$が存在する．
+    \end{enumerate}
+\end{theorem}
+\begin{proof}[\textup{前半の証明}]
+    ($\Longrightarrow$) 明らか．
+
+    ($\Longleftarrow$) $\mathcal{C}$が(C1)を満たすなら，$(E, \mathcal{F})$は独立性システム．(C2)を満たすなら，$\mathcal{C}$の各元はサーキット．
 \end{proof}
 
 \end{document}

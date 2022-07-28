@@ -1,0 +1,321 @@
+\documentclass[xelatex,ja=standard,a4paper,14pt,everyparhook=compat]{bxjsarticle}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{enumitem, mleftright, mathtools, bm}
+\usepackage{ascmac}
+
+\setenumerate{label=(\alph*)}
+
+\usepackage{concmath}
+\usepackage[OT1]{fontenc}
+\setsansfont{CMU Concrete}
+\setmainfont{CMU Concrete}
+\setCJKmainfont{Noto Sans JP}
+\setCJKsansfont{Noto Sans JP Bold}
+
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbZ}{\mathbb{Z}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\mcF}{\mathcal{F}}
+\newcommand{\mcB}{\mathcal{B}}
+\newcommand{\mcC}{\mathcal{C}}
+
+\DeclareMathOperator{\OPT}{OPT}
+
+\newcommand{\paren}[1]{\mleft(#1\mright)}
+\newcommand{\norm}[1]{\mleft|#1\mright|}
+\newcommand{\ifthen}[3]{\text{$#1$ ? $#2$ : $#3$}}
+\newcommand{\bool}[1]{[#1]}
+\newcommand{\dotcup}{\mathbin{\dot\cup}}
+
+\theoremstyle{definition}
+\newtheorem{exercise}{演習}
+\newtheorem{theorem}{定理}[section]
+\newtheorem*{theorem*}{定理}
+\newtheorem{example}[theorem]{例}
+\newtheorem*{example*}{例}
+\newtheorem*{recall}{復習}
+\newtheorem{proposition}[theorem]{命題}
+\newtheorem{corollary}[theorem]{系}
+\newtheorem{definition}[theorem]{定義}
+\newtheorem*{claim}{主張}
+\renewcommand{\proofname}{\textup{証明}}
+
+\newenvironment{subproof}[1][\proofname]{%
+    \begin{proof}[#1]%
+    \renewcommand*{\qedsymbol}{$\blacksquare$}
+}{%
+    \end{proof}
+}
+
+\begin{document}
+
+\setcounter{section}{12}
+\section{Matroids}
+\setcounter{subsection}{3}
+\subsection{The Greedy Algorithm}
+
+\begin{itembox}[l]{最大化問題}
+    \begin{tabular}{ll}
+        インスタンス： & 独立性システム$(E, \mcF)$，$c: E \to \bbR$．                 \\
+        タスク：       & $c(X) = \sum_{e \in X} c(e)$を最大化する$X \in \mcF$の発見．
+    \end{tabular}
+\end{itembox}
+
+$(E, \mcF)$が何らかのオラクルで与えられる状況を考える．
+
+\textbf{独立性オラクル}：$F \subseteq E$について，$F \in \mcF$か否かを返す．
+
+\textbf{basis-supersetオラクル}：$F \subseteq E$について，$F$が基を含むか否かを返す．
+
+\begin{example*}
+    TSP．\textbf{完全}グラフ$G$について \begin{equation*}
+        E = V(G), \quad \mcF = \{F \subseteq E : \text{$F$は$G$のハミルトン閉路の一部}\}.
+    \end{equation*}
+    \begin{itemize}
+        \item $(E, \mcF)$の独立性オラクル：簡単
+        \item $(E, \mcF)$のbasis-supersetオラクル：NP-完全
+    \end{itemize}
+\end{example*}
+
+\begin{example*}
+    最短経路問題．グラフ$G$について \begin{equation*}
+        E = V(G), \quad \mcF = \{F \subseteq E : \text{$F$は$s$-$t$-パスの一部}\}.
+    \end{equation*}
+    \begin{itemize}
+        \item $(E, \mcF)$の独立性オラクル：NP-完全
+        \item $(E, \mcF)$のbasis-supersetオラクル：簡単
+    \end{itemize}
+\end{example*}
+
+\newpage
+
+\begin{itembox}[l]{Best-In-Greedyアルゴリズム}
+    \begin{tabular}{ll}
+        入力： & 独立性オラクルで与えられる独立性システム$(E, \mcF)$， \\
+               & 重み$c : E \to \bbR_+$．                              \\
+        出力： & $F \in \mcF$．
+    \end{tabular}
+\end{itembox}
+
+\begin{enumerate}[label=\arabic*.]
+    \item $E=\{e_1,\ldots,e_n\}$を$c(e_1) \geq \cdots \geq c(e_n)$となるようソート．
+    \item $F \gets \emptyset$．
+    \item \textbf{for} $i \gets 0$ \textbf{to} $n$ \textbf{do}: \textbf{if} $F \cup \{e_i\} \in \mcF$ \textbf{then} $F \gets F \cup \{e_i\}$.
+\end{enumerate}
+
+\begin{example*}
+    Kruskal法．
+\end{example*}
+
+\begin{itembox}[l]{Worst-Out-Greedyアルゴリズム}
+    \begin{tabular}{ll}
+        入力： & basis-supersetオラクルで与えられる独立性システム$(E, \mcF)$， \\
+               & 重み$c : E \to \bbR_+$．                              \\
+        出力： & $(E, \mcF)$の基$F$．
+    \end{tabular}
+\end{itembox}
+
+\begin{enumerate}[label=\arabic*.]
+    \item $E=\{e_1,\ldots,e_n\}$を$c(e_1) \leq \cdots \leq c(e_n)$となるようソート．
+    \item $F \gets E$．
+    \item \textbf{for} $i \gets 0$ \textbf{to} $n$ \textbf{do}: \textbf{if} $F \setminus \{e_i\}$が基を含む \textbf{then} $F \gets F \setminus \{e_i\}$.
+\end{enumerate}
+
+\begin{claim}
+    $(E, \mcF, c)$に対するBest-In-Greedyアルゴリズムは，$(E, \mcF^*, -c)$に対するWorst-Out-Greedyアルゴリズムと対応する．
+\end{claim}
+\begin{proof}
+    \begin{align*}
+        &F \in \mcF \\
+        \Longleftrightarrow{}& \text{$\exists B:\text{$(E,\mcF)$の基}$ s.t. $F \subseteq B$} \\
+        \Longleftrightarrow{}& \text{$\exists B:\text{$(E,\mcF)$の基}$ s.t. $F^c \supseteq B^c$} \quad (\text{$B^c$は$(E,\mcF^*)$の基})
+    \end{align*}
+\end{proof}
+
+\newpage
+
+\setcounter{theorem}{18}
+\begin{theorem}
+    $c:E \to \bbR_+$に対する最大化問題について， \begin{align*}
+        G(E,\mcF,c) &= (\text{Best-In-Greedyが発見した解のコスト}), \\
+        \OPT(E,\mcF,c) &= (\text{最適解のコスト}),
+    \end{align*}
+    とすると \begin{equation*}
+        q(E,\mcF) \leq \frac{G(E,\mcF,c)}{\OPT(E,\mcF,c)} \leq 1.
+    \end{equation*}
+    ある$c$は下界を達成する．
+\end{theorem}
+\begin{recall}
+    Rank quotient: \begin{equation*}
+        q(E,\mcF) = \min_{F \subseteq E} \frac{\rho(F)}{r(F)}
+    \end{equation*}
+    Lower rank: \begin{equation*}
+        \rho(F) = \min\{|B|: \text{$B$は$F$の基}\}
+    \end{equation*}
+\end{recall}
+\begin{proof}
+    $E = \{e_1,\ldots,e_n\}$，$c(e_1) \geq \cdots \geq c(e_n)$とする．これに対するBest-In-Greedyの解を$G_n$とし，最適解を$O_n$とする． \begin{align*}
+        E_j &= \{e_1,\ldots,e_j\}, \\
+        G_j &= G_n \cap E_j, \\
+        O_j &= O_n \cap E_j,
+    \end{align*}
+    とする．また， \begin{align*}
+        d_n &= c(e_n), \\
+        d_j &= c(e_j) - c(e_{j+1}),
+    \end{align*}
+    とする．このとき \begin{align*}
+        |O_j| &\leq r(E_j) \qquad (\because\ O_j \in \mcF) \\
+        |G_j| &\geq \rho(E_j) \qquad (\because\ \text{$G_j$は$E_j$の基}).
+    \end{align*}
+    したがって， \begin{align*}
+        \frac{c(G_n)}{c(O_n)}
+        &= \frac{\sum_{j=1}^n (|G_j|-|G_{j-1}|) c(e_j)}{\sum_{j=1}^n (|O_j|-|O_{j-1}|) c(e_j)} \\
+        &= \frac{\sum_{j=1}^n |G_j| d_j}{\sum_{j=1}^n |O_j| d_j} \\
+        &\geq \frac{\sum_{j=1}^n \rho(E_j) d_j}{\sum_{j=1}^n r(E_j) d_j} \\
+        &\geq q(E,\mcF).
+    \end{align*}
+    ここで，
+    \begin{equation*}
+        q(E,\mcF) = \frac{\rho(F)}{r(F)} = \frac{|B_1|}{|B_2|}
+    \end{equation*}
+    となるように$F \subseteq E$と$F$の基$B_1$，$B_2$をとる． \begin{equation*}
+        c(e) = \begin{cases}
+            1 & (e \in F) \\
+            0 & (e \notin F)
+        \end{cases}
+    \end{equation*}
+    とし， \begin{gather*}
+        c(e_1) \geq \cdots \geq c(e_n), \\
+        B_1 = \{e_1, \ldots, e_{|B_1|}\},
+    \end{gather*}
+    となるように$E$の元を並べると， \begin{align*}
+        G(E,\mcF,c) &= |B_1|, \\
+        \OPT(E,\mcF,c) &\geq |B_2|.
+    \end{align*}
+\end{proof}
+
+\newpage
+
+\begin{theorem}[Edmonds-Radoの定理]
+    次は同値． \begin{enumerate}
+        \item $(E,\mcF)$はマトロイド．
+        \item 任意の$c:E\to\bbR_+$について，Best-In-Greedyは$(E,\mcF,c)$に関する最大化問題の最適解を与える．
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    \begin{align*}
+        & \text{$(E,\mcF)$はマトロイド} \\
+        \Longleftrightarrow{}& q(E,\mcF) = 1 \\
+        \Longleftrightarrow{}& \text{Best-In-Greedyは常に最適解を与える．}
+    \end{align*}
+\end{proof}
+
+\begin{theorem}
+    マトロイド$(E,\mcF)$，ランク関数$r:2^E \to \bbZ_+$をとる．
+
+    $(E,\mcF)$の\textbf{マトロイド超多面体(matroid polytope)}（$\mcF$の元の接続ベクトルの凸包）は \begin{equation*}
+        \left\{ x \in \bbR^E : \text{$x \geq 0$, $\sum_{e \in A} x_e \leq r(A)$ for all $A \subseteq E$} \right\}
+    \end{equation*}
+\end{theorem}
+
+\begin{proof}
+    ($\subseteq$) は明らか．
+
+    ($\supseteq$) $e \in E$について$r(\{e\}) \leq 1$より，超多面体の各頂点$x$について$0 \leq x \leq 1$．これに$x \in \bbZ^E$という条件が加われば，$x$はある$F \subseteq E$の接続ベクトルとなり， \begin{equation*}
+        \sum_{e \in F} x_e = |F| \leq r(F)
+    \end{equation*} より$F \in \mcF$，したがって$x \in (\text{matroid polytope})$．したがって，超多面体の頂点がすべて整数ベクトルであればよい．そこで， \begin{equation*}
+        \max \left\{ cx : \text{$x \geq 0$, $\sum_{e \in A} x_e \leq r(A)$ for all $A \subseteq E$} \right\}
+    \end{equation*}
+    が任意の$c \in \bbR^E$について整数解を持つことを示す．
+
+    $c: E \to \bbR$をとる．ある$e \in E$について$c(e) < 0$ならば最適解$x$は$x_e = 0$を満たすので，そのような$e$は考慮から外してよい．そこで$c \geq 0$を仮定し，$(E,\mcF,c)$に対する最大化問題を考える．
+
+    LPの最適解$x$について， \begin{equation*}
+        \text{$s_j = x_{e_1} + \cdots + x_{e_j}$ ($\leq r(\{e_1,\ldots,e_j\}) = r(E_j)$)},
+    \end{equation*}
+    とすると，
+     \begin{align*}
+        \frac{c(G_n)}{\sum_{e \in E} c(e) x_e}
+        &= \frac{\sum_{j=1}^n (|G_j| - |G_{j-1}|) c(e_j)}{\sum_{j=1}^n (s_j - s_{j-1}) c(e_j)} \\
+        &= \frac{\sum_{j=1}^n |G_j| d_j}{\sum_{j=1}^n s_j d_j} \\
+        &\geq \frac{\sum_{j=1}^n \rho(E_j) d_j}{\sum_{j=1}^n r(E_j) d_j} \\
+        &\geq q(E, \mcF) = 1.
+    \end{align*}
+    したがって$c(G_n) \geq cx$なので，$G_n$もLPの最適解．
+\end{proof}
+
+\begin{theorem}
+    独立性システム$(E, \mcF)$，$c: E \to \bbR_+$に関する\textbf{最小}化問題について， \begin{align*}
+        G(E,\mcF,c) &= (\text{Worst-Out-Greedyが発見した解のコスト}), \\
+        \rho^* &= (\text{$(E,\mcF^*)$のlower rank関数}), \\
+        r^* &= (\text{$(E,\mcF^*)$のランク関数})
+    \end{align*}
+    とすると， \begin{equation*}
+        1 \leq \frac{G(E,\mcF,c)}{\OPT(E,\mcF,c)} \leq \max_{F \subseteq E} \frac{|F| - \rho^*(F)}{|F| - r^*(F)}.
+    \end{equation*}
+    ある$c$は上界を達成する．
+\end{theorem}
+
+\begin{proof}
+    分子側($|G_j| \leq |E_j| - \rho^*(E_j)$)を示す．$E_j \setminus G_j$が$(E,\mcF^*)$における$E_j$の基であると言えれば， \begin{equation*}
+        |E_j| - |G_j| = |E_j \setminus G_j| = r^*(E_j) \geq \rho^*(E_j).
+    \end{equation*}
+    \begin{enumerate}
+        \item $E_j \setminus G_j \in \mcF^*$：$G_n$は$(E,\mcF)$の基であり，$(E_j \setminus G_j) \cap G_n = \emptyset$．
+        \item $(E_j \setminus G_j) \cup \{e\} \notin \mcF^*$ for all $e \in G_j$：$\forall B$(基) $G_j \setminus \{e\} \not\supseteq B$より，$\forall B$(基) $((E_j \setminus G_j) \cup \{e\}) \cap B \neq \emptyset$．
+    \end{enumerate}
+
+    分母側($|O_j| \geq |E_j| - r^*(E_j)$)を示す．$O_n$は$(E,\mcF)$の基であり，$(E_j \setminus O_j) \cap O_n = \emptyset$なので，$E_j \setminus O_j \in \mcF^*$，よって \begin{equation*}
+        |E_j| - |O_j| = |E_j \setminus O_j| \leq r^*(E_j \setminus O_j) \leq r^*(E_j).
+    \end{equation*}
+
+    よって同様の計算により不等式が示される．
+
+    上界を達成する$c$を構成する． \begin{equation*}
+        \max_{F \subseteq E} \frac{|F| - \rho^*(F)}{|F| - r^*(F)} = \frac{|F| - \rho^*(F)}{|F| - r^*(F)} = \frac{|F| - |B_1|}{|F| - |B_2|}
+    \end{equation*}
+    となるように$F \subseteq E$と$F$の($(E,\mcF^*)$での)基$B_1$，$B_2$をとり， \begin{equation*}
+        c(e) = \begin{cases}
+            1 & (e \in F) \\
+            0 & (e \notin F)
+        \end{cases}
+    \end{equation*}
+    とする．$E$の元を$c(e_1) \geq \cdots c(e_n)$，$B_1 = \{e_1,\ldots,e_{|B_1|}\}$となるように並べると， \begin{align*}
+        G(E,\mcF,c) &= |F|-|B_1|, \\
+        \OPT(E,\mcF,c) &= |F|-|B_2|.
+    \end{align*}
+\end{proof}
+
+\newpage
+
+\begin{theorem}
+    マトロイド$(E,\mcF)$，$C: E \to \bbR$，$X \in \mcF$，$k = |X|$について，$c(X) = \max\{c(Y) : Y \in \mcF,\ |Y| = k\}$であることは，以下が同時に成り立つことと同値． \begin{enumerate}
+        \item $y \in E \setminus X$，$X \cup \{y\} \notin \mcF$，$x \in C(X,y)$ $\Longrightarrow$ $c(x) \geq c(y)$．\footnote{$C(X,y)$は$X\cup\{y\}$が含むただ一つの閉路のこと．}
+        \item $y \in E \setminus X$，$X \cup \{y\} \in \mcF$，$x \in X$ $\Longrightarrow$ $c(x) \geq c(y)$．
+    \end{enumerate}
+\end{theorem}
+
+\begin{example*}
+    連結グラフ$G$のグラフィックマトロイド$(E,\mcF)$，$k=r(E)=|V|-1$．
+\end{example*}
+
+\begin{proof}
+    $(\Longrightarrow)$いずれかが成立しない場合，$(X \cup \{y\}) \setminus \{x\}$がより大きな重みを持つ．
+
+    $(\Longleftarrow)$ WLOG $c \geq 0$と仮定する．$\mcF' \coloneqq \{F \in \mcF : |F| \leq k\}$．
+
+    $E = \{e_1,\ldots,e_n\}$の元を重みの降順で並べ，同じ重みのもの同士では$X$の元が先に来るようにする．
+
+    $(E,\mcF')$はマトロイドなので，最大化問題に対するBest-In-Greedyの貪欲解$X'$をとると$c(X) = \max\{c(Y) : Y \in \mcF\}$．
+
+    $X = X'$を示す．$X \neq X'$を仮定する．
+
+    $X'$は基なので$|X| = k = |X'|$．$e_i \in X' \setminus X$なる最小の$i$をとる．このとき$j < i$について$e_j \in X$ $\Longleftrightarrow$ $e_j \in X'$．
+
+    $X \cup \{e_i\} \notin \mcF$ならば，(a)より各$e_j \in C(X,e_i)$は$j \leq i$を満たす．$e_j \in X$または$e_j = e_i$より$e_j \in X'$．したがって$C(X,e_i) \subseteq X'$となり，$X' \in \mcF'$に矛盾．
+
+    $X \cup \{e_i\} \in \mcF$ならば，(b)より各$e_j \in X$は$j < i$を満たす．したがって$e_j \in X'$より，$X \subset X'$．$|X| = |X'|$に矛盾．
+\end{proof}
+
+\end{document}

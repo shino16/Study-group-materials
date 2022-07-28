@@ -1,0 +1,291 @@
+\documentclass[xelatex,ja=standard,a4paper,14pt,everyparhook=compat]{bxjsarticle}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{enumitem, mleftright, mathtools, bm}
+\usepackage{ascmac}
+
+\setenumerate{label=(\alph*)}
+
+% \usepackage{concmath}
+% \usepackage[OT1]{fontenc}
+% \setsansfont{CMU Concrete}
+% \setmainfont{CMU Concrete}
+% \setCJKmainfont{Noto Sans JP}
+% \setCJKsansfont{Noto Sans JP Bold}
+
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbZ}{\mathbb{Z}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\mcF}{\mathcal{F}}
+\newcommand{\mcB}{\mathcal{B}}
+\newcommand{\mcC}{\mathcal{C}}
+
+\DeclareMathOperator{\OPT}{OPT}
+
+\newcommand{\paren}[1]{\mleft(#1\mright)}
+\newcommand{\norm}[1]{\mleft|#1\mright|}
+\newcommand{\ifthen}[3]{\text{$#1$ ? $#2$ : $#3$}}
+\newcommand{\bool}[1]{[#1]}
+\newcommand{\dotcup}{\mathbin{\dot\cup}}
+
+% \newcommand{\A1}{A^{(1)}}
+% \newcommand{\A2}{A^{(2)}}
+% \newcommand{\barA1}{\bar A^{(1)}}
+% \newcommand{\barA2}{\bar A^{(2)}}
+
+\theoremstyle{definition}
+\newtheorem{theorem}{定理}
+\newtheorem*{theorem*}{定理}
+\newtheorem{lemma}{補題}
+\newtheorem*{lemma*}{補題}
+\newtheorem{example}[theorem]{例}
+\newtheorem*{example*}{例}
+\newtheorem{definition}[theorem]{定義}
+\newtheorem*{definition*}{定義}
+\newtheorem{proposition}[theorem]{命題}
+\newtheorem*{proposition*}{命題}
+\newtheorem{corollary}[theorem]{系}
+\newtheorem{problem}{問題}
+\newtheorem*{answer}{解答}
+\renewcommand{\proofname}{\textup{証明}}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable,skins,theorems}
+
+\tcolorboxenvironment{definition}{
+    coltitle = black,
+    % colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{definition*}{
+    coltitle = black,
+    % colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{theorem}{
+    coltitle = black,
+    % colback = black!10!white,
+    colframe = blue!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{theorem*}{
+    coltitle = black,
+    % colback = black!10!white,
+    colframe = blue!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{proposition}{
+    coltitle = black,
+    % colback = black!10!white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{proposition*}{
+    coltitle = black,
+    % colback = black!10!white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{lemma}{
+    coltitle = black,
+    % colback = black!10!white,
+    colframe = gray!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{example}{
+    coltitle = black,
+    % colback = black!10!white,
+    colframe = purple!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{example*}{
+    coltitle = black,
+    % colback = black!10!white,
+    colframe = purple!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{lemma*}{
+    coltitle = black,
+    % colback = black!10!white,
+    colframe = gray!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{proof}{
+    blanker,
+    breakable,
+    left=5mm,
+    before skip=10pt,
+    after skip=10pt,
+    borderline west={1mm}{0pt}{black}
+}
+
+\tcolorboxenvironment{proof*}{
+    blanker,
+    breakable,
+    left=5mm,
+    before skip=10pt,
+    after skip=10pt,
+    borderline west={1mm}{0pt}{black}
+}
+
+\tcolorboxenvironment{problem}{
+    coltitle = black,
+    % colback = black!10!white,
+    colframe = black!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{answer}{
+    blanker,
+    breakable,
+    left=5mm,
+    before skip=10pt,
+    after skip=10pt,
+    borderline west={1mm}{0pt}{black}
+}
+
+\begin{document}
+
+\setcounter{section}{12}
+\section{Matroids}
+\setcounter{subsection}{6}
+\subsection{Weighted Matroid Intersection}
+
+\begin{itembox}[l]{重み付きマトロイド交差問題}
+    \begin{tabular}{ll}
+        インスタンス： & 独立性オラクルで与えられるマトロイド$(E,\mcF_1)$， \\
+                       & $(E,\mcF_2)$，重み$c:e\to\bbR$．                   \\
+        タスク：       & $c(X)$を最大化する$X \in \mcF_1 \cap \mcF_2$．
+    \end{tabular}
+\end{itembox}
+
+\setcounter{theorem}{34}
+\begin{lemma}
+    マトロイド$(E,\mcF)$，重み$c:E\to\bbR$，独立集合$X \in \mcF$について，$x_1,\ldots,x_l \in X$と$y_1,\ldots,y_l \notin X$が \begin{enumerate}
+        \item $x_j \in C(X, y_j)$ and $c(x_j) = c(y_j)$ for all j,
+        \item $x_i \notin C(X, y_j)$ or $c(x_i) > c(y_j)$ for all i < j,
+        \item $x_i \notin C(X, y_j)$ or $c(x_i) \geq c(y_j)$ for all j < i,
+    \end{enumerate}
+    を満たすとき，$(X \setminus \{x_1,\ldots,x_l\}) \cup \{y_1,\ldots,y_l\} \in \mcF$．
+\end{lemma}
+\begin{proof}
+    $l$で帰納法．
+
+    $l=1$のとき，$x_1 \in C(X,y_1)$より$(X \setminus \{x_1\}) \cup \{y_1\}$．
+
+    $\mu \coloneqq \min c(x_i)$，$h \coloneqq \min \{i : c(x_i) = \mu\}$，$X' \coloneqq (X \setminus \{x_h\}) \cup \{y_h\}$．
+
+    (a)より$X' \in \mcF$．$C(X',y_j) = C(X,y_j)$ ($\forall j \neq h$)が言えれば，$X'$と$(x_i), (y_i)$の残りに帰納法の仮定を適用して終了．
+
+    $h < j$のとき，$c(x_h) = \mu \leq c(x_j) = c(y_j)$なので$x_h \notin C(X,y_j)$．
+
+    $j < h$のとき，$c(x_h) = \mu < c(x_j) = c(y_j)$なので$x_h \notin C(X,y_j)$．
+
+    したがって，$j \neq h$について$x_h \notin C(X,y_j)$．
+
+    ゆえに$C(X,y_j) = C(X \setminus \{x_h\}, y_j) = C(X', y_j)$．
+\end{proof}
+
+\newpage
+
+\begin{itembox}[l]{アルゴリズムの概略}
+    $X = X_0 = \emptyset$から始めて， \begin{itemize}
+        \item 増加パス$P$をとり，$X_{k+1} \gets X_k \mathbin{\bigtriangleup} V(P)$
+    \end{itemize}
+    を繰り返す（重みなしver.と同様）．
+
+    これで得られる$X_0,\ldots,X_m \in \mcF_1 \cap \mcF_2$ ($|X_k| = k$)について， \begin{equation*}
+        c(X_k) = \max \{c(X) : X \in \mcF_1 \cap \mcF_2,\ |X| = k\} \quad (\forall k)
+    \end{equation*}
+    を保証．$\max_k c(X_k)$を達成する$X_k$が答え．
+\end{itembox}
+
+\begin{lemma*}[\#]
+    $X_k$と$c_1,c_2 : E \to \bbR$が \begin{itemize}
+        \item $c_1 + c_2 = c$, and
+        \item $c_i(X_k) = \max \{c_i(X) : X \in \mcF_i,\ |X| = k\}$ ($\forall i$)
+    \end{itemize}
+    を満たすとき，$c(X_k) = \max \{c(X) : X \in \mcF_1 \cap \mcF_2,\ |X| = k\}$．
+\end{lemma*}
+\begin{proof}
+    $\max$を達成する$X$をとると， \begin{align*}
+        c(X_k) &\leq c(X) \\
+        &= c_1(X) + c_2(X) \\
+        &\leq c_1(X_k) + c_2(X_k) \\
+        &= c(X_k).
+    \end{align*}
+\end{proof}
+
+\newpage
+
+補題(\#)の条件を満たす$X_k,c_1,c_2$について，二部グラフを構築する． \begin{align*}
+    A^{(1)} &= \{(x,y) : x \in C_1(X_k,y) \setminus \{y\},\ y \in E \setminus X\}, \\
+    A^{(2)} &= \{(y,x) : x \in C_2(X_k,y) \setminus \{y\},\ y \in E \setminus X\}, \\
+    S &= \{y \in E \setminus X : X_k \cup \{y\} \in \mcF_1\}, \\
+    T &= \{y \in E \setminus X : X_k \cup \{y\} \in \mcF_2\}
+\end{align*}
+とする．ここで \begin{align*}
+    m_1 &= \max \{c_1(y) : y \in S\}, \\
+    m_2 &= \max \{c_2(y) : y \in T\}, \\
+    \bar S &= \{y \in S : c_1(y) = m_1\}, \\
+    \bar T &= \{y \in T : c_2(y) = m_2\}, \\
+    \bar A^{(1)} &= \{(x,y) \in A^{(1)} : c_1(x) = c_1(y)\}, \\
+    \bar A^{(2)} &= \{(y,x) \in A^{(2)} : c_2(x) = c_2(y)\}, \\
+\end{align*}
+とし，グラフ$\bar G = (E, \bar A^{(1)} \cup \bar A^{(2)})$を考える．
+
+\begin{lemma*}
+    \begin{enumerate}
+        \item[(I)] $c_1(x) \geq c_1(y)$ ($\forall (x,y) \in A^{(1)}$).
+        \item[(II)] $c_2(x) \geq c_2(y)$ ($\forall (y,x) \in A^{(2)}$).
+        \item[(i)] $c_1(x) > c_1(y)$ ($\forall (x,y) \in A^{(1)} \setminus \bar A^{(1)}$).
+        \item[(ii)] $c_2(x) > c_2(y)$ ($\forall (y,x) \in A^{(2)} \setminus \bar A^{(2)}$).
+    \end{enumerate}
+\end{lemma*}
+\begin{proof}
+    (I), (II)は定理13.23よりよい．(i), (ii)は$\bar A^{(1)}, \bar A^{(2)}$の定義よりよい．
+\end{proof}
+
+\newpage
+
+\begin{lemma*}
+    最短$\bar S$-$\bar T$-パス$P$について，$X_{k+1} = X_k \mathbin{\bigtriangleup} V(P)$とすると \begin{enumerate}[label=(\Alph*)]
+        \item $X_{k+1} \in \mcF_1 \cap \mcF_2$, and
+        \item $X_{k+1},c_1,c_2$は補題(\#)の条件を満たす．
+    \end{enumerate}
+\end{lemma*}
+\begin{proof}
+    (A) $P = y_0x_1y_1\cdots x_ly_l$とおく．
+
+    $X_{k+1} \in \mcF_1$を示す．$y_0 \in S$より$X_k \cup \{y_0\} \in \mcF_1$，また$C(X_k,y_j) = C(X_k \cup \{y_0\},y_j)$．
+
+    $X_k \cup \{y_0\}$，$c_1$，$x_1,\ldots,x_l$と$y_1,\ldots,y_l$に対して補題13.35を適用． \begin{enumerate}
+        \item $(x_j,y_j) \in \bar A^{(1)}$より$x_j \in C_1(X_k,y_j)$ and $c_1(x_j) = c_1(y_j)$．
+        \item $i < j$とする．$P$は最短なので$(x_i,y_j) \notin \bar A^{(1)}$
+    \end{enumerate}
+\end{proof}
+
+\end{document}
