@@ -1,5 +1,0 @@
-\contentsline {section}{\numberline {0}復習}{1}%
-\contentsline {section}{\numberline {1}線形順序拡大}{2}%
-\contentsline {subsection}{\numberline {1.1}格子パスとの対応}{2}%
-\contentsline {subsection}{\numberline {1.2}具体例}{4}%
-\contentsline {subsection}{\numberline {1.3}パスカルの三角形との関係}{5}%

@@ -1,0 +1,247 @@
+\documentclass[xelatex,ja=standard,a4paper,14pt,everyparhook=compat]{bxjsarticle}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools, bm}
+\usepackage{enumitem}
+\setenumerate{label=\alph*.}
+\usepackage{ascmac}
+
+% \usepackage{concmath}
+% \usepackage[OT1]{fontenc}
+% \setsansfont{Computer Mathematics}
+% \setmainfont{CMU Concrete}
+% \setCJKmainfont{Noto Sans JP Light}
+% \setCJKsansfont{Noto Sans JP Light}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\rhead{\leftmark}
+\lhead{\rightmark}
+\renewcommand{\footrulewidth}{0.4pt}
+\let\origtitle\title
+\renewcommand{\title}[1]{\lfoot{#1}\origtitle{#1}}
+\cfoot{}
+\rfoot{\thepage}
+
+\newcommand{\paren}[1]{\left(#1\right)}
+
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbP}{\mathbb{P}}
+\newcommand{\bbF}{\mathbb{F}}
+\newcommand{\frakS}{\mathfrak{S}}
+\DeclareMathOperator{\inv}{inv}
+\DeclareMathOperator{\conv}{conv}
+\DeclareMathOperator{\image}{Im}
+
+\theoremstyle{definition}
+\newtheorem{theorem}{定理}
+\newtheorem*{theorem*}{定理}
+\newtheorem{lemma}{補題}
+\newtheorem*{lemma*}{補題}
+\newtheorem{example}[theorem]{例}
+\newtheorem*{example*}{例}
+\newtheorem{definition}[theorem]{定義}
+\newtheorem*{definition*}{定義}
+\newtheorem{proposition}[theorem]{命題}
+\newtheorem*{proposition*}{命題}
+\newtheorem{corollary}[theorem]{系}
+\newtheorem{problem}{問題}
+\newtheorem*{answer}{解答}
+\renewcommand{\proofname}{\textup{証明}}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable,skins,theorems}
+
+\tcolorboxenvironment{definition}{
+    coltitle = black,
+    % colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{definition*}{
+    coltitle = black,
+    % colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{theorem}{
+    coltitle = black,
+    % colback = black!10!white,
+    colframe = blue!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{theorem*}{
+    coltitle = black,
+    % colback = black!10!white,
+    colframe = blue!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{proposition}{
+    coltitle = black,
+    % colback = black!10!white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{proposition*}{
+    coltitle = black,
+    % colback = black!10!white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{lemma}{
+    coltitle = black,
+    % colback = black!10!white,
+    colframe = gray!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{example}{
+    coltitle = black,
+    % colback = black!10!white,
+    colframe = purple!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{example*}{
+    coltitle = black,
+    % colback = black!10!white,
+    colframe = purple!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{lemma*}{
+    coltitle = black,
+    % colback = black!10!white,
+    colframe = gray!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{proof}{
+    blanker,
+    breakable,
+    left=5mm,
+    before skip=10pt,
+    after skip=10pt,
+    borderline west={1mm}{0pt}{black}
+}
+
+\tcolorboxenvironment{proof*}{
+    blanker,
+    breakable,
+    left=5mm,
+    before skip=10pt,
+    after skip=10pt,
+    borderline west={1mm}{0pt}{black}
+}
+
+\tcolorboxenvironment{problem}{
+    coltitle = black,
+    % colback = black!10!white,
+    colframe = black!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{answer}{
+    blanker,
+    breakable,
+    left=5mm,
+    before skip=10pt,
+    after skip=10pt,
+    borderline west={1mm}{0pt}{black}
+}
+
+\title{第3章 演習問題}
+\author{shino16}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\newpage
+
+\setcounter{problem}{85}
+\begin{problem}
+$L$：有限束，$f,g : L \to K$ (標数$0$の体)について \begin{equation*}
+    f(s) = \sum_{t : s \land t = \hat 0} g(t),
+\end{equation*}
+とする．$\mu(\hat 0, u) \neq 0$ ($\forall u \in L$)であるとき， \begin{equation*}
+    g(s) = \sum_t \alpha(s,t) f(t)
+\end{equation*}
+を示せ．ただし \begin{equation*}
+    \alpha(s,t) = \sum_u \frac{\mu(s,u) \mu(t,u)}{\mu(\hat 0, u)}.
+\end{equation*}
+\end{problem}
+
+\begin{answer}
+    $G(s) = \sum_{s \leq t} g(t)$ ($G = \zeta g$)とする． \begin{align*}
+        f(s) = \sum_{t : s \land t = \hat 0} g(t)
+         & = \sum_t g(t) \sum_{u \leq s \land t} \mu(\hat 0, u)  \\
+         & = \sum_{u \leq s} \mu(\hat 0, u) \sum_{u \leq t} g(t) \\
+         & = \sum_{u \leq s} \mu(\hat 0, u) G(u).
+    \end{align*}
+    $f(s), \mu(\hat 0, u) G(u)$に対するM\"obius反転より \begin{align*}
+        \mu(\hat 0, t) G(t) = \sum_{u \leq t} f(u) \mu(u, t).
+    \end{align*}
+    一方，$G(s), g(t)$に対するM\"obius反転より \begin{align*}
+        g(s) & = \sum_{s \leq t} \mu(s, t) G(t)                                               \\
+             & = \sum_{s \leq t} \frac{\mu(s,t)}{\mu(\hat0,t)} \sum_{u \leq t} f(u) \mu(u, t) \\
+             & = \sum_u f(u) \sum_t \frac{\mu(s,t) \mu(u,t)}{\mu(\hat0,t)}.
+    \end{align*}
+\end{answer}
+
+\begin{problem}
+\begin{enumerate}
+    \item $P$：$\hat0,\hat1$つきの有限poset，$f: P \to \bbC$．
+          \begin{align*}
+                  & \sum (f(t_1)-1) (f(t_2)-1) \cdots (f(t_k)-1)                                                   \\
+              ={} & \sum (-1)^{k+1} \mu(\hat0, t_1) \mu(t_1,t_2) \cdots \mu(t_k,\hat1) f(t_1) f(t_2) \cdots f(t_k)
+          \end{align*}
+          を示せ．ただし和は全ての$k$と鎖$\hat 0 < t_1 < \cdots < t_k < \hat 1$にわたってとる．
+    \item 次を示せ： \begin{equation*}
+              \sum_{\hat0 = t_0 < t_1 < \cdots < t_k = \hat1} (-1)^k \mu(\hat0, t_1) \mu(t_1,t_2) \cdots \mu(t_{k-1},t_k) = 1.
+          \end{equation*}
+          \item (b)を隣接代数を用いて示せ．
+          \item
+\end{enumerate}
+\end{problem}
+
+\begin{answer}
+    (a) ある鎖$C: \hat0 < t_1 < \cdots < t_k < \hat1$について，$f(t_1)\cdots f(t_k)$の寄与は \begin{align*}
+            & \sum_{\text{鎖$C'$} \supseteq C} (-1)^{\#(C'-C)}                                                                            \\
+        ={} & \sum_{\text{鎖$C'$} \supseteq C} (-1)^{\#(C' \cap (\hat0,t_1)) + \#(C' \cap (t_1,t_2)) + \cdots + \#(C' \cap (t_k,\hat1))}.
+    \end{align*}
+    \begin{itembox}[l]{命題3.8.5}
+        有限poset $P$について，
+        \begin{align*}
+            \mu_{\widehat P}(\hat0, \hat1)
+             & = \sum_{k \geq 0} (-(\zeta-1))^k (\hat0,\hat1) \\
+             & = c_0 - c_1 + c_2 - c_3 + \cdots
+        \end{align*}
+        ただし$c_i \coloneqq (\text{$\hat0$から$\hat1$への長さ$i$の鎖の個数})$.
+    \end{itembox}
+    $\mu(t_i, t_{i+1}) = \sum_{C} (-1)^{\#C-1}$ ($C$は$t_i$から$t_{i+1}$への鎖)などから， \begin{align*}
+            & \sum_{\text{鎖$C'$} \supseteq C} (-1)^{\#(C' \cap (\hat0,t_1)) + \#(C' \cap (t_1,t_2)) + \cdots + \#(C' \cap (t_k,\hat1))} \\
+        ={} & (-1)^{k+1} \mu(\hat0, t_1) \mu(t_1,t_2) \cdots \mu(t_k,\hat1).
+    \end{align*}
+
+    (b) $f(t) = 0$ ($\forall t \in P$)として得られる．
+\end{answer}
+
+\end{document}
