@@ -23,7 +23,7 @@
 \cfoot{}
 \rfoot{\thepage}
 
-\newcommand{\paren}[1]{\left(#1\right)}
+\newcommand{\defby}{\overset{\mathrm{def}}{\iff}}
 
 \newcommand{\bbC}{\mathbb{C}}
 \newcommand{\bbR}{\mathbb{R}}
@@ -40,6 +40,7 @@
 \DeclareMathOperator{\conv}{conv}
 \DeclareMathOperator{\image}{Im}
 \DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\nullity}{null}
 \DeclareMathOperator{\ess}{ess}
 \DeclareMathOperator{\codim}{codim}
 
@@ -213,7 +214,7 @@
     配置$\mcA$について， \begin{equation*}
         \text{Intersection poset $L(\mcA) \coloneqq \{\text{$0$個以上の超平面の非空な交わり}\}$}.
     \end{equation*}
-    $\hat 0f = V$．$s \leq t \overset{\mathrm{def}}{\Longleftrightarrow} s \supseteq t$．
+    $\hat 0f = V$．$s \leq t \overset{\mathrm{def}}{\iff} s \supseteq t$．
 \end{definition}
 
 \begin{definition}
@@ -257,7 +258,7 @@
 \begin{definition}
     $\mcA$の超平面はgeneral positionにある
 
-    $\overset{\mathrm{def}}{\Longleftrightarrow}$ 以下が同時に成立： \begin{enumerate}
+    $\overset{\mathrm{def}}{\iff}$ 以下が同時に成立： \begin{enumerate}
         \item $\{H_1,\ldots,H_p\} \subseteq \mcA$, $p \leq n$ $\Longrightarrow$ $\dim(H_1 \cap \cdots \cap H_p) = n-p$,
         \item $\{H_1,\ldots,H_p\} \subseteq \mcA$, $p > n$ $\Longrightarrow$ $H_1 \cap \cdots \cap H_p = \emptyset$.
     \end{enumerate}
@@ -286,7 +287,7 @@
                   \Longrightarrow{} & S = S'.
               \end{align*}
         \item $\phi$と$\phi^{-1}$は順序を保つ： \begin{equation*}
-                  S \subseteq S' \Longleftrightarrow \phi(S) \supseteq \phi(S').
+                  S \subseteq S' \iff \phi(S) \supseteq \phi(S').
               \end{equation*}
     \end{enumerate}
     ゆえに$L(\mcA) \cong P$．
@@ -318,11 +319,11 @@ $m \geq n$のとき$\rank(\mcA) = n$より \begin{align*}
     \item 漸化式を用いる： \begin{align*}
                   & \binom{m}{n} - \binom{m}{n-1} + \binom{m}{n-2} - \cdots                                                \\
               ={} & \left[\binom{m-1}{n}+\binom{m-1}{n-1}\right] - \left[\binom{m-1}{n-1}+\binom{m-1}{n-2}\right] + \cdots \\
-              ={}& \binom{m-1}{n}.
+              ={} & \binom{m-1}{n}.
           \end{align*}
     \item FPS： \begin{equation*}
-        (-1)^n [x^n] \frac{1}{1-x}(1-x)^m = \binom{m-1}{n}.
-    \end{equation*}
+              (-1)^n [x^n] \frac{1}{1-x}(1-x)^m = \binom{m-1}{n}.
+          \end{equation*}
 \end{enumerate}
 
 \newpage
@@ -339,25 +340,37 @@ $\bbQ$上の配置$\mcA$の特性多項式を，有限体を使って計算し�
 \end{enumerate}
 
 \begin{definition}
-    $\mcA$は$\umod q$で\textbf{良い帰着}を持つ $\overset{\mathrm{def}}{\Longleftrightarrow}$ $L(\mcA) \cong L(\mcA_q)$．
+    $\mcA$は$\umod q$で\textbf{良い帰着}を持つ $\overset{\mathrm{def}}{\iff}$ $L(\mcA) \cong L(\mcA_q)$．
 \end{definition}
 
 \begin{proposition}
     $\bbZ$上の配置$\mcA$について，$\mcA$が$\umod p$で良い帰着を持たないような素数$p$は有限個のみ．
 \end{proposition}
 \begin{proof}
-    $\bbZ$上のアフィン空間$H_1,\ldots,H_j$ ($H_i : \alpha_i \cdot x = a_i$)について， \begin{align*}
-        & H_1 \cap \cdots \cap H_j \neq \emptyset \\
-        \Longleftrightarrow{}& \rank\begin{pmatrix}
-            \alpha_1 & a_1 \\
-            \vdots & \vdots \\
+    アフィン空間$H_1,\ldots,H_j$ ($H_i : \alpha_i \cdot x = a_i$)について， \begin{align*}
+               & H_1 \cap \cdots \cap H_j \neq \emptyset                             \\
+        \iff{} & \rank\begin{pmatrix}
+            \alpha_1 & a_1    \\
+            \vdots   & \vdots \\
             \alpha_j & a_j
         \end{pmatrix} = \rank \begin{pmatrix}
             \alpha_1 \\
-            \vdots \\
+            \vdots   \\
             \alpha_j
         \end{pmatrix}.
     \end{align*}
+    また$H_1 \cap \cdots \cap H_j \neq \emptyset$ならば \begin{equation*}
+        \dim(H_1 \cap \cdots \cap H_j) = \nullity \begin{pmatrix}
+            \alpha_1 \\
+            \vdots   \\
+            \alpha_j
+        \end{pmatrix} = n - \rank \begin{pmatrix}
+            \alpha_1 \\
+            \vdots   \\
+            \alpha_j
+        \end{pmatrix}.
+    \end{equation*}
+
 \end{proof}
 
 \end{document}
