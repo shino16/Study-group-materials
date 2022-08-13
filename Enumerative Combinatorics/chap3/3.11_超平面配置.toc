@@ -1,0 +1,4 @@
+\contentsline {section}{\numberline {0}復習}{2}%
+\contentsline {section}{\numberline {1}General Positionと特性多項式}{3}%
+\contentsline {section}{\numberline {2}有限体法}{6}%
+\contentsline {subsection}{\numberline {2.1}$\mathbb {Q}$から$\mathbb {F}_q$への帰着}{6}%

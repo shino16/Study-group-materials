@@ -1,0 +1,363 @@
+\documentclass[xelatex,ja=standard,a4paper,14pt,everyparhook=compat]{bxjsarticle}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools, bm}
+\usepackage{enumitem}
+\setenumerate{label=(\alph*)}
+
+% \usepackage{concmath}
+% \usepackage[OT1]{fontenc}
+\setsansfont{Segoe UI}
+% \setmainfont{CMU Concrete}
+% \usepackage{zxjatype}
+\usepackage[noto-jp,oneweight]{zxjafont}
+% \setCJKmainfont{Noto Serif JP}
+% \setCJKsansfont{Noto Sans JP}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{\nouppercase{\leftmark}}
+\rhead{\nouppercase{\rightmark}}
+\renewcommand{\footrulewidth}{0.4pt}
+\let\origtitle\title
+\renewcommand{\title}[1]{\lfoot{#1}\origtitle{#1}}
+\cfoot{}
+\rfoot{\thepage}
+
+\newcommand{\paren}[1]{\left(#1\right)}
+
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbQ}{\mathbb{Q}}
+\newcommand{\bbZ}{\mathbb{Z}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbP}{\mathbb{P}}
+\newcommand{\bbF}{\mathbb{F}}
+\newcommand{\frakS}{\mathfrak{S}}
+\newcommand{\mcA}{\mathcal{A}}
+\newcommand{\mcB}{\mathcal{B}}
+\newcommand{\umod}{{\bmod\:}}
+\DeclareMathOperator{\inv}{inv}
+\DeclareMathOperator{\conv}{conv}
+\DeclareMathOperator{\image}{Im}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\ess}{ess}
+\DeclareMathOperator{\codim}{codim}
+
+\theoremstyle{definition}
+\newtheorem{theorem}{定理}
+\newtheorem*{theorem*}{定理}
+\newtheorem{lemma}{補題}
+\newtheorem*{lemma*}{補題}
+\newtheorem{example}[theorem]{例}
+\newtheorem*{example*}{例}
+\newtheorem{definition}[theorem]{定義}
+\newtheorem*{definition*}{定義}
+\newtheorem{proposition}[theorem]{命題}
+\newtheorem*{proposition*}{命題}
+\newtheorem{corollary}[theorem]{系}
+\newtheorem*{corollary*}{系}
+\newtheorem{problem}{問題}
+\newtheorem*{answer}{解答}
+\renewcommand{\proofname}{\textup{証明}}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable,skins,theorems}
+
+\tcolorboxenvironment{definition}{
+    coltitle = black,
+    % colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{definition*}{
+    coltitle = black,
+    % colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{theorem}{
+    coltitle = black,
+    % colback = black!10!white,
+    colframe = blue!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{theorem*}{
+    coltitle = black,
+    % colback = black!10!white,
+    colframe = blue!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{proposition}{
+    coltitle = black,
+    % colback = black!10!white,
+    colframe = blue!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{proposition*}{
+    coltitle = black,
+    % colback = black!10!white,
+    colframe = blue!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{corollary}{
+    coltitle = black,
+    % colback = black!10!white,
+    colframe = blue!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{corollary*}{
+    coltitle = black,
+    % colback = black!10!white,
+    colframe = blue!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{lemma}{
+    coltitle = black,
+    % colback = black!10!white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{example}{
+    coltitle = black,
+    colback = white,
+    colframe = purple!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{example*}{
+    coltitle = black,
+    colback = white,
+    colframe = purple!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{lemma*}{
+    coltitle = black,
+    % colback = black!10!white,
+    colframe = gray!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{proof}{
+    blanker,
+    breakable,
+    left=5mm,
+    before skip=10pt,
+    after skip=10pt,
+    borderline west={1mm}{0pt}{black}
+}
+
+\tcolorboxenvironment{proof*}{
+    blanker,
+    breakable,
+    left=5mm,
+    before skip=10pt,
+    after skip=10pt,
+    borderline west={1mm}{0pt}{black}
+}
+
+\tcolorboxenvironment{problem}{
+    coltitle = black,
+    % colback = black!10!white,
+    colframe = black!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{answer}{
+    blanker,
+    breakable,
+    left=5mm,
+    before skip=10pt,
+    after skip=10pt,
+    borderline west={1mm}{0pt}{black}
+}
+
+\title{3.11節の残り}
+\author{shino16}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\newpage
+
+\setcounter{section}{-1}
+\section{復習}
+
+\begin{definition}
+    配置$\mcA$について， \begin{equation*}
+        \text{Intersection poset $L(\mcA) \coloneqq \{\text{$0$個以上の超平面の非空な交わり}\}$}.
+    \end{equation*}
+    $\hat 0f = V$．$s \leq t \overset{\mathrm{def}}{\Longleftrightarrow} s \supseteq t$．
+\end{definition}
+
+\begin{definition}
+    \begin{align*}
+        \text{特性多項式 $\chi_\mcA(x)$ }
+         & \coloneqq \sum_{t \in L(\mcA)} \mu(\hat0, t) x^{\dim(t)} \\
+         & = \sum_{\substack{\mcB \subseteq \mcA                    \\ \text{central}}} (-1)^{\#\mcB} x^{n - \rank(\mcB)} && (\text{命題3.11.3}).
+    \end{align*}
+\end{definition}
+
+\begin{proposition}[3.11.5, Deletion-Restriction]
+    配置$\mcA$，$H_0 \in \mcA$について \begin{align*}
+        \mcA'  & \coloneqq \mcA - \{H_0\},                                          \\
+        \mcA'' & \coloneqq \mcA^{H_0} = \{H \cap H_0 \neq \emptyset : H \in \mcA\}.
+    \end{align*}
+    このとき \begin{equation*}
+        \chi_A(x) = \chi_{\mcA'}(x) - \chi_{\mcA''}(x).
+    \end{equation*}
+\end{proposition}
+
+\begin{definition}
+    $V : \text{実線形空間}$について \begin{align*}
+        r(\mcA) & \coloneqq \#(\text{領域}) = r(\mcA') + r(\mcA''),                             \\
+        b(\mcA) & \coloneqq \#(\text{相対的に有界な領域}) \quad (\text{essentializeすると有界}) \\
+                & = \begin{cases}
+            b(\mcA') + b(\mcA'') & \text{if $\rank(\mcA) = \rank(\mcA')$,}     \\
+            0                    & \text{if $\rank(\mcA) = \rank(\mcA') + 1$.}
+        \end{cases}
+    \end{align*}
+\end{definition}
+
+\begin{theorem}
+    \begin{align*}
+        r(\mcA) & = (-1)^n \chi_\mcA(-1),            \\
+        b(\mcA) & = (-1)^{\rank(\mcA)} \chi_\mcA(1).
+    \end{align*}
+\end{theorem}
+
+\section{General Positionと特性多項式}
+
+\begin{definition}
+    $\mcA$の超平面はgeneral positionにある
+
+    $\overset{\mathrm{def}}{\Longleftrightarrow}$ 以下が同時に成立： \begin{enumerate}
+        \item $\{H_1,\ldots,H_p\} \subseteq \mcA$, $p \leq n$ $\Longrightarrow$ $\dim(H_1 \cap \cdots \cap H_p) = n-p$,
+        \item $\{H_1,\ldots,H_p\} \subseteq \mcA$, $p > n$ $\Longrightarrow$ $H_1 \cap \cdots \cap H_p = \emptyset$.
+    \end{enumerate}
+\end{definition}
+
+\begin{proposition}
+    $\mcA:\text{general position}$，$m = \#\mcA$について \begin{align*}
+        \chi_\mcA(x) & = \sum_{k=0}^n (-1)^k \binom{m}{k} x^{n-k}                            \\
+                     & = x^n - mx^{n-1} + \binom{m}{2}x^{n-2} - \cdots + (-1)^n\binom{m}{n}.
+    \end{align*}
+\end{proposition}
+\begin{proof}
+    方針：$L(\mcA)$の構造に注目．$\mu(\hat0,t)$をexplicitに求める．
+
+    \begin{align*}
+        \mcA & = \{H_1,\ldots,H_m\},                                           \\
+        P    & = \{S \subseteq [m] : \#S \leq n\}\text{ を包含関係で順序付け}, \\
+        \phi & : P \to L(\mcA), \quad S \mapsto \bigcap_{i \in S} H_i,
+    \end{align*}
+    とする\footnote{$P$はtruncated boolean algebraと呼ばれる．}．このとき \begin{enumerate}
+        \item $\phi$は全射：明らか．
+        \item $\phi$は単射： \begin{align*}
+                                    & \phi(S) = \phi(S')                          \\
+                  \Longrightarrow{} & \phi(S) = \phi(S \cup S')                   \\
+                  \Longrightarrow{} & n - \#S = \dim(\phi(S)) = n - \#(S \cup S') \\
+                  \Longrightarrow{} & S = S'.
+              \end{align*}
+        \item $\phi$と$\phi^{-1}$は順序を保つ： \begin{equation*}
+                  S \subseteq S' \Longleftrightarrow \phi(S) \supseteq \phi(S').
+              \end{equation*}
+    \end{enumerate}
+    ゆえに$L(\mcA) \cong P$．
+
+    $[\hat0,S] \cong B_{\#S}$より$\mu(\hat0,S) = (-1)^{\#S}$，また$\dim(\phi(S)) = n - \#S$より \begin{align*}
+        \chi_\mcA(x) & = \sum_{t \in L(\mcA)} \mu(\hat0,t) x^{\dim(t)} \\
+                     & = \sum_{S \in P} (-1)^{\#S} x^{n-\#S}           \\
+                     & = \sum_{k=0}^n (-1)^k \binom{m}{k} x^{n-k}.
+    \end{align*}
+\end{proof}
+
+なお$V:\text{実線形空間}$について \begin{align*}
+    r(\mcA) = (-1)^n \chi_\mcA(-1)
+     & = \sum_{k=0}^n \binom{m}{k}                     \\
+     & = 1 + m + \binom{m}{2} + \cdots + \binom{m}{n}.
+\end{align*}
+$m < n$のとき \begin{align*}
+    b(\mcA) & = (-1)^m \chi_\mcA(1)                     \\
+            & = (-1)^m \sum_{k=0}^m (-1)^k \binom{m}{k} \\
+            & = \delta_{0m},
+\end{align*}
+$m \geq n$のとき$\rank(\mcA) = n$より \begin{align*}
+    b(\mcA) & = (-1)^n \chi_\mcA(1)                  \\
+            & = \sum_{k=0}^n (-1)^{n-k} \binom{m}{k} \\
+    % & = (-1)^n \left[ 1 - m + \binom{m}{2} - \cdots + (-1)^n \binom{m}{n} \right] \\
+            & = \binom{m-1}{n}.
+\end{align*}
+(注)最後の等号について： \begin{enumerate}
+    \item 漸化式を用いる： \begin{align*}
+                  & \binom{m}{n} - \binom{m}{n-1} + \binom{m}{n-2} - \cdots                                                \\
+              ={} & \left[\binom{m-1}{n}+\binom{m-1}{n-1}\right] - \left[\binom{m-1}{n-1}+\binom{m-1}{n-2}\right] + \cdots \\
+              ={}& \binom{m-1}{n}.
+          \end{align*}
+    \item FPS： \begin{equation*}
+        (-1)^n [x^n] \frac{1}{1-x}(1-x)^m = \binom{m-1}{n}.
+    \end{equation*}
+\end{enumerate}
+
+\newpage
+
+\section{有限体法}
+
+$\bbQ$上の配置$\mcA$の特性多項式を，有限体を使って計算しよう．
+
+\subsection{$\bbQ$から$\bbF_q$への帰着}
+
+\begin{enumerate}[label=(\arabic*)]
+    \item $\mcA$全体を同時に整数倍して分母をはらう．
+    \item 素ベキ$q$をとって全体の$\umod q$をとり，$\mcA_q$を得る．
+\end{enumerate}
+
+\begin{definition}
+    $\mcA$は$\umod q$で\textbf{良い帰着}を持つ $\overset{\mathrm{def}}{\Longleftrightarrow}$ $L(\mcA) \cong L(\mcA_q)$．
+\end{definition}
+
+\begin{proposition}
+    $\bbZ$上の配置$\mcA$について，$\mcA$が$\umod p$で良い帰着を持たないような素数$p$は有限個のみ．
+\end{proposition}
+\begin{proof}
+    $\bbZ$上のアフィン空間$H_1,\ldots,H_j$ ($H_i : \alpha_i \cdot x = a_i$)について， \begin{align*}
+        & H_1 \cap \cdots \cap H_j \neq \emptyset \\
+        \Longleftrightarrow{}& \rank\begin{pmatrix}
+            \alpha_1 & a_1 \\
+            \vdots & \vdots \\
+            \alpha_j & a_j
+        \end{pmatrix} = \rank \begin{pmatrix}
+            \alpha_1 \\
+            \vdots \\
+            \alpha_j
+        \end{pmatrix}.
+    \end{align*}
+\end{proof}
+
+\end{document}
