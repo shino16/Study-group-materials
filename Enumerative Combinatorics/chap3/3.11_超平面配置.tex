@@ -2,6 +2,7 @@
 \usepackage{amsmath, amssymb, amsthm}
 \usepackage{mathtools, bm}
 \usepackage{enumitem}
+\usepackage{hyperref}
 \setenumerate{label=(\alph*)}
 
 % \usepackage{concmath}
@@ -35,6 +36,7 @@
 \newcommand{\frakS}{\mathfrak{S}}
 \newcommand{\mcA}{\mathcal{A}}
 \newcommand{\mcB}{\mathcal{B}}
+\newcommand{\mcS}{\mathcal{S}}
 \newcommand{\umod}{{\bmod\:}}
 \DeclareMathOperator{\inv}{inv}
 \DeclareMathOperator{\conv}{conv}
@@ -45,18 +47,18 @@
 \DeclareMathOperator{\codim}{codim}
 
 \theoremstyle{definition}
-\newtheorem{theorem}{定理}
-\newtheorem*{theorem*}{定理}
-\newtheorem{lemma}{補題}
-\newtheorem*{lemma*}{補題}
-\newtheorem{example}[theorem]{例}
-\newtheorem*{example*}{例}
-\newtheorem{definition}[theorem]{定義}
-\newtheorem*{definition*}{定義}
-\newtheorem{proposition}[theorem]{命題}
-\newtheorem*{proposition*}{命題}
-\newtheorem{corollary}[theorem]{系}
-\newtheorem*{corollary*}{系}
+% \newtheorem{theorem}{定理}
+\newtheorem*{theorem}{定理}
+% \newtheorem{lemma}{補題}
+\newtheorem*{lemma}{補題}
+% \newtheorem{example}[theorem]{例}
+\newtheorem*{example}{例}
+% \newtheorem{definition}[theorem]{定義}
+\newtheorem*{definition}{定義}
+% \newtheorem{proposition}[theorem]{命題}
+\newtheorem*{proposition}{命題}
+% \newtheorem{corollary}[theorem]{系}
+\newtheorem*{corollary}{系}
 \newtheorem{problem}{問題}
 \newtheorem*{answer}{解答}
 \renewcommand{\proofname}{\textup{証明}}
@@ -334,10 +336,10 @@ $\bbQ$上の配置$\mcA$の特性多項式を，有限体を使って計算し�
 
 \subsection{$\bbQ$から$\bbF_q$への帰着}
 
-\begin{enumerate}[label=(\arabic*)]
+\begin{itemize}
     \item $\mcA$全体を同時に整数倍して分母をはらう．
     \item 素ベキ$q$をとって全体の$\umod q$をとり，$\mcA_q$を得る．
-\end{enumerate}
+\end{itemize}
 
 \begin{definition}
     $\mcA$は$\umod q$で\textbf{良い帰着}を持つ $\overset{\mathrm{def}}{\iff}$ $L(\mcA) \cong L(\mcA_q)$．
@@ -347,8 +349,8 @@ $\bbQ$上の配置$\mcA$の特性多項式を，有限体を使って計算し�
     $\bbZ$上の配置$\mcA$について，$\mcA$が$\umod p$で良い帰着を持たないような素数$p$は有限個のみ．
 \end{proposition}
 \begin{proof}
-    アフィン空間$H_1,\ldots,H_j$ ($H_i : \alpha_i \cdot x = a_i$)について， \begin{align*}
-               & H_1 \cap \cdots \cap H_j \neq \emptyset                             \\
+    $H_1,\ldots,H_j \in \mcA$ ($H_i : \alpha_i \cdot x = a_i$)について， \begin{align} \label{rank}
+               & H_1 \cap \cdots \cap H_j \neq \emptyset \nonumber                   \\
         \iff{} & \rank\begin{pmatrix}
             \alpha_1 & a_1    \\
             \vdots   & \vdots \\
@@ -358,8 +360,8 @@ $\bbQ$上の配置$\mcA$の特性多項式を，有限体を使って計算し�
             \vdots   \\
             \alpha_j
         \end{pmatrix}.
-    \end{align*}
-    また$H_1 \cap \cdots \cap H_j \neq \emptyset$ならば \begin{equation*}
+    \end{align}
+    また$H_1 \cap \cdots \cap H_j \neq \emptyset$ならば \begin{equation} \label{dim}
         \dim(H_1 \cap \cdots \cap H_j) = \nullity \begin{pmatrix}
             \alpha_1 \\
             \vdots   \\
@@ -369,8 +371,151 @@ $\bbQ$上の配置$\mcA$の特性多項式を，有限体を使って計算し�
             \vdots   \\
             \alpha_j
         \end{pmatrix}.
+    \end{equation}
+    等式(\ref{rank})の成立/不成立と式(\ref{dim})の値が$\bbZ$上，$\bbF_q$上で一致すればよい．
+
+    ($\because$ 増えない(1)，潰れない(2)，大小関係を保つ(明らか)，比較不可能な関係を保つ(2))
+
+    $(\text{行列の$\rank$}) = (\text{$\max k$ s.t. 正則な$k \times k$小行列が存在})$より，どの正方小行列についても行列式が非ゼロから$\umod p$でゼロにならなければよい．$p$を十分大きくとればOK．
+\end{proof}
+
+\subsection{$\chi_\mcA(q)$の計算}
+
+この節のメイン．
+
+\begin{theorem}[3.11.10]
+    $\bbQ^n$上の配置$\mcA$，$L(\mcA) \cong L(\mcA_q)$なる素ベキ$q$について， \begin{align*}
+        \chi_\mcA(q) & = \#\left(\bbF_q^n - \bigcup_{H \in \mcA_q} H\right) \\
+                     & = q^n - \#\bigcup_{H \in \mcA_q} H.
+    \end{align*}
+\end{theorem}
+無限個の$q$について上の等式が成り立つので，補完で$\chi_\mcA(x)$が得られる．
+\begin{proof}
+    方針：$\chi_\mcA(q)$をM\"obius反転の式にあてはめる．
+
+    $f,g : L(\mcA_q) \to \bbZ$を \begin{align*}
+        f(t) & = \#t = q^{\dim(t)},                    \\
+        g(t) & = \#\left(t - \bigcup_{u > t} u\right),
+    \end{align*}
+    で定める．$f(t) = \sum_{u \geq t} g(u)$より \begin{align*}
+        g(t) & = \sum_{u \geq t} \mu(t,u) f(u)         \\
+             & = \sum_{u \geq t} \mu(t,u) q^{\dim(u)}.
+    \end{align*}
+    $t = \hat0$を代入して \begin{equation*}
+        g(\hat0) = \chi_\mcA(q) = \#\left(\bbF_q^n - \bigcup_{H \in \mcA_q} H\right).
+    \end{equation*}
+\end{proof}
+
+\subsection{例：ブレイド配置}
+braid……組みひも
+
+\begin{definition}
+    ランク$n-1$の\textbf{ブレイド配置} \begin{align*}
+        \mcB_n = \{x_i - x_j = 0 : 1 \leq i < j \leq n\} \text{ in $K^n$}.
+    \end{align*}
+    これは直線$x_1=\cdots=x_n$を含む$\binom{n}{2}$個の超平面の集まり．
+\end{definition}
+例：$\mcB_3$ \url{https://www.geogebra.org/3d/uxubgxrc}
+
+特性多項式を有限体法で計算しよう．十分大きな素数$p$について，定理3.11.10より \begin{align*}
+    \chi_{\mcB_n}(p) & = \#\{(x_1,\ldots,x_n) \in \bbF_p^n : \text{$x_i \neq x_j$ ($\forall i < j$)}\} \\
+                     & = (p)_n.
+\end{align*}
+ゆえに \begin{equation*}
+    \chi_{\mcB_n}(x) = (x)_n.
+\end{equation*}
+実は$L(\mcB_n) \cong \Pi_n$ (なぜ？)．
+
+\subsection{例：Shi配置}
+
+\begin{definition}
+    \begin{equation*}
+        \text{\textbf{Shi配置} $\mcS = \{x_i, x_j = c : \text{$c \in \{0, 1\}$, $i \leq i < j \leq n$}\}$.}
+    \end{equation*}
+\end{definition}
+
+\begin{theorem}[3.11.7]
+    \begin{equation*}
+        \chi_{\mcS_n}(x) = x(x-n)^{n-1}.
+    \end{equation*}
+\end{theorem}
+\begin{proof}
+    素数$p$について次を示す： \begin{equation*}
+        \#\left(\bbF_p^n - \bigcup_{H \in (\mcS_n)_p} H\right) = p(p-n)^{n-1}.
     \end{equation*}
 
+    次の条件を満たす$\pi=(B_1,\ldots,B_{p-n})$を考える\footnote{$[n]$のweak ordered partition}： \begin{enumerate}
+        \item $\bigcup B_i = [n]$,
+        \item $B_i \cup B_j = \emptyset$ ($i \neq j$), and
+        \item $1 \in B_1$.
+    \end{enumerate}
+    $(a, \pi)$ ($a \in \bbF_p$)を$\bbF_p^n-\bigcup_{H \in (\mcS_n)_p} H$の元に一対一に対応させよう．
+
+    \begin{itemize}
+        \item for $i$ in $1,\ldots,p-n$: \begin{itemize}
+                  \item for $j$ in $B_i$ (昇順): \begin{itemize}
+                            \item $\alpha_j \gets a$.
+                            \item $a \gets a + 1$.
+                        \end{itemize}
+                  \item $a \gets a + 1$.
+              \end{itemize}
+              % \item assert $a = (\text{$a$の初期値})$.
+    \end{itemize}
+    例：$p = 11$, $n = 6$, $a = 6$, $\pi = (\{1,4\}, \{5\}, \emptyset, \{2,3,6\}, \emptyset)$: \begin{equation*}
+        \text{$\alpha_1 = 6$, $\alpha_4 = 7$, $\alpha_5 = 9$, $\alpha_2 = 1$, $\alpha_3 = 2$, $\alpha_6 = 3$.}
+    \end{equation*}
+
+    $(\alpha_1,\ldots,\alpha_n) \in \left(\bbF_p^n - \bigcup_{H \in (\mcS_n)_p} H\right)$： \begin{equation*}
+        \text{$\alpha_i - \alpha_j = 1$ $\implies$ $i,j$は$\pi$上で同一ブロックに属し，$j < i$．}
+    \end{equation*}
+
+    全単射性：$\alpha_1,\ldots,\alpha_n$を，$\alpha_1$を先頭として昇順に並べる(informal)．
+
+    $\alpha_1$から$a$が，$p-n$個のギャップから$p-n$個のブロックとそれらの間の順番が一意に決まる．
+
+    各$1 < i \leq n$について，$i$が所属するブロックが$p-n$通りあることから，$(a,\pi)$は$p (p-n)^{n-1}$通り．
 \end{proof}
+
+\begin{corollary}[3.11.14]
+    \begin{align*}
+        r(\mcS_n) & = (n+1)^{n-1}, \\
+        b(\mcS_n) & = (n-1)^{n-1}.
+    \end{align*}
+\end{corollary}
+
+$r(\mcS_2) = 3$, $b(\mcS_2) = 1$.
+
+$r(\mcS_3) = 4^2 = 16$, $b(\mcS_3) 2^2 = 4$.
+
+\newpage
+
+\section{問題}
+
+\setcounter{problem}{107}
+\begin{problem}
+    単純グラフ$G = (V,E)$について，$G$の\textbf{$n$-彩色}とは次を満たす$f: V \to [n]$： \begin{itemize}
+        \item $f(a) \neq f(b)$ ($\{a,b\} \in E$).
+    \end{itemize}
+    $\chi_G: n \mapsto \#(\text{$G$の$n$-彩色})$は$G$の\textbf{彩色多項式}．$p \coloneqq \#V$．
+
+    \begin{enumerate}[label=\alph*.]
+        \item $V$の\textbf{安定な分割}：全てのブロックが$G$の安定集合．
+
+        $S_G(j) \coloneqq \#(\text{$V$の安定な$j$ブロック分割})$について次を示せ： \begin{equation*}
+            \chi_G(n) = \sum_{j=1}^n S_G(j) (n)_j.
+        \end{equation*}
+        \item 半順序集合$L_G \coloneqq \{\pi : \text{$V$の分割，各ブロックが$G$で連結}\}$．
+
+        次を示せ： \begin{equation*}
+            \chi_G(n) = \sum_{\pi \in L_G} \mu(\hat0, \pi) n^{\#\pi}.
+        \end{equation*}
+
+        なお，これより$\chi_G(n) = n^{\#(\text{$G$の連結成分})} \chi_{L_G}(n)$．
+    \end{enumerate}
+\end{problem}
+\begin{answer}[a.]
+    ちょうど$j$色を使う$n$-彩色は$S_G(j) (n)_j$通り．ただし$(n)_j$は$j$個のブロックに色を割り当てる方法の数．
+    % これより$\chi_G(n)$は$n$の$p$次多項式であり，$[n^p]\chi_G(n) = 1$，$[n^{p-1}]\chi_G(n) = -(\#E)$.
+\end{answer}
 
 \end{document}
