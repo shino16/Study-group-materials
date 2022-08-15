@@ -424,7 +424,7 @@ braid……組みひも
 ゆえに \begin{equation*}
     \chi_{\mcB_n}(x) = (x)_n.
 \end{equation*}
-実は$L(\mcB_n) \cong \Pi_n$ (なぜ？)．
+実は$L(\mcB_n) \cong \Pi_n$ (問題108で後述)．
 
 \subsection{例：Shi配置}
 
@@ -487,35 +487,95 @@ $r(\mcS_2) = 3$, $b(\mcS_2) = 1$.
 
 $r(\mcS_3) = 4^2 = 16$, $b(\mcS_3) 2^2 = 4$.
 
-\newpage
-
 \section{問題}
 
 \setcounter{problem}{107}
 \begin{problem}
-    単純グラフ$G = (V,E)$について，$G$の\textbf{$n$-彩色}とは次を満たす$f: V \to [n]$： \begin{itemize}
-        \item $f(a) \neq f(b)$ ($\{a,b\} \in E$).
-    \end{itemize}
-    $\chi_G: n \mapsto \#(\text{$G$の$n$-彩色})$は$G$の\textbf{彩色多項式}．$p \coloneqq \#V$．
+単純グラフ$G = (V,E)$について，$G$の\textbf{$n$-彩色}とは次を満たす$f: V \to [n]$： \begin{itemize}
+    \item $f(a) \neq f(b)$ ($\{a,b\} \in E$).
+\end{itemize}
+$\chi_G: n \mapsto \#(\text{$G$の$n$-彩色})$は$G$の\textbf{彩色多項式}．$p \coloneqq \#V$．
 
-    \begin{enumerate}[label=\alph*.]
-        \item $V$の\textbf{安定な分割}：全てのブロックが$G$の安定集合．
+\begin{enumerate}[label=\alph*.]
+    \item $V$の\textbf{安定な分割}：全てのブロックが$G$の安定集合．
 
-        $S_G(j) \coloneqq \#(\text{$V$の安定な$j$ブロック分割})$について次を示せ： \begin{equation*}
-            \chi_G(n) = \sum_{j=1}^n S_G(j) (n)_j.
-        \end{equation*}
-        \item 半順序集合$L_G \coloneqq \{\pi : \text{$V$の分割，各ブロックが$G$で連結}\}$．
+          $S_G(j) \coloneqq \#(\text{$V$の安定な$j$ブロック分割})$について次を示せ： \begin{equation*}
+              \chi_G(n) = \sum_{j=1}^n S_G(j) (n)_j.
+          \end{equation*}
+    \item 半順序集合$L_G \coloneqq \{\pi : \text{$V$の分割，各ブロックが$G$で連結}\}$．
 
-        次を示せ： \begin{equation*}
-            \chi_G(n) = \sum_{\pi \in L_G} \mu(\hat0, \pi) n^{\#\pi}.
-        \end{equation*}
+          次を示せ： \begin{equation*}
+              \chi_G(n) = \sum_{\pi \in L_G} \mu(\hat0, \pi) n^{\#\pi}.
+          \end{equation*}
 
-        なお，これより$\chi_G(n) = n^{\#(\text{$G$の連結成分})} \chi_{L_G}(n)$．
-    \end{enumerate}
+          なお，これより$\chi_G(n) = n^{\#(\text{$G$の連結成分})} \chi_{L_G}(n)$．
+    \item \textbf{グラフィカル配置}： \begin{equation*}
+        \mcB_G = \text{$\{x_i = x_j : \{i,j\} \in E\}$ in $\bbR^p$}.
+    \end{equation*}
+    $L_G \cong L(\mcB_G)$，$\chi_G = \chi_{\mcB_G}$を示せ．
+    \item $e \in E$について \begin{align*}
+        G - e &= (V, E - \{e\}, \\
+        G/e &= (\text{$e$を縮約し，多重辺を$1$つにまとめる}).
+    \end{align*}
+    次を示せ： \begin{equation*}
+        \chi_G(n) = \chi_{G-e}(n) - \chi_{G/e}(n).
+    \end{equation*}
+\end{enumerate}
 \end{problem}
 \begin{answer}[a.]
     ちょうど$j$色を使う$n$-彩色は$S_G(j) (n)_j$通り．ただし$(n)_j$は$j$個のブロックに色を割り当てる方法の数．
     % これより$\chi_G(n)$は$n$の$p$次多項式であり，$[n^p]\chi_G(n) = 1$，$[n^{p-1}]\chi_G(n) = -(\#E)$.
+\end{answer}
+
+\begin{answer}[b.]
+    $g(\sigma) = \sum_{\pi \geq \sigma} \mu(\sigma,\pi) n^{\#\pi}$とすると，M\"obius反転により \begin{equation*}
+        n^{\#\sigma} = \sum_{\pi \geq \sigma} g(\pi).
+    \end{equation*}
+    $g(\hat 0) = \chi_G(n)$となるように$g$をうまく定めたい．
+    \newpage
+
+    $g(\sigma) \coloneqq (\text{$\pi$の各ブロックを縮約したグラフでの答え})$とすればよい．各頂点の自由な$n$-彩色は，両端点の色が同じ辺を全て縮約したグラフ(のみ)の$n$-彩色．
+
+    定義より$\chi_G(n) = g(\hat0) = \sum_{\pi} \mu(\hat0,\pi) n^{\#\pi}$.
+
+    $\chi_G(n) = n^{\#(\text{$G$の連結成分})} \chi_{L_G}(n)$： \begin{align*}
+        \text{$L_G$のランク} & = p - \#(\text{$G$の連結成分}), \\
+        \rho(\pi)            & = p - \#\pi,
+    \end{align*}
+    より \begin{align*}
+        \chi_{L_G}(n)
+         & = \sum_\pi \mu(\hat0,\pi) n^{(\text{$L_G$のランク})-\rho(\pi)}  \\
+         & = \sum_\pi \mu(\hat0,\pi) n^{\#\pi - \#(\text{$G$の連結成分})}.
+    \end{align*}
+\end{answer}
+\begin{answer}[c.]
+    $\pi \in L_G$に対して，$\pi$の各ブロックに含まれる辺を集め，これらに対応する超平面の交叉($\in L(\mcB_G)$)を対応付ける．これは$L_G \to L(\mcB_G)$の同型写像．
+
+    b.より \begin{equation*}
+        \chi_G(n) = n^a \chi_{L_G}(n) = n^a \chi_{L(\mcB_G)}(n) = n^{a+b} \chi_{\mcB_G}(n) \quad \text{($a,b$は定数)}.
+    \end{equation*}
+    どちらも次数は$p$なので$a+b=0$．
+\end{answer}
+\begin{answer}[d.]
+    \begin{equation*}
+        \chi_{\mcB_G}(n) = \chi_{\mcB_{G-e}}(n) - \chi_{\mcB_{G/e}}(n).
+    \end{equation*}
+    を示す．Deletion-Restriction $\chi_{\mcA}(x) = \chi_{\mcA'}(x) - \chi_{\mcA''}(x)$を用いる．
+
+    $e$に対応する超平面$H_e$について$(\mcB_G)' = \mcB_G - \{H_e\} = \mcB_{G-e}$．
+
+    あとは$\chi_{(\mcB_G)''}(n) = \chi_{\mcB_{G/e}}(n)$を示せばよい．WLOG $e=\{p-1,p\}$. \begin{align*}
+        (\mcB_G)'' &= \{H \cap H_e \neq \emptyset : H \in \mcB_G - \{H_e\}\} \\
+            &= \{x_i = x_j, x_{p-1} = x_p : \{i,j\} \in E - \{e\}\}\text{ in $\bbR^p$}, \\
+        \mcB_{G/e} &= \{x_i=x_j : \{i,j\} \in E, i,j < p\} \\
+        &\phantom{{}={}}\cup \{x_i=x_{p-1} : \{i,p\} \in E\}\text{ in $\bbR^{p-1}$}.
+    \end{align*}
+    $\mcB_G$の超平面は必ず$x_{p-1} = x_p$であり，$x_p$を取り除けば$\mcB_{G/e}$に一致．したがって$(\mcB_G)'',\mcB_{G/e}$は本質的に同じ(informal)．
+
+    注：組合せ的証明の方が簡単．$e=\{i,j\}$について \begin{align*}
+        \chi_G(n) &= \#\{f : \text{$G-e$の$n$-彩色，$f(i) \neq f(j)$}\}, \\
+        \chi_{G/e}(n) &= \#\{f : \text{$G-e$の$n$-彩色，$f(i) = f(j)$}\}.
+    \end{align*}
 \end{answer}
 
 \end{document}

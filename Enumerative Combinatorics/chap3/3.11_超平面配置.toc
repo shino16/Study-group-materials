@@ -5,4 +5,4 @@
 \contentsline {subsection}{\numberline {2.2}$\chi _\mathcal {A}(q)$の計算}{7}{subsection.2.2}%
 \contentsline {subsection}{\numberline {2.3}例：ブレイド配置}{8}{subsection.2.3}%
 \contentsline {subsection}{\numberline {2.4}例：Shi配置}{9}{subsection.2.4}%
-\contentsline {section}{\numberline {3}問題}{11}{section.3}%
+\contentsline {section}{\numberline {3}問題}{10}{section.3}%
