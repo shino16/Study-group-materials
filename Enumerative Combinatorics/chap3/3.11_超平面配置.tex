@@ -5,6 +5,8 @@
 \usepackage{hyperref}
 \setenumerate{label=(\alph*)}
 
+\DeclareMathOperator{\ao}{ao}
+
 % \usepackage{concmath}
 % \usepackage[OT1]{fontenc}
 \setsansfont{Segoe UI}
@@ -485,7 +487,7 @@ braid……組みひも
 
 $r(\mcS_2) = 3$, $b(\mcS_2) = 1$.
 
-$r(\mcS_3) = 4^2 = 16$, $b(\mcS_3) 2^2 = 4$.
+$r(\mcS_3) = 4^2 = 16$, $b(\mcS_3) = 2^2 = 4$.
 
 \section{問題}
 
@@ -576,6 +578,18 @@ $\chi_G: n \mapsto \#(\text{$G$の$n$-彩色})$は$G$の\textbf{彩色多項式}
         \chi_G(n) &= \#\{f : \text{$G-e$の$n$-彩色，$f(i) \neq f(j)$}\}, \\
         \chi_{G/e}(n) &= \#\{f : \text{$G-e$の$n$-彩色，$f(i) = f(j)$}\}.
     \end{align*}
+\end{answer}
+
+\begin{problem}
+    単純無向グラフ$G$について \begin{equation*}
+        \ao(G) = \#(\text{$G$のacyclicな向き付け})
+    \end{equation*}
+    とするとき次を示せ： \begin{equation*}
+        \ao(G) = (-1)^p \chi_G(-1).
+    \end{equation*}
+\end{problem}
+\begin{answer}
+
 \end{answer}
 
 \end{document}
