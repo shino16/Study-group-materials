@@ -1,0 +1,369 @@
+\documentclass[xelatex,ja=standard,a4paper,14pt,everyparhook=compat]{bxjsarticle}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools, bm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\setenumerate{label=(\alph*)}
+
+\DeclareMathOperator{\ao}{ao}
+
+% \usepackage{concmath}
+% \usepackage[OT1]{fontenc}
+\setsansfont{Segoe UI}
+% \setmainfont{CMU Concrete}
+% \usepackage{zxjatype}
+\usepackage[noto-jp,oneweight]{zxjafont}
+% \setCJKmainfont{Noto Serif JP}
+% \setCJKsansfont{Noto Sans JP}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{\nouppercase{\leftmark}}
+\rhead{\nouppercase{\rightmark}}
+\renewcommand{\footrulewidth}{0.4pt}
+\let\origtitle\title
+\renewcommand{\title}[1]{\lfoot{#1}\origtitle{#1}}
+\cfoot{}
+\rfoot{\thepage}
+
+\newcommand{\defby}{\overset{\mathrm{def}}{\iff}}
+
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbQ}{\mathbb{Q}}
+\newcommand{\bbZ}{\mathbb{Z}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbP}{\mathbb{P}}
+\newcommand{\bbF}{\mathbb{F}}
+\newcommand{\mkS}{\mathfrak{S}}
+\newcommand{\mkm}{\mathfrak{m}}
+\newcommand{\mcA}{\mathcal{A}}
+\newcommand{\mcB}{\mathcal{B}}
+\newcommand{\mcC}{\mathcal{C}}
+\newcommand{\mcH}{\mathcal{H}}
+\newcommand{\mcL}{\mathcal{L}}
+\newcommand{\mcS}{\mathcal{S}}
+\newcommand{\umod}{{\bmod\:}}
+\DeclareMathOperator{\inv}{inv}
+\DeclareMathOperator{\conv}{conv}
+\DeclareMathOperator{\image}{Im}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\nullity}{null}
+\DeclareMathOperator{\ess}{ess}
+\DeclareMathOperator{\codim}{codim}
+
+\theoremstyle{definition}
+% \newtheorem{theorem}{定理}
+\newtheorem*{theorem}{定理}
+% \newtheorem{lemma}{補題}
+\newtheorem*{lemma}{補題}
+% \newtheorem{example}[theorem]{例}
+\newtheorem*{example}{例}
+% \newtheorem{definition}[theorem]{定義}
+\newtheorem*{definition}{定義}
+% \newtheorem{proposition}[theorem]{命題}
+\newtheorem*{proposition}{命題}
+% \newtheorem{corollary}[theorem]{系}
+\newtheorem*{corollary}{系}
+\newtheorem{problem}{問題}
+\newtheorem*{answer}{解答}
+\renewcommand{\proofname}{\textup{証明}}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable,skins,theorems}
+
+\tcolorboxenvironment{definition}{
+    coltitle = black,
+    % colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{definition*}{
+    coltitle = black,
+    % colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{theorem}{
+    coltitle = black,
+    % colback = black!10!white,
+    colframe = blue!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{theorem*}{
+    coltitle = black,
+    % colback = black!10!white,
+    colframe = blue!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{proposition}{
+    coltitle = black,
+    % colback = black!10!white,
+    colframe = blue!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{proposition*}{
+    coltitle = black,
+    % colback = black!10!white,
+    colframe = blue!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{corollary}{
+    coltitle = black,
+    % colback = black!10!white,
+    colframe = blue!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{corollary*}{
+    coltitle = black,
+    % colback = black!10!white,
+    colframe = blue!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{lemma}{
+    coltitle = black,
+    % colback = black!10!white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{example}{
+    coltitle = black,
+    colback = white,
+    colframe = purple!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{example*}{
+    coltitle = black,
+    colback = white,
+    colframe = purple!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{lemma*}{
+    coltitle = black,
+    % colback = black!10!white,
+    colframe = gray!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{proof}{
+    blanker,
+    breakable,
+    left=5mm,
+    before skip=10pt,
+    after skip=10pt,
+    borderline west={1mm}{0pt}{black}
+}
+
+\tcolorboxenvironment{proof*}{
+    blanker,
+    breakable,
+    left=5mm,
+    before skip=10pt,
+    after skip=10pt,
+    borderline west={1mm}{0pt}{black}
+}
+
+\tcolorboxenvironment{problem}{
+    coltitle = black,
+    % colback = black!10!white,
+    colframe = black!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{answer}{
+    blanker,
+    breakable,
+    left=5mm,
+    before skip=10pt,
+    after skip=10pt,
+    borderline west={1mm}{0pt}{black}
+}
+
+\title{3.11節の残り}
+\author{shino16}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\newpage
+
+\setcounter{section}{-1}
+\section{復習}
+
+\begin{definition}
+    $P$：ランク$n$の有限階層的半順序集合，$\rho$：ランク関数，$S \subseteq [0,n]$について \begin{align*}
+        P_S       & \coloneqq \{t \in P : \rho(t) \in S\},                   \\
+        \alpha(S) & \coloneqq \#(\text{$P_S$の極大鎖}),                      \\
+        \beta(S)  & \coloneqq \sum_{T \subseteq S} (-1)^{\#(S-T)} \alpha(T).
+    \end{align*}
+\end{definition}
+\begin{definition}
+    $P$：$\hat0,\hat1$を持つ有限階層的半順序集合．
+
+    任意の区間$[s,t]$について，次を満たす極大鎖$s = t_0 \lessdot \cdots \lessdot t_\ell = t$が一意に存在するとき，$\lambda : \{(s,t) : s \lessdot t\} \to \bbZ$は\textbf{R-ラベリング}： \begin{equation*}
+        \lambda(t_0,t_1) \leq \cdots \leq \lambda(t_{\ell-1}, t_\ell).
+    \end{equation*}
+    R-ラベリングが存在する半順序集合は\textbf{R-poset}．
+\end{definition}
+\begin{theorem}[3.14.2]
+    $S \subseteq [n-1]$について， \begin{equation*}
+        \beta(S) = \#\{\text{極大鎖$\mkm$} : D(\lambda(\mkm)) = S \}.
+    \end{equation*}
+    ただし$\mkm$：$\hat0=t_0 \lessdot \cdots \lessdot t_n = \hat1$について \begin{align*}
+        \lambda(\mkm)    & \coloneqq (\lambda(t_0,t_1),\ldots,\lambda(t_{n-1},t_n)),      \\
+        D(\lambda(\mkm)) & \coloneqq \{i : \lambda(t_{i-1},t_i) > \lambda(t_i,t_{i+1})\}.
+    \end{align*}
+\end{theorem}
+
+\section{半モジュラ束のR-ラベリング}
+
+$L$：有限半モジュラ束(階層的かつ$\rho(s) + \rho(t) \geq \rho(s \land t) + \rho(s \vee t)$)．
+
+$P = \{s \in L : \text{結び既約}\}$ ($s \neq \hat0$，$t,u < s$を用いて$s = t \vee u$と表せない).
+
+$\omega: P \to [\#P]$：order-preservingな全単射．ここで \begin{align*}
+    t_i          & = \omega^{-1}(i),                                  \\
+    \lambda(s,t) & = \min\{i : s \vee t_i = t\} \quad (s \lessdot t),
+\end{align*}
+とすると$\lambda$は$L$のR-ラベリング．
+
+\begin{proof}[概略]
+    ($\lambda(\mkm)$が単調増加な極大鎖$\mkm$の存在)区間$[s,t]$の長さで帰納法．$s = t$のときはよい．
+    \begin{align*}
+        i & \coloneqq \min \{i : s < s \vee t_i \leq t\},                           \\
+        w & \coloneqq \bigvee \{t_j : t_j < t_i\} \quad (\text{空のときは$\hat0$}),
+    \end{align*}
+    とすると，$w \lessdot t_i$．
+
+    また各$t_j < t_i$について，$i$の最小性より$s = s \vee t_j$，したがって$s \geq w$．これより$s \wedge t_i = w$．
+    \begin{align*}
+        \rho(s) + \rho(t_i) & \geq \rho(s \vee t_i) + \rho(w)     \\
+                            & = \rho(s \vee t_i) + \rho(t_i) - 1,
+    \end{align*}
+    より$\rho(s) + 1 \geq \rho(s \vee t_i)$．$s < s \vee t_i$より$s \lessdot (s \vee t_i)$．
+
+    帰納法の仮定を使って$s \vee t_i$から$t$への極大鎖をとり，$s$をprepend．
+
+    (極大鎖$\mkm$の一意性) $\lambda(\mkm), \lambda(\mkm')$がともに単調増加な極大鎖 \begin{align*}
+        \mkm  & : s = s_0 \lessdot s_1 \lessdot \cdots \lessdot s_\ell = t,    \\
+        \mkm' & : s = s_0' \lessdot s_1' \lessdot \cdots \lessdot s_\ell' = t,
+    \end{align*}
+    について，$i = \lambda(s_0, s_1) < \lambda(s_0', s_1')$を仮定する．
+
+    $j = \min \{j : t_i \leq s_j'\} > 0$をとると$s_{j-1}' \vee t_i = s_j'$より$\lambda(s_{j-1}', s_j') \leq i$，矛盾．
+\end{proof}
+
+\section{$(P,\omega)$-分割}
+\subsection{主要な母関数}
+
+\begin{definition}
+    $P$：半順序集合，$p = \#P$，全単射$\omega : P \to [p]$とする．
+
+    \textbf{$(P,\omega)$-分割}$\sigma : P \to \bbN$は次を満たす： \begin{enumerate}
+        \item $s \leq t$ $\implies$ $\sigma(s) \geq \sigma(t)$, and
+        \item $s < t$ and $\omega(s) > \omega(t)$ $\implies$ $\sigma(s) > \sigma(t)$.
+    \end{enumerate}
+    $\sum_{t \in P} \sigma(t) = n$とすると，$\sigma$は$n$の$(P,\omega)$-分割．
+\end{definition}
+
+$s < t$ $\implies$ $\omega(s) < \omega(t)$のとき$\omega$は$P$の\textbf{自然なラベリング}．このとき条件(b)は無関係で，このときの$\sigma$は\textbf{$P$-分割}．
+
+$s < t$ $\implies$ $\omega(s) > \omega(t)$のとき$\omega$は$P$の\textbf{双対自然なラベリング}．条件(a)で定まる順序関係が全てstrictになる．このときの$\sigma$は\textbf{狭義$P$-分割}．
+
+$P = \{t_1,\ldots,t_p\}$とおく．$(P,\omega)$-分割たちに関連する基本母関数は \begin{equation*}
+    F_{P,\omega} = F_{P,\omega}(x_1,\ldots,x_p) \coloneqq \sum_{\text{$\sigma$: $(P,\omega)$-分割}} x_1^{\sigma(t_1)} \cdots x_p^{\sigma(t_p)}.
+\end{equation*}
+$\omega$が自然なラベリングであるとき，$\omega$を省略して$F_P$と書く．
+
+\begin{example}
+    $t_1 < \cdots < t_p$からなる$P$と自然なラベリング$\omega$について， \begin{align*}
+        F_P & = \sum_{a_1 \geq \cdots \geq a_p \geq 0} x_1^{a_1} x_2^{a_2} \cdots x_p^{a_p} \\
+            & = \frac{1}{(1-x_1)(1-x_1x_2)\cdots(1-x_1x_2\cdots x_p)}.
+    \end{align*}
+\end{example}
+
+\begin{example}
+    $t_1 < \cdots < t_p$からなる$P$と双対自然なラベリング$\omega$について， \begin{align*}
+        F_{P,\omega} & = \sum_{a_1 > \cdots > a_p \geq 0} x_1^{a_1} x_2^{a_2}\cdots x_p^{a_p}                  \\
+                     & = \frac{x_1^{p-1}x_2^{p-2}\cdots x_{p-1}}{(1-x_1)(1-x_1x_2)\cdots(1-x_1x_2\cdots x_p)}.
+    \end{align*}
+\end{example}
+
+\begin{example}
+    $p$元反鎖$P$について \begin{align*}
+        F_P & = \sum_{a_1,\ldots,a_p \geq 0} x_1^{a_1} x_2^{a_2} \cdots x_p^{a_p} \\
+            & = \frac{1}{(1-x_1)(1-x_2)\cdots(1-x_p)}.
+    \end{align*}
+\end{example}
+
+\begin{example}
+    $t_1 < t_2$，$t_1 < t_3$，$t_2 \parallel t_3$からなる$P$と$\omega(t_1) = 2$，$\omega(t_2)=1$，$\omega(t_3)=3$について， \begin{equation*}
+        F_{P,\omega} = \sum_{b < a \geq c} x_1^a x_2^b x_3^c.
+    \end{equation*}
+\end{example}
+
+\begin{definition}
+    ラベル付き半順序集合$(P,\omega)$について，\textbf{Jordan-H\"older集合} \begin{equation*}
+        \mcL(P, \omega) \coloneqq \{\text{$P$のトポロジカルソートをラベルで並べたもの}\} \subseteq \mkS_p.
+    \end{equation*}
+\end{definition}
+
+\begin{definition}
+    \begin{equation*}
+        \mcA(P,\omega) \coloneqq \{\sigma : \text{$P \to \bbN$, $(P,\omega)$-分割}\}.
+    \end{equation*}
+    $\sigma \in \mcA(P,\omega)$に対して，$\sigma' : [p] \to \bbN$を$\sigma'(\omega(t)) = \sigma(t)$で定める．
+\end{definition}
+
+\begin{definition}
+    $w \in \mkS_n$について，次の条件を満たす$f : [n] \to \bbN$は$w$-compatible． \begin{itemize}
+        \item $f(w_1) \geq \cdots \geq f(w_n)$, and
+        \item $f(w_i) = f(w_{i+1})$ $\implies$ $w_i < w_{i+1}$.
+    \end{itemize}
+    $f$が$w$-compatibleとなる$w$は一意に存在．
+\end{definition}
+
+\begin{definition}
+    \begin{equation*}
+        S_w = \{\sigma : \text{$P \to \bbN$, $\sigma'$が$w$-compatible}\}.
+    \end{equation*}
+\end{definition}
+
+\begin{lemma}[3.15.3]
+    $\sigma : P \to \bbN$について， \begin{equation*}
+        \text{$\sigma$は$(P,\omega)$-分割$\iff$ $\exists w \in \mcL(P,\omega)$ s.t. $\sigma'$が$w$-compatible.}
+    \end{equation*}
+    言い換えると， \begin{equation*}
+        \mcA(P,\omega) = \bigcup_{w \in \mcL(P,\omega)} S_w \quad (\text{非交和}).
+    \end{equation*}
+\end{lemma}
+
+\end{document}

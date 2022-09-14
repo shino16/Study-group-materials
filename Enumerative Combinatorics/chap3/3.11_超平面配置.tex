@@ -38,6 +38,7 @@
 \newcommand{\frakS}{\mathfrak{S}}
 \newcommand{\mcA}{\mathcal{A}}
 \newcommand{\mcB}{\mathcal{B}}
+\newcommand{\mcC}{\mathcal{C}}
 \newcommand{\mcS}{\mathcal{S}}
 \newcommand{\umod}{{\bmod\:}}
 \DeclareMathOperator{\inv}{inv}
@@ -288,7 +289,7 @@
                                     & \phi(S) = \phi(S')                          \\
                   \Longrightarrow{} & \phi(S) = \phi(S \cup S')                   \\
                   \Longrightarrow{} & n - \#S = \dim(\phi(S)) = n - \#(S \cup S') \\
-                  \Longrightarrow{} & S = S'.
+                  \Longrightarrow{} & S \supseteq S'.
               \end{align*}
         \item $\phi$と$\phi^{-1}$は順序を保つ： \begin{equation*}
                   S \subseteq S' \iff \phi(S) \supseteq \phi(S').
@@ -413,7 +414,7 @@ braid……組みひも
 
 \begin{definition}
     ランク$n-1$の\textbf{ブレイド配置} \begin{align*}
-        \mcB_n = \{x_i - x_j = 0 : 1 \leq i < j \leq n\} \text{ in $K^n$}.
+        \mcB_n = \{x_i = x_j : 1 \leq i < j \leq n\} \text{ in $K^n$}.
     \end{align*}
     これは直線$x_1=\cdots=x_n$を含む$\binom{n}{2}$個の超平面の集まり．
 \end{definition}
@@ -432,7 +433,7 @@ braid……組みひも
 
 \begin{definition}
     \begin{equation*}
-        \text{\textbf{Shi配置} $\mcS = \{x_i, x_j = c : \text{$c \in \{0, 1\}$, $i \leq i < j \leq n$}\}$.}
+        \text{\textbf{Shi配置} $\mcS = \{x_i - x_j = c : \text{$c \in \{0, 1\}$, $i \leq i < j \leq n$}\}$.}
     \end{equation*}
 \end{definition}
 
@@ -588,8 +589,34 @@ $\chi_G: n \mapsto \#(\text{$G$の$n$-彩色})$は$G$の\textbf{彩色多項式}
         \ao(G) = (-1)^p \chi_G(-1).
     \end{equation*}
 \end{problem}
-\begin{answer}
+\begin{answer}[帰納法]
+    辺$e = \{i,j\} \in E$について， \begin{align*}
+        & \ao(G) \\
+        ={}& \#(\text{$e$を適当に向き付ければacyclicな$E - \{e\}$の向き付け}) \\
+        & + \#(\text{$i \to j$としても$j \to i$としてもacyclicな$E - \{e\}$の向き付け}) \\
+        ={}& \ao(G-e) + \ao(G/e).
+    \end{align*}
+    $E = \emptyset$のとき$\chi_G(n) = n^p$，$\ao(G) = 1$より$\ao(G) = (-1)^p \chi_G(-1)$．$\#E$の帰納法でOK．
+\end{answer}
+\begin{answer}[配置の領域の個数]
+    $G$のacyclicな向き付けを$1$つとり，配置$\mcB_G$の領域に対応させる．各辺$\{i,j\} \in E$について，$i \to j$なら超平面$x_i=x_j$で仕切られた$x_i < x_j$側を，$j \to i$なら$x_i > x_j$側を選ぶ．これは一対一対応．
 
+    ゆえに$\ao(G) = r(\mcB_G) = (-1)^p \chi_{\mcB_G}(-1) = (-1)^p \chi_G(-1)$．
+\end{answer}
+
+\setcounter{problem}{114}
+\begin{problem}[a]
+    \begin{equation*}
+        \text{カタラン配置 }\mcC_n = \{x_i - x_j = c : \text{$c \in \{0,\pm1\}$, $1 \leq i < j \leq n$}\}
+    \end{equation*}
+    について次を示せ： \begin{equation*}
+        \chi_{\mcC_n}(x) = x(x-n-1)(x-n-2)(x-n-3)\cdots(x-2n+1).
+    \end{equation*}
+\end{problem}
+\begin{answer}
+    $a_i - a_j \neq 0, \pm1$なる$(a_1,\ldots,a_n) \in \bbF_p^n$を数える．
+
+    $a_1$を$p$通りから選べば，残りの$n-1$元をどの$2$つも隣接しないように$[p-3]$から選ぶのみで， $p \binom{p-3-(n-1)+1}{n-1} (n-1)!$通り．
 \end{answer}
 
 \end{document}
