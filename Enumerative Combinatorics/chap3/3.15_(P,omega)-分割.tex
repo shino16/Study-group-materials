@@ -359,11 +359,36 @@ $\omega$が自然なラベリングであるとき，$\omega$を省略して$F_P
 
 \begin{lemma}[3.15.3]
     $\sigma : P \to \bbN$について， \begin{equation*}
-        \text{$\sigma$は$(P,\omega)$-分割$\iff$ $\exists w \in \mcL(P,\omega)$ s.t. $\sigma'$が$w$-compatible.}
+        \text{$\sigma$は$(P,\omega)$-分割$\iff$ $\sigma'$が$w$-compatibleのとき$w \in \mcL(P,\omega)$.}
     \end{equation*}
-    言い換えると， \begin{equation*}
-        \mcA(P,\omega) = \bigcup_{w \in \mcL(P,\omega)} S_w \quad (\text{非交和}).
-    \end{equation*}
+    言い換えると， \begin{align*}
+        \mcA(P,\omega) & = \{\sigma : \text{$P \to \bbN$, $\sigma'$が$w$-compatible, $w \in \mcL(P,\omega)$}\} \\
+                       & =\bigcup_{w \in \mcL(P,\omega)} S_w \quad (\text{非交和}).
+    \end{align*}
 \end{lemma}
+\begin{proof}
+    $(\subseteq)$ $\sigma \in \mcA(P,\omega)$をとる．$\sigma'$が$w$-compatibleだとする．$w \in \mcL(P,\omega)$を言えばよい．
+
+    $i < j$について$w_i = \omega(s)$，$w_j = \omega(t)$とし，$s \not> t$を示したい．
+
+    $\sigma'$は$w$-compatibleなので$\sigma'(w_i) \geq \sigma'(w_j)$ i.e. $\sigma(s) \geq \sigma(t)$．
+
+    $\sigma(s) > \sigma(t)$のとき$s \geq t$ $\implies$ $\sigma(s) \leq \sigma(t)$より$s \not\geq t$．
+
+    $\sigma(s) = \sigma(t)$のとき$\sigma'(w_i) = \sigma'(w_j)$より$w_i < w_{i+1} < \cdots < w_j$，ゆえに$\omega(s) < \omega(t)$．
+
+    $s > t$ and $\omega(s) < \omega(t)$ $\implies$ $\sigma(s) < \sigma(t)$より$s \not> t$．
+
+    以上より$s \not> t$，$\therefore$ $\sigma \in \mcL(P,\omega)$．
+
+    $(\supseteq)$ $w \in \mcL(P,\omega)$，$\sigma'$が$w$-compatibleな$w$を取り，$\sigma \in \mcA(P,\omega)$を示す．$w_i = \omega(s)$，$w_j = \omega(t)$とする．
+
+    $s \leq t$ $\implies$ $i \leq j$ $\implies$ $\sigma'(w_i) \geq \sigma'(w_j)$ $\implies$ $\sigma(s) \geq \sigma(t)$．
+
+    $s < t$，$w_i = \omega(s) > \omega(t) = w_j$として$\sigma(s) > \sigma(t)$を示す．$w_i > w_j$より，$\exists k \in [i, j-1]$ s.t. $w_k > w_{k+1}$．$\sigma'$は$w$-compatibleなので， \begin{align*}
+        \sigma(s) = \sigma'(w_i) \geq \sigma'(w_{i+1}) \geq \cdots &\geq \sigma'(w_k) \\
+        &> \sigma'(w_{k+1}) \geq \cdots \geq \sigma'(w_j) = \sigma(t).
+    \end{align*}
+\end{proof}
 
 \end{document}
