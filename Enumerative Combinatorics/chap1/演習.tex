@@ -1,0 +1,347 @@
+\documentclass[xelatex,ja=standard,a4paper,14pt,everyparhook=compat]{bxjsarticle}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools, bm}
+\usepackage{enumitem}
+\setenumerate{label=\alph*.}
+\usepackage{ascmac}
+
+% \usepackage{concmath}
+% \usepackage[OT1]{fontenc}
+% \setsansfont{Computer Mathematics}
+% \setmainfont{CMU Concrete}
+% \setCJKmainfont{Noto Sans JP Light}
+% \setCJKsansfont{Noto Sans JP Light}
+
+\usepackage{fancyhdr, lastpage}
+\pagestyle{fancy}
+\rhead{\leftmark}
+\lhead{\rightmark}
+\renewcommand{\footrulewidth}{0.4pt}
+\let\origtitle\title
+\renewcommand{\title}[1]{\lfoot{#1}\origtitle{#1}}
+\cfoot{}
+\rfoot{\thepage/\pageref{LastPage}}
+
+\newcommand{\paren}[1]{\left(#1\right)}
+
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbP}{\mathbb{P}}
+\newcommand{\bbF}{\mathbb{F}}
+\newcommand{\frakS}{\mathfrak{S}}
+\DeclareMathOperator{\inv}{inv}
+\DeclareMathOperator{\conv}{conv}
+\DeclareMathOperator{\image}{Im}
+
+\theoremstyle{definition}
+\newtheorem{theorem}{定理}
+\newtheorem*{theorem*}{定理}
+\newtheorem{lemma}{補題}
+\newtheorem*{lemma*}{補題}
+\newtheorem{example}[theorem]{例}
+\newtheorem*{example*}{例}
+\newtheorem{definition}[theorem]{定義}
+\newtheorem*{definition*}{定義}
+\newtheorem{proposition}[theorem]{命題}
+\newtheorem*{proposition*}{命題}
+\newtheorem{corollary}[theorem]{系}
+\newtheorem*{problem}{問題}
+\newtheorem*{answer}{解答}
+\renewcommand{\proofname}{\textup{証明}}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable,skins,theorems}
+
+\tcolorboxenvironment{definition}{
+    coltitle = black,
+    % colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{definition*}{
+    coltitle = black,
+    % colback = white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{theorem}{
+    coltitle = black,
+    % colback = black!10!white,
+    colframe = blue!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{theorem*}{
+    coltitle = black,
+    % colback = black!10!white,
+    colframe = blue!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{proposition}{
+    coltitle = black,
+    % colback = black!10!white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{proposition*}{
+    coltitle = black,
+    % colback = black!10!white,
+    colframe = green!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{lemma}{
+    coltitle = black,
+    % colback = black!10!white,
+    colframe = gray!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{example}{
+    coltitle = black,
+    % colback = black!10!white,
+    colframe = purple!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{example*}{
+    coltitle = black,
+    % colback = black!10!white,
+    colframe = purple!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{lemma*}{
+    coltitle = black,
+    % colback = black!10!white,
+    colframe = gray!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{proof}{
+    blanker,
+    breakable,
+    left=5mm,
+    before skip=10pt,
+    after skip=10pt,
+    borderline west={1mm}{0pt}{black}
+}
+
+\tcolorboxenvironment{proof*}{
+    blanker,
+    breakable,
+    left=5mm,
+    before skip=10pt,
+    after skip=10pt,
+    borderline west={1mm}{0pt}{black}
+}
+
+\tcolorboxenvironment{problem}{
+    coltitle = black,
+    % colback = black!10!white,
+    colframe = black!35!black,
+    fonttitle = \bfseries,
+    breakable = true
+}
+
+\tcolorboxenvironment{answer}{
+    blanker,
+    breakable,
+    left=5mm,
+    before skip=10pt,
+    after skip=10pt,
+    borderline west={1mm}{0pt}{black}
+}
+
+\title{第1章 演習問題}
+\author{shino16}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\newpage
+
+\begin{problem}[9]
+$f(m,n) = (\text{$(0,0)$から$(m,n)$へ移動する経路の個数})$，ただし使える移動は$(1,0)$，$(0,1)$，$(1,1)$のみ．
+\begin{enumerate}
+    \item 次を示せ： \begin{equation*}
+              \sum_{m \geq 0} \sum_{n \geq 0} f(m,n) x^n y^n = \frac{1}{1-x-y-xy}.
+          \end{equation*}
+    \item $\sum_{n \geq 0} f(n,n) x^n$を簡単に表せ．
+\end{enumerate}
+\end{problem}
+\begin{answer}
+    (a.) \begin{equation*}
+        (\text{左辺}) = 1 + (x+y+xy) + (x+y+xy)^2 + \cdots.
+    \end{equation*}
+
+    (b.) $(0,1)$の移動を$k$回使うと，$(1,0)$は$k$回，$(1,1)$は$n-k$回．したがって \begin{align*}
+        \sum_{n \geq 0} f(n,n) x^n
+         & = \sum_{n \geq 0} x^n \sum_k \binom{n+k}{n-k,k,k}                 \\
+         & = \sum_{n \geq 0} x^n \sum_k \binom{n+k}{2k} \binom{2k}{k}        \\
+         & = \sum_k \binom{2k}{k} \sum_{n \geq 0} \binom{n+k}{2k} x^n        \\
+         & = \sum_k \binom{2k}{k} x^k \sum_{n+k \geq 0} \binom{n+2k}{2k} x^n \\
+         & = \sum_k \binom{2k}{k} \frac{x^k}{(1-x)^{2k+1}}.
+    \end{align*}
+    ここで$(1-4x)^{-1/2} = \sum_n \binom{2n}{n} x^n$を使うと， \begin{equation*}
+        \sum_{n \geq 0} f(n,n) x^n = \frac{1}{1-x} \paren{1-\frac{4x}{(1-x)^2}}^{-1/2} = (1-6x+x^2)^{-1/2}.
+    \end{equation*}
+\end{answer}
+
+\begin{problem}[10]
+$f(n,r,s) = \#\left\{S \subseteq [2n] : \begin{aligned} & \text{奇数$r$個，偶数$s$個}, \\ & \text{どの$2$つの元も隣接しない} \end{aligned} \right\}$．
+
+$f(n,r,s) = \binom{n-r}{s} \binom{n-s}{r}$を示せ．
+\end{problem}
+\begin{answer}
+    DP (漸化式)で解けるので，$f(n,r,s)=\binom{n-r}{s}\binom{n-s}{r}$が初期条件と漸化式を満たすことを示せばOK．
+\end{answer}
+\begin{answer}
+    数え上げの対象$S = \{a_1,\ldots,a_{r+s}\}_< \subseteq [2n]$について， \begin{equation*}
+        \phi(S) \coloneqq \{\{a_1, a_2 - 2, a_3 - 4, \ldots, a_{r+s} - 2(r+s-1)\}\} \quad (\text{多重集合}).
+    \end{equation*}
+    $\phi(S)$は$[2n - 2(r+s-1)]$上の多重集合で，奇数$r$個，偶数$s$個．
+
+    $\phi$はそのような多重集合たちへの全単射なので， \begin{align*}
+        f(n,r,s) & = \paren{\binom{n-r-s+1}{r}} \paren{\binom{n-r-s+1}{s}} \\
+                 & = \binom{n-s}{r} \binom{n-r}{s}.
+    \end{align*}
+\end{answer}
+
+\begin{problem}[15]
+以下の個数を求めよ．
+\begin{enumerate}
+    \item 多項式$(1+x+x^2)^n$の係数で，$3$の倍数でないもの．
+\end{enumerate}
+\end{problem}
+\begin{answer}
+    (a.) $\bbF_3$上で$1+x+x^2 = 1-2x+x^2 = (1-x)^2$．
+
+    よって$\binom{2n}{k} \not\equiv 0 \pmod 3$なる$0 \leq k \leq 2n$を数えればよい．
+
+    Lucasの定理より，$2n = \overline{a_1a_2\cdots a_r}_{(3)}$のとき答えは$(a_1+1)\cdots(a_r+1)$．
+\end{answer}
+
+\begin{problem}[33]
+\begin{enumerate}
+    \item $k, n \geq 1$について，次を満たす列$\emptyset = S_0,\ldots,S_k \subseteq [n]$はいくつあるか．\begin{enumerate}[label=(\roman*)]
+              \item $S_{i-1} \subset S_i$ or $S_{i-1} \supset S_i$, and
+              \item $|\#S_{i-1} - \#S_i| = 1$.
+          \end{enumerate}
+    \item 上に条件$S_k = \emptyset$を課したときの答え$f_k(n)$が \begin{equation*}
+              f_k(n) = \frac{1}{2^n} \sum_i \binom{n}{i} (n-2i)^k
+          \end{equation*}
+          であることを示せ．
+\end{enumerate}
+\end{problem}
+\begin{answer}
+    (a.) $S_{i-1} \mathbin{\triangle} S_i = \{a_i\}$とすると，列$(a_1,\ldots,a_k)$は$\emptyset = S_0,\ldots,S_k$を一意に決める．よって$n^k$個．
+\end{answer}
+
+\begin{problem}[63]
+\begin{enumerate}
+    \item 大きさが相異なる$n$個の封筒が与えられる．封筒をより大きな封筒に入れることを$0$回以上繰り返して得られる配置はいくつあるか．
+    \item a.のうち，他の封筒の中に入っていない封筒が$k$個あるものはいくつあるか．
+
+          a.のうち，他の封筒が入っていない封筒が$k$個あるものはいくつあるか．
+\end{enumerate}
+\end{problem}
+
+\begin{answer}
+    封筒を大きい順に$1,\ldots,n$とラベル付けする．
+
+    他の封筒に入っていないことを，「封筒$0$に入っている」と考える．
+
+    (a.) 各$i=1,\ldots,n$について，封筒$i$を入れる先を$0,\ldots,i-1$から自由に選べる．よって$n!$個．
+
+    (b.前半) 順列$w_1\cdots w_n \in \frakS_n$について，封筒の配置を次のように構成する： \begin{itemize}
+        \item 各$i$について，$j = \max\{j < i : w_j < w_i\}$ (存在しなければ$j=0$)とし，封筒$i$を封筒$j$に入れる．
+    \end{itemize}
+    これは配置を全単射的に構成する．例：57316284
+
+    このうちleft-to-right minimaが$k$個あるものを探せば良く，これは非交なサイクル$k$個からなる順列の個数$c(n, k)$ (符号なし第一種スターリング数)．
+
+    (b.後半)順列のうちdescentが$k-1$個しかないものを探せばよく，これはEulerian number $A(n,k)$．\footnote{命題1.4.4 \begin{equation*}
+            \sum_{k=1}^n A(n,k) x^k = (1-x)^{n+1} \sum_{m \geq 0} m^n x^m
+        \end{equation*}より，$n$を固定すると各$k \leq n$について同時に$O(n \log n)$時間で求まる．}
+\end{answer}
+
+\begin{problem}[64]
+\begin{enumerate}
+    \item \begin{equation*}
+              f(n) = \left\{\begin{aligned}
+                   & \text{正整数列$a_1,\ldots,a_n$} :                        \\
+                   & \qquad \text{($\forall k>1$, $k \in \{a_1,\ldots,a_n\}$)} \\
+                   & \qquad \text{\underline{最後の} $k$は$k-1$の後ろに現れる}
+              \end{aligned} \right\}.
+          \end{equation*}
+          $f(n) = n!$を示せ．
+    \item 上のうち$\max\{a_1,\ldots,a_n\} = k$を満たすものの個数が$A(n,k)$であることを示せ\footnote{$A(n,k) = \text{(非交なサイクル$k-1$個からなる順列$w\in\frakS_n$の個数)}$}．
+\end{enumerate}
+\end{problem}
+ヒント：各$k$の最後の出現だけに注目
+\begin{answer}
+    数え上げ対象$(a_1,\ldots,a_n)$から$w \in \frakS_n$を全単射的に構成する： \begin{enumerate}[label=\arabic*.]
+        \item $m_1 = (\text{$1$の出現回数})$とし，$1$を${}$\underline{右}から順に$1,2,\ldots,m_1$で置き換える．
+        \item $m_2 = (\text{$2$の出現回数})$とし，元々の$2$を${}$\underline{右}から順に$m_1+1,m_1+2,\ldots,m_1+m_2$で置き換える．
+        \item $3$以降も同様．
+    \end{enumerate}
+    例：13213312
+\end{answer}
+
+\begin{problem}[97]
+    整数列$(a_1,\ldots,a_n)$で，$0 \leq a_i \leq 9$かつ総和が$4$の倍数であるものの個数を求めよ．
+\end{problem}
+\begin{answer}
+    $f(x) = 1+x+\cdots+x^9$とすると，求める答えは$\sum_i [x^{4i}] f(x)^n$．これは \begin{align*}
+        & \frac{1}{4} (f(1)^n + f(i)^n + f(-1)^n + f(-i)^n) \\
+        ={}& \frac{1}{4} (10^n + (1+i)^n + (1-i)^n) \\
+        ={}& \begin{cases*}
+            \frac{1}{4}(10^n + (-1)^k 2^{2k+1}) & if $n = 4k$, \\
+            \frac{1}{4}(10^n + (-1)^k 2^{2k+1}) & if $n = 4k+1$, \\
+            \frac{1}{4}10^n & if $n = 4k+2$, \\
+            \frac{1}{4}(10^n + (-1)^{k+1} 2^{2k+2}) & if $n = 4k+3$, \\
+        \end{cases*}
+    \end{align*}
+\end{answer}
+
+\begin{problem}[108]
+    \begin{enumerate}
+        \item $[n]$の分割であって，どの隣接する$2$元も同じブロックに属さないものの個数がベル数$B(n-1)$であることを示せ．
+    \end{enumerate}
+\end{problem}
+\begin{answer}
+    $[n-1]$の分割$\pi$をとる．同じブロックに$i,i+1,\ldots,j-1,j$ (極大)が属するとき，そのうち$i+1,i+3,\ldots$を$n$が属するブロックに移動させる．これを繰り返すと数え上げ対象の$[n]$の分割が得られ，この構成は全単射．
+\end{answer}
+
+\begin{problem}[109]
+    \begin{enumerate}
+        \item 順列$a_1 \cdots a_n \in \frakS_n$のうち，$a_i < a_j < a_{j+1}$なる$i < j$が存在しないものの個数が$B(n)$であることを示せ．
+        \item $a_i < a_j < a_{j+1}$の代わりに$a_i < a_{j+1} < a_j$を考えても結果は同じであることを示せ．
+        \item (a.) (b.)の条件をともに満たす順列の個数は，$\frakS_n$の対合の個数と等しいことを示せ\footnote{$f : X \to X$が対合 $\iff$ $f \circ f = \mathrm{id}$}．
+    \end{enumerate}
+\end{problem}
+\begin{answer}
+    (a.) $[n]$の分割$\pi$をとる．ブロックを最小元の降順に並べ，各ブロックの元を$(\text{最小元}),(\text{残りの元の降順})$に並べる．これらを結合して$a_1\cdots a_n \in \frakS_n$を得る．この構成は全単射．例：$13569|248|7$
+
+    (b.) (a.) と同じことをする，ただし各ブロックの元は昇順に並べる．
+
+    (c.) (a.)で得た順列が(b.)の条件を満たすには，各ブロックの要素数が$2$以下であることが必要十分．
+\end{answer}
+
+\end{document}
