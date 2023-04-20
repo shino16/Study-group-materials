@@ -1,0 +1,390 @@
+\documentclass[aspectratio=98, 8pt, t]{beamer}
+
+\usepackage{luatexja-fontspec}
+% \usepackage[noto-otf]{luatexja-preset}
+% \setmainfont[Ligatures=TeX]{Fira Serif}
+\setsansfont[Ligatures=TeX, UprightFont={* Regular}, BoldFont={* Medium}]{Fira Sans}
+\usefonttheme{professionalfonts}
+% \usefonttheme[onlymath]{serif}
+% \usepackage{firamath-otf}
+% \usepackage{FiraSans}
+\setmainjfont[UprightFont={*-Regular}, BoldFont={*-Bold}]{NotoSansCJKjp}
+\setsansjfont[UprightFont={*-Regular}, BoldFont={*-Bold}]{NotoSansCJKjp}
+\usetheme{Darmstadt}
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{graphicx, float}
+
+\usepackage{mleftright}
+\let\oldleft\left
+\let\oldright\right
+\renewcommand{\left}{\mleft}
+\renewcommand{\right}{\mright}
+
+\theoremstyle{definition}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+
+\newcommand{\bbP}{\mathbb{P}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\defby}{\overset{\mathrm{def}}{\iff}}
+
+\newcommand{\aparen}[1]{\langle #1 \rangle}
+\newcommand{\paren}[1]{\left( #1 \right)}
+\newcommand{\wKP}{\widehat{KP}}
+
+\title{3.21 Differential Posets}
+\author{shino16}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{復習}
+
+\begin{frame}{$r$-differential posetの定義}
+  \begin{definition}
+    $r \in \bbP$について，\textbf{$r$-differential poset}は以下を満たすposet $P$ \begin{itemize}
+      \item[(D1)] $\hat0 \in P$, locally finite, graded
+      \item[(D2)] $t \in P$が$k$元を被覆$\iff$ $k+r$元が$t$を被覆
+      \item[(D3)] $s,t \in P$ ($s \neq t$)について，$s,t$が同じ$j$元を被覆$\iff$同じ$j$元が$s,t$を被覆
+    \end{itemize}
+  \end{definition}
+\end{frame}
+
+\begin{frame}{線形代数}
+  \begin{definition}
+    $K$：体，$P$：posetについて， \begin{align*}
+      \widehat{KP}
+       & \coloneqq \{\text{$P$の元の線形結合($K$係数)}\}
+      = \left\{ \sum_{t \in P} c_t t : c_t \in K \right\}    \\
+      KP
+       & \coloneqq \{\text{$P$の\textbf{有限個の}元の線形結合($K$係数)}\}
+    \end{align*}
+  \end{definition}
+  \begin{definition}
+    \begin{equation*}
+      \text{$\phi\colon \wKP \to \wKP$が\textbf{連続} $\defby$ }\phi\left( \sum_t c_t t \right) = \sum_t c_t \phi(t)
+    \end{equation*}
+  \end{definition}
+\end{frame}
+
+% \begin{frame}{Up, Down}
+%   \begin{definition}
+%     (D1)を満たす$P$について \begin{align*}
+%       U(s) & \coloneqq \sum_{t \gtrdot s} t, \\
+%       D(s) & \coloneqq \sum_{t \lessdot s} t
+%     \end{align*}
+%   \end{definition}
+%   \pause
+%   \begin{proposition}[3.21.3]
+%     \begin{equation*}
+%       \text{$P$が$r$-differential} \iff DU-UD = rI
+%     \end{equation*}
+%     ここで$I : \wKP \to \wKP$は恒等写像．
+%   \end{proposition}
+%   ($\Longrightarrow$の証明) \begin{itemize}
+%     \pause
+%     \item (D2)より$[t]UD(t) = k$ $\implies$ $[t]DU(t) = k+r$．
+%           \pause
+%     \item (D3)より$s\neq t$について$[s]UD(t) = j$ $\implies$ $[s]DU(t) = j$．
+%   \end{itemize}
+%   \pause 逆も同様．
+% \end{frame}
+% \begin{frame}
+%   \begin{definition}
+%     $X \subseteq P$について，\begin{equation*}
+%       \bm{X} = \sum_{t \in X} t
+%     \end{equation*}
+%     例：$\bm{P} = \sum_{t \in P} t$
+%   \end{definition}
+%   \pause
+%   \begin{proposition}[3.21.4]
+%     $P$が$r$-differentialであるとき \begin{equation*}
+%       D\bm P = (U+r)\bm P \quad (= U\bm P + r\bm P)
+%     \end{equation*}
+%   \end{proposition}
+%   \pause
+%   (証明) \begin{align*}
+%     [t] U \bm P & = \#\{s : t \gtrdot s\} = \#(\text{$t$\textbf{が}被覆する元})  \\
+%     [t] D \bm P & = \#\{s : t \lessdot s\} = \#(\text{$t$\textbf{を}被覆する元})
+%   \end{align*}
+%   \pause
+%   \begin{align*}
+%     \text{(D2) $t \in P$が$k$元を被覆} & \iff \text{$k+r$元が$t$を被覆} \\
+%     [t] U\bm P = k                     & \iff [t]D\bm P = k+r
+%   \end{align*}
+% \end{frame}
+
+% \begin{frame}{双線型形式}
+%   \begin{definition}
+%     $\langle \bullet, \bullet \rangle\colon \wKP \times KP \to K$を次で定める： \begin{equation*}
+%       \left\langle \sum a_t t, \sum b_t t \right\rangle = \sum a_t b_t \qquad \text{(ドット積っぽいやつ)}
+%     \end{equation*}
+%     ※$\sum b_t t \in KP$は有限個の項しかないから，右辺の項も有限個．
+%   \end{definition}
+%   \pause
+%   例えば$[t]U \bm P = \aparen{U\bm P, t}$と書ける．
+
+%   \pause
+%   例：$e(t) = \#(\text{飽和鎖$\hat 0 = t_0 \lessdot t_1 \lessdot \cdots \lessdot t_n = t$})$，$P_n = \{t : \rho(t)=n\}$について \begin{equation*}
+%     e(t) = \aparen{U^n \hat0, t}
+%   \end{equation*}
+%   \begin{equation*}
+%     \sum_{t \in P_n} e(t) = \aparen{U^n \hat0, \bm{P_n}}
+%   \end{equation*}
+%   \begin{equation*}
+%     \sum_{t \in P_n} e(t)^2 = \aparen{D^n U^n \hat0, \hat 0}
+%   \end{equation*}
+% \end{frame}
+
+% \begin{frame}{作用素での表現}
+%   関係式$DU - UD = rI$を \begin{equation*}
+%     \paren{r \frac{d}{dz}} z - z \paren{r \frac{d}{dz}} = r
+%   \end{equation*}
+%   で表現．すなわち$U = z$，$D = r \frac{d}{dz}$．
+
+%   \pause \begin{example}
+%     $f(U)$：$U$のべき級数について，$r \frac{d}{dz} (f(z) \cdot g(z)) = r \frac{d}{dz}f(z) \cdot g(z) + f(z) \cdot r\frac{d}{dz} g(z)$より \begin{equation*}
+%       D f(U) = r \frac{df(U)}{dU} + f(U) D
+%     \end{equation*}
+%   \end{example}
+
+%   \pause 目標：$DU$を$UD$に交換していって，$U^i D^j$の形を作ろう
+
+%   \pause 理由：$D^j \hat 0 = \delta_{j0} \hat 0$
+% \end{frame}
+
+% \begin{frame}{作用素係数のべき級数}
+%   モチベーション：$U,D$を含む等式を示すため，$U,D$の式を係数に持つ母関数を考えたい
+%   \pause
+%   \begin{definition}
+%     $x$のべき級数($K[U,D]$係数) $F(x)$を考える．つまり \begin{equation*}
+%       F(x) = \sum_{n \geq 0} p_n(U,D) x^n \qquad \text{($p_n$は多項式)}
+%     \end{equation*}
+%     $F(x)$は$\wKP$に作用する： \begin{equation*}
+%       \left(\sum_n p_n(U,D) x^n\right) t = \left(\sum_n p_n(U,D) t\right) x^n
+%     \end{equation*}
+%   \end{definition}
+%   \pause
+%   例：$e^{Dx} = \sum_{n \geq 0} \frac{D^nx^n}{n!}$
+%   \begin{align*}
+%     e^{Dx}\hat0 & = \sum_{n \geq 0} \left(\frac{D^n}{n!} x^n\right) \hat0 \\
+%                 & = \sum_{n \geq 0} \frac{D^n \hat0}{n!} x^n              \\
+%                 & = \hat0 \qquad \text{($n=0$だけ残る)}
+%   \end{align*}
+% \end{frame}
+
+% \begin{frame}{$(U+D)^n$}
+%   \begin{theorem}[3.21.6 (a)]
+%     \begin{equation*}
+%       e^{(U+D)x} = e^{\frac{1}{2} rx^2 + Ux} e^{Dx}
+%     \end{equation*}
+%     ※$x$は不定元
+%   \end{theorem}
+%   左辺は$(U+D)^n$のEGF．
+%   \begin{equation*}
+%     e^{(U+D)x} = \sum_{n \geq 0} (U+D)^n \frac{x^n}{n!}
+%   \end{equation*}
+%   \pause
+%   (証明) $J(x) \coloneqq (\text{右辺})$について \begin{align*}
+%     J(0)              & = 1,                                                             \\
+%     \frac{d}{dx} J(x) & = (D+U) J(x) \qquad \text{(ここで$D = r \tfrac{d}{dU}$を使った)}
+%   \end{align*}
+% \end{frame}
+
+% \begin{frame}{$e^{Dx}f(U,y)$}
+%   \begin{theorem}[3.21.6 (b)]
+%     \only<1>{$f(U, y) = \text{$y$のべき級数($K[U]$係数)}$とする．すなわち \begin{equation*}
+%         f(U, y) = \sum_{n \geq 0} p_n(U) y^n \qquad \text{(各$p_n$は多項式)}
+%       \end{equation*}
+%       このとき，}\begin{equation*}
+%       e^{Dx} f(U, y) = f(U+rx, y) e^{Dx}
+%     \end{equation*}
+%   \end{theorem}
+%   \pause
+%   (証明) $U=z$，$D=r\frac{d}{dz}$とし，各辺を$g(z)$に作用させる． \pause
+%   % \begin{align*}
+%   %   f(z+rx) &= \sum_{n \geq 0} \frac{(rx)^n}{n!} \frac{d}{dz} f(z) \qquad \text{(Taylor展開)} \\
+%   %   &= e^{x\paren{r \frac{d}{dz}}} f(z)
+%   % \end{align*}
+%   % \pause これを$g(z)$に作用させると \begin{align*}
+%   %   e^{x\paren{r \frac{d}{dz}}} (f(z) \cdot g(z))
+%   %   &= f(z+rx) e^{x\paren{r \frac{d}{dz}}} g(z)
+%   % \end{align*}
+%   \begin{align*}
+%     e^{\paren{r\frac{d}{dz}}x} (f(z,y) \cdot g(z))
+%      & = \sum_{n \geq 0} \frac{r^n x^n}{n!} \frac{d^n}{dz^n} (f(z,y) \cdot g(z))                                                     \\
+%      & = \sum_{n \geq 0} \frac{r^n x^n}{n!} \sum_{k=0}^n {n \choose k} \frac{d^k}{dz^k} f(z,y) \cdot \frac{d^{n-k}}{dz^{n-k}} g(z)   \\
+%     f(z+rx, y) e^{\paren{r\frac{d}{dz}}x} g(z)
+%      & = \sum_{k \geq 0} \frac{(rx)^k}{k!} \frac{d^k}{dz^k} f(z, y) \cdot e^{\paren{r\frac{d}{dz}}x} g(z) \qquad \text{(Taylor展開)} \\
+%      & = \sum_{k,m \geq 0} \frac{(rx)^k}{k!} \frac{d^k}{dz^k} f(z, y) \cdot \frac{r^m x^m}{m!} \frac{d^m}{dz^m} g(z)                 \\
+%      & = \sum_{k,m \geq 0} \frac{r^{k+m} x^{k+m}}{(k+m)!} \frac{(k+m)!}{k!\,m!} \frac{d^k}{dz^k} f(z, y) \cdot \frac{d^m}{dz^m} g(z)
+%   \end{align*}
+% \end{frame}
+
+\section{Hasse Walk}
+
+\begin{frame}{定義}
+  \begin{definition}
+    $s$から$t$への長さ$\ell$の\textbf{Hasse walk}： \begin{equation*}
+      s = t_0,\,t_1,\,\ldots,\,t_\ell = t
+    \end{equation*}
+    ただし$t_{i-1} \lessdot t_i$ or $t_{i-1} \gtrdot t_i$
+  \end{definition}
+  % \begin{frame}{$D\bm P = (U+r)\bm P$の利用}
+  %   \begin{theorem}[3.21.9]
+  %     $P$：$r$-differentialについて \begin{align*}
+  %       e^{Dx} \bm P        & = e^{rx + \frac{1}{2}rx^2 + Ux} \bm P, \\
+  %       e^{(U+D)x} \bm P    & = e^{rx + rx^2 + 2Ux} \bm P,           \\
+  %       e^{Dx} e^{Ux} \bm P & = e^{rx + \frac{3}{2}rx^2 + 2Ux} \bm P
+  %     \end{align*}
+  %   \end{theorem}
+  %   ($2$つ目の証明) \begin{align*}
+  %     e^{(U+D)x} \bm P & = e^{\frac{1}{2}rx^2+Ux} e^{Dx} \bm P                      \\
+  %                      & = e^{\frac{1}{2}rx^2+Ux} e^{rx + \frac{1}{2}rx^2+Ux} \bm P \\
+  %                      & = e^{rx+rx^2+2Ux} \bm P
+  %   \end{align*}
+  %   \pause
+  %   ($3$つ目の証明) \begin{align*}
+  %     e^{Dx} e^{Ux} \bm P & = e^{(U+rx)x} e^{Dx} \bm P                    \\
+  %                         & = e^{(U+rx)x} e^{rx+\frac{1}{2}rx^2+Ux} \bm P \\
+  %                         & = e^{rx+\frac{3}{2}rx^2+2Ux} \bm P
+  %   \end{align*}
+  % \end{frame}
+
+  \pause
+  \begin{definition}
+    \begin{align*}
+      e(t)            & = \#(\text{$\hat0$から$t$へ上に上がるだけのHasse walk}) \\
+      \alpha(0 \to n) & = \sum_{t \in P_n} e(t)                      \\
+      \delta_n        & = \#(\text{起点$\hat0$，長さ$n$のHasse walk})
+    \end{align*}
+  \end{definition}
+\end{frame}
+
+\begin{frame}{定理}
+  \begin{theorem}[3.21.9]
+    $P$：$r$-differentialについて \begin{align*}
+      e^{Dx} \bm P        & = e^{rx + \frac{1}{2}rx^2 + Ux} \bm P, \\
+      e^{(U+D)x} \bm P    & = e^{rx + rx^2 + 2Ux} \bm P,           \\
+      e^{Dx} e^{Ux} \bm P & = e^{rx + \frac{3}{2}rx^2 + 2Ux} \bm P
+    \end{align*}
+  \end{theorem}
+  \pause
+  \begin{theorem}[3.21.10]
+    $P$：$r$-differentialについて \begin{align*}
+      \sum_{n \geq 0} \alpha(0 \to n) \frac{x^n}{n!} & = e^{rx+\frac{1}{2}rx^2} \\
+      \sum_{n \geq 0} \delta_n \frac{x^n}{n!}        & = e^{rx+rx^2}
+    \end{align*}
+  \end{theorem}
+\end{frame}
+
+% \begin{frame}{順列との関係}
+%   $w \in \mathfrak{S}_n$について，$c(w) \coloneqq (\text{サイクルの個数})$
+%   \begin{proposition}
+%     \begin{equation*}
+%       \alpha(0 \to n) = \sum_{w^2 = 1} r^{c(w)}
+%     \end{equation*}
+%   \end{proposition}
+%   (証明) \pause $w^2 = 1$ $\iff$ $w$の各サイクルが長さ$\leq 2$
+%   \pause \begin{align*}
+%     \sum_{w^2=1} r^{c(w)}
+%     &= \sum_{2k \leq n} \frac{r^{n-k}}{k!} \binom{n}{2} \binom{n-2}{2} \cdots \binom{n-2k+2}{2} \\
+%     &= \sum_{2k \leq n} \frac{n! \, r^{n-k}}{k! \, 2^k \, (n-2k)!} \\
+%     &= n! \, [x^n] e^{rx} e^{\frac{1}{2} rx^2} \\
+%     &= \alpha(0 \to n)
+%   \end{align*}
+%   \pause $c_2(w) \coloneqq (\text{長さ$2$のサイクルの個数})$ \begin{align*}
+%     \sum_{w^2=1} r^{c(w)} 2^{c_2(w)}
+%     &= \sum_{2k \leq n} \frac{n! \, r^{n-k}}{k! \, (n-2k)!} \\
+%     &= n! \, [x^n] e^{rx} e^{rx^2} = \delta_n
+%   \end{align*}
+% \end{frame}
+
+\begin{frame}{$\alpha(n \to n+k)$}
+  $\alpha(0 \to n)$の一般化，$\alpha(n \to n+k)$を調べる
+
+  \pause ${}$
+
+  $k=0$のとき$\alpha(n \to n) = \#P_n$
+  \begin{definition}
+    Graded poset $P$のランク母関数 \begin{equation*}
+      F(P, q) \coloneqq \sum_{n \geq 0} (\#P_n) q^n
+    \end{equation*}
+  \end{definition}
+\end{frame}
+
+\begin{frame}{$\alpha(n \to n+k)$の母関数}
+  \begin{theorem}[3.21.11]
+    $P$：$r$-differential
+    \begin{equation*}
+      \sum_{n, k \geq 0} \alpha(n \to n+k) q^n \frac{x^k}{k!}
+      = F(P, q) \exp\left[\frac{rx}{1-q} + \frac{rx^2}{2(1-q^2)}\right]
+    \end{equation*}
+  \end{theorem}
+  (証明) \pause
+  $\gamma: \wKP \to K[[q]]$を次で定める：\begin{equation*}
+    \gamma\paren{\sum_{t \in P} c_t t} = \sum_{t \in P} c_t q^{\rho(t)}
+  \end{equation*}
+  \pause
+  \begin{align*}
+    \alpha(n \to n+k)   & = \sum_{t \in P_n} \#(\text{$t$から$k$回上がるHasse walk})                      \\
+                        & = [q^n] \gamma(D^k \bm P)                                                 \\
+    \uncover<4->{G(q,x) & \coloneqq (\text{左辺}) = \sum_{k \geq 0} \gamma(D^k \bm P) \frac{x^k}{k!}}
+  \end{align*}
+\end{frame}
+
+\begin{frame}{証明続き}
+  \begin{align*}
+    G(q,x) & = \sum_{k \geq 0} \gamma(D^k \bm P) \frac{x^k}{k!}       \\
+           & = \gamma(e^{Dx} \bm P)                                   \\
+           & = e^{rx+\frac{1}{2}rx^2} \gamma(e^{Ux} \bm P)            \\
+           & = e^{rx+\frac{1}{2}rx^2} \sum_{n \geq 0} \sum_{k \geq 0}
+    \alpha(n \to n+k) q^{n+k} \frac{x^k}{k!}                          \\
+           & = e^{rx+\frac{1}{2}rx^2} \sum_{n \geq 0} \sum_{k \geq 0}
+    \alpha(n \to n+k) q^n \frac{(qx)^k}{k!}                           \\
+           & = e^{rx+\frac{1}{2}rx^2} G(q, qx)
+  \end{align*}
+  \pause
+  $x \gets 0$に注目すると \begin{equation*}
+    G(q,0) = F(P,q)
+  \end{equation*}
+\end{frame}
+
+\begin{frame}{証明続き}
+  わかったこと：
+  \begin{itemize}
+    \item $G(q,x) = e^{rx+\frac{1}{2}rx^2} G(q,qx)$
+    \item $G(q,0) = F(P,q)$
+  \end{itemize}
+  $G(q,x) = F(p,q) \exp \left[ \frac{rx}{1-q} + \frac{rx^2}{2(1-q^2)} \right]$がこの方程式の一意解だと示せればOK．
+
+  \pause
+  \begin{equation*}
+    G(q,x) = \sum_{k \geq 0} f_k(q) \, x^k \qquad (f_k(q) \in K[[q]])
+  \end{equation*}
+  とおく．$x \gets 0$に注目して$f_0(q) = F(P,q)$.
+  \pause \begin{equation*}
+    \sum_{k \geq 0} q_k(q) \, x^k = e^{rx+\frac{1}{2}rx^2} \sum_{k \geq 0} f_k(q) \, (qx)^k
+  \end{equation*}
+  \pause
+  ここで$x^k$の係数を比較すると， \begin{equation*}
+    f_k(q) = f_k(q) \, q^k + r f_{k-1}(q) \, q^{k-1} + \cdots + ({\cdots}) f_0(q)
+  \end{equation*}
+  の形になり，$f_k(q)$が$f_{k-1}(q),\ldots,f_0(q)$から一意に決まる．
+\end{frame}
+
+\end{document}
